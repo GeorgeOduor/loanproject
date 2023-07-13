@@ -1,0 +1,4 @@
+<link rel="stylesheet" type="text/.css' %}" href="{% static 'css/core/menu/menu-types/vertical-compact-menu.css' %}" />
+<link rel="stylesheet" type="text/.css' %}" href="{% static 'vendors/css/cryptocoins/cryptocoins.css' %}" />
+<link rel="stylesheet" type="text/.css' %}" href="{% static 'css/pages/timeline.css' %}" />
+<link rel="stylesheet" type="text/.css' %}" href="{% static 'css/pages/dashboard-ico.css' %}" />
