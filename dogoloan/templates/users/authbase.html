@@ -38,245 +38,268 @@
     <link rel="stylesheet" type="text/css" href="{% static '/assets/css/style.css' %}">
     <!-- END Custom CSS-->
     <style>
-   
+        body{
+            overflow-y: auto;
+        }
       /*Background color*/
       
       /*form styles*/
       #msform {
-          text-align: center;
-          position: relative;
-          margin-top: 20px;
-      }
-      
-      #msform fieldset .form-card {
+        text-align: center;
+        position: relative;
+        //margin-top: 20px;
+    }
+    .card-body{
+      padding: 0.5rem !important;
+    }
+    #msform fieldset .form-card {
+      background: white;
+      border: 0 none;
+      border-radius: 0px;
+      /* box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2); */
+      /* padding: 11px 20px; */
+      box-sizing: border-box;
+      width: 100%;
+      /* margin: 0 3% 5px 3%; */
+      position: relative;
+  }
+
+    #msform fieldset {
         background: white;
         border: 0 none;
-        border-radius: 0px;
-        box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
-        padding: 11px 20px;
+        border-radius: 0.5rem;
         box-sizing: border-box;
-        width: 94%;
-        margin: 0 3% 5px 3%;
+        width: 100%;
+        margin: 0;
+        padding-bottom: 20px;
+    
+        /*stacking fieldsets above each other*/
         position: relative;
     }
+    
+    /*Hide all except first fieldset*/
+    #msform fieldset:not(:first-of-type) {
+        display: none;
+    }
+    
+    #msform fieldset .form-card {
+        text-align: left;
+        color: #9E9E9E;
+    }
+    
+    .custom-file-label::after {
+        padding: 5px 8px 4px 8px;
+        border-radius: 0px;
+        margin-bottom: 3px !important;
+        margin-top: 2px;
+        font-family: monospace;
+        color: #000000;
+        font-size: 12px;
+        height: 23px;
+        letter-spacing: 0px;
+        border-radius: 0 5px 5px 0;
+    background-color:lightgray;
+    }
 
-      #msform fieldset {
-          background: white;
-          border: 0 none;
-          border-radius: 0.5rem;
-          box-sizing: border-box;
-          width: 100%;
-          margin: 0;
-          padding-bottom: 20px;
-      
-          /*stacking fieldsets above each other*/
-          position: relative;
-      }
-      
-      /*Hide all except first fieldset*/
-      #msform fieldset:not(:first-of-type) {
-          display: none;
-      }
-      
-      #msform fieldset .form-card {
-          text-align: left;
-          color: #9E9E9E;
-      }
-      
-       #msform input, #msform textarea {
-          /* padding: 0px 8px 4px 8px; */
-          border: none;
-          border-bottom: 1px solid #ccc;
-          border-radius: 0px;
-          margin-bottom: 13px;
-          margin-top: 2px;
-          width: 100%;
-          box-sizing: border-box;
-          font-family: montserrat;
-          color: #2C3E50;
-          font-size: 16px;
-          height: 25px;
-          letter-spacing: 1px;
-      }
-      
-      
-      #msform input:focus, #msform textarea:focus {
-          -moz-box-shadow: none !important;
-          -webkit-box-shadow: none !important;
-          box-shadow: none !important;
-          border: none;
-          font-weight: bold;
-          border-bottom: 2px solid skyblue;
-          outline-width: 0;
-      }
-      
-      /*Blue Buttons*/
-       #msform .action-button {
-          width: 100px;
-          background: #0e35ac;
-          font-weight: bold;
-          color: white;
-          border: 0 none;
-          border-radius: 0px;
-          cursor: pointer;
-          padding: 2px 5px;
-          font-size: 12px;
-          border-radius: 5px;
-          /* margin: 10px 5px; */
-      }
+ #msform input, #msform textarea, select.form-select.form-select-sm, .custom-file-label, .cutom-file-label::after {
+        padding: 5px 0px 5px 5px;
+        border: none;
+        border-bottom: 1px solid #ccc;
+        border-radius: 0px;
+        margin-bottom: 13px;
+        margin-top: 2px;
+        width: 100%;
+        box-sizing: border-box;
+        font-family: monospace;
+        color: #000000;
+        font-size: 12px;
+        height: 25px;
+        letter-spacing: 0px;
+        border-radius: 8px;
+    }
+    
+    
+    #msform input:focus, #msform textarea:focus {
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border: none;
+        font-weight: bold;
+        border-bottom: 2px solid skyblue;
+        outline-width: 0;
+    }
+    
+    /*Blue Buttons*/
+     #msform .action-button {
+        width: 100px;
+        background: #0e35ac;
+        font-weight: bold;
+        color: white;
+        border: 0 none;
+        border-radius: 0px;
+        cursor: pointer;
+        padding: 2px 5px;
+        font-size: 12px;
+        border-radius: 5px;
+        /* margin: 10px 5px; */
+    }
 
-      #msform .action-button:hover, #msform .action-button:focus {
-          box-shadow: 0 0 0 2px white, 0 0 0 3px skyblue;
-      }
-      
-      /*Previous Buttons*/
-      #msform .action-button-previous {
-          width: 100px;
-          background: #616161;
-          font-weight: bold;
-          color: white;
-          border: 0 none;
-          border-radius: 0px;
-          cursor: pointer;
-          /* padding: 10px 5px; */
-          margin: 14px 5px;
-          border-radius: 5px;
-      }
-      
-      #msform .action-button-previous:hover, #msform .action-button-previous:focus {
-          box-shadow: 0 0 0 2px white, 0 0 0 3px #616161;
-      }
-      
-      /*Dropdown List Exp Date*/
-      select.list-dt {
-          border: none;
-          outline: 0;
-          border-bottom: 1px solid #ccc;
-          padding: 2px 5px 3px 5px;
-          margin: 2px;
-      }
-      
-      select.list-dt:focus {
-          border-bottom: 2px solid skyblue;
-      }
-      
-      /*The background card*/
-      .card {
-          z-index: 0;
-          border: none;
-          border-radius: 0.5rem;
-          position: relative;
-      }
-      
-      /*FieldSet headings*/
-      .fs-title {
-        font-size: 17px;
+    #msform .action-button:hover, #msform .action-button:focus {
+        box-shadow: 0 0 0 2px white, 0 0 0 3px skyblue;
+    }
+    
+    /*Previous Buttons*/
+    #msform .action-button-previous {
+        width: 100px;
+        background: #616161;
+        font-weight: bold;
+        color: white;
+        border: 0 none;
+        border-radius: 0px;
+        cursor: pointer;
+        /* padding: 10px 5px; */
+        /* margin: 14px 5px; */
+        border-radius: 5px;
+    }
+    
+    #msform .action-button-previous:hover, #msform .action-button-previous:focus {
+        box-shadow: 0 0 0 2px white, 0 0 0 3px #616161;
+    }
+    
+    /*Dropdown List Exp Date*/
+    select.list-dt {
+        border: none;
+        outline: 0;
+        border-bottom: 1px solid #ccc;
+        padding: 2px 5px 3px 5px;
+        margin: 2px;
+    }
+    
+    select.list-dt:focus {
+        border-bottom: 2px solid skyblue;
+    }
+    
+    /*The background card*/
+    .card {
+        z-index: 0;
+        border: none;
+        border-radius: 0.5rem;
+        position: relative;
+    }
+    
+    /*FieldSet headings*/
+    .fs-title {
+        font-size: 20px;
         color: #000000;
         font-weight: bold;
         text-align: center;
     }
-      
-      /*progressbar*/
-      #progressbar {
-        overflow: hidden;
-        color: lightgrey;
+    
+    /*progressbar*/
+    #progressbar {
+      overflow: hidden;
+      color: lightgrey;
+  }
+  
+    #progressbar .active {
+        color: #000000;
     }
     
-      #progressbar .active {
-          color: #000000;
-      }
-      
-      #progressbar li {
-        list-style-type: none;
-        font-size: 12px;
-        width: 31%;
-        float: left;
-        position: relative;
+    #progressbar li {
+      list-style-type: none;
+      font-size: 10px;
+      width: 25%;
+      float: left;
+      position: relative;
+  }
+    
+    /*Icons in the ProgressBar*/
+    #progressbar #account:before {
+        font-family: FontAwesome;
+        content: "\f023";
     }
-      
-      /*Icons in the ProgressBar*/
-      #progressbar #account:before {
-          font-family: FontAwesome;
-          content: "\f023";
-      }
-      
-      #progressbar #personal:before {
-          font-family: FontAwesome;
-          content: "\f007";
-      }
-      
-      #progressbar #payment:before {
-          font-family: FontAwesome;
-          content: "\f09d";
-      }
-      
-      #progressbar #confirm:before {
-          font-family: FontAwesome;
-          content: "\f00c";
-      }
-      
-      /*ProgressBar before any progress*/
-      #progressbar li:before {
-          width: 50px;
-          height: 50px;
-          line-height: 45px;
-          display: block;
-          font-size: 18px;
-          color: #ffffff;
-          background: lightgray;
-          border-radius: 50%;
-          margin: 0 auto 10px auto;
-          padding: 2px;
-      }
-      
-      /*ProgressBar connectors*/
-      #progressbar li:after {
-          content: '';
-          width: 100%;
-          height: 2px;
-          background: lightgray;
-          position: absolute;
-          left: 0;
-          top: 25px;
-          z-index: -1;
-      }
-      
-      /*Color number of the step and the connector before it*/
-      #progressbar li.active:before, #progressbar li.active:after {
-          background: skyblue;
-      }
-      
-      /*Imaged Radio Buttons*/
-      .radio-group {
-          position: relative;
-          margin-bottom: 25px;
-      }
-      
-      .radio {
-          display:inline-block;
-          width: 204;
-          height: 104;
-          border-radius: 0;
-          background: lightblue;
-          box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
-          box-sizing: border-box;
-          cursor:pointer;
-          margin: 8px 2px; 
-      }
-      
-      .radio:hover {
-          box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
-      }
-      
-      .radio.selected {
-          box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1);
-      }
-      
-      /*Fit image in bootstrap div*/
-      .fit-image{
-          width: 100%;
-          object-fit: cover;
-      }
+    
+    #progressbar #personal:before {
+        font-family: FontAwesome;
+        content: "\f007";
+    }
+    
+    #progressbar #payment:before {
+        font-family: FontAwesome;
+        content: "\f09d";
+    }
+    
+    #progressbar #confirm:before {
+        font-family: FontAwesome;
+        content: "\f00c";
+    }
+    
+    /*ProgressBar before any progress*/
+    #progressbar li:before {
+        width: 30px;
+        height: 30px;
+        line-height: 28px;
+        display: block;
+        font-size: 15px;
+        color: #ffffff;
+        background: lightgray;
+        border-radius: 50%;
+        margin: 0 auto 10px auto;
+        padding: 2px;
+    }
+    
+    /*ProgressBar connectors*/
+    #progressbar li:after {
+        content: '';
+        width: 100%;
+        height: 2px;
+        background: lightgray;
+        position: absolute;
+        left: 0;
+        top: 15px;
+        z-index: -1;
+    }
+    
+    /*Color number of the step and the connector before it*/
+    #progressbar li.active:before, #progressbar li.active:after {
+        background: #0e35ac;
+    }
+    
+    /*Imaged Radio Buttons*/
+    .radio-group {
+        position: relative;
+        margin-bottom: 25px;
+    }
+    
+    .radio {
+        display:inline-block;
+        width: 204;
+        height: 104;
+        border-radius: 0;
+        background: lightblue;
+        box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+        box-sizing: border-box;
+        cursor:pointer;
+        margin: 8px 2px; 
+    }
+    
+    .radio:hover {
+        box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    }
+    
+    .radio.selected {
+        box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1);
+    }
+    
+    /*Fit image in bootstrap div*/
+    .fit-image{
+        width: 100%;
+        object-fit: cover;
+    }
+    .blank-page .content-wrapper .flexbox-container {
+       
+        height: auto !important;
+    }
   </style>
   </head>
   <body class="vertical-layout vertical-compact-menu 1-column  bg-full-screen-image menu-expanded blank-page blank-page" data-open="click" data-menu="vertical-compact-menu" data-col="1-column">
@@ -296,7 +319,7 @@
                     </div>
                 </div>
                 <!-- login form -->
-                <div class="col-xl-3 col-lg-4 col-md-5 col-sm-5 col-12 p-0">
+                <div class="col-xl-3 col-lg-4 col-md-5 col-sm-5 col-12 p-1">
                     <div class="card border-grey border-lighten-3 m-0 box-shadow-0 card-account-right height-400">                
                         <div class="card-content">                    
                             {% block form %}

@@ -1,0 +1,729 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Dashboard
+{% endblock %}
+{% block nav %}
+{% include 'includes/nav.html' %}
+{% endblock %}
+
+{% block menu %}
+{% include 'includes/menu.html' %}
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
+  <h3 class="content-header-title mb-0 d-inline-block">Admin</h3>
+  <div class="row breadcrumbs-top d-inline-block">
+    <div class="breadcrumb-wrapper col-12">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item" title="Click to visit ">
+          <a href="index.html">Dashboard</a>
+        </li>
+        {% comment %} <li class="breadcrumb-item active" title="Click to visit ">Buy ICO</li> {% endcomment %}
+      </ol>
+    </div>
+  </div>
+</div>
+<div class="content-header-right col-md-4 col-12 d-none d-md-inline-block">
+  <div class="btn-group float-md-right">
+    <a class="btn-gradient-secondary btn-xs white" href="wallet.html">Export</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block bodycontent %}
+<div class="row">
+  <div class="col-md-3 col-sm-6 col-12">
+    <!-- Content for the first column -->
+    <div class="card card-stats mb-4 mb-xl-0 pull-up">
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <h5 class="card-title text-uppercase mb-0">Total Applications</h5>
+            <span class="h3 font-weight-bold mb-0">Ksh 999,999</span>
+          </div>
+          <div class="col-auto">
+            <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+              <i class="fas fa-file-alt"></i>
+              <img class="icon_image" src="{% static '/images/loanapplication.png' %}" alt="">
+            </div>
+          </div>
+        </div>
+        <p class="mt-0 mb-0 text-muted text-sm">
+          <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 15.5%</span>
+          <span class="text-nowrap">Since last month</span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 col-12">
+    <!-- Content for the second column -->
+    <div class="card card-stats mb-4 mb-xl-0 pull-up">
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <h5 class="card-title text-uppercase mb-0">Approved Loans</h5>
+            <span class="h3 font-weight-bold mb-0">Ksh 999,999</span>
+          </div>
+          <div class="col-auto">
+            <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+              <img class="icon_image" src="{% static '/images/approved.png' %}" alt="">
+            </div>
+          </div>
+        </div>
+        <p class="mt-0 mb-0 text-muted text-sm">
+          <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 15.5%</span>
+          <span class="text-nowrap">Since last month</span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 col-12">
+    <!-- Content for the third column -->
+    <div class="card card-stats mb-4 mb-xl-0 pull-up">
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <h5 class="card-title text-uppercase mb-0">Rejected Loans</h5>
+            <span class="h3 font-weight-bold mb-0">Ksh 999,999</span>
+          </div>
+          <div class="col-auto">
+            <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+              <img class="icon_image" src="{% static '/images/rejected.png' %}" alt="">
+            </div>
+          </div>
+        </div>
+        <p class="mt-0 mb-0 text-muted text-sm">
+          <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 15.5%</span>
+          <span class="text-nowrap">Since last month</span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 col-12">
+    <!-- Content for the fourth column -->
+    <div class="card card-stats mb-4 mb-xl-0 pull-up">
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <h5 class="card-title text-uppercase mb-0">Processing time</h5>
+            <span class="h3 font-weight-bold mb-0">Ksh 999,999</span>
+          </div>
+          <div class="col-auto">
+            <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+              <img class="icon_image" src="{% static '/images/approvaltime.png' %}" alt="">
+            </div>
+          </div>
+        </div>
+        <p class="mt-0 mb-0 text-muted text-sm">
+          <span class="text-success mr-2"><i class='bx bxs-up-arrow-circle'></i>15.5%</span>
+          <span class="text-nowrap">Since last month</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /key kpis -->
+<div class="row">
+  <div class="col-md-4 col-sm-6 col-12">
+    <div class="card pull-up">
+      <div class="card-header">
+        <span class="card_header_text">Loan Disbursement Trend</span>
+      </div>
+      <div class="card-body distribution_chart">
+        <div class="col-12 chart-section">
+          <!-- Content for the third sub-column of the third column -->
+          <div id="disbursement_trend"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card pull-up mb-1">
+          <div class="card-body">
+            <div class="row more-stats">
+              <div class="col-md-6 col-sm-6 col-6 left top">
+                <!-- Content for the first sub-column of the third column -->
+                <p class="stat_text2">Disbursed this week</p>
+              </div>
+              <div class="col-md-6 col-sm-6 col-6">
+                <!-- Content for the second sub-column of the third column -->
+                <p class="stat_text2">Ksh 5000 </p>
+    
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card pull-up mb-1">
+          <div class="card-body">
+            <div class="row more-stats">
+              <div class="col-md-6 col-sm-6 col-6 left top">
+                <!-- Content for the first sub-column of the third column -->
+                <p class="stat_text2">Disbursed this month</p>
+              </div>
+              <div class="col-md-6 col-sm-6 col-6">
+                <!-- Content for the second sub-column of the third column -->
+                <p class="stat_text2">Ksh 5,000</p>
+    
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 col-12">
+    <!-- Content for the second column -->
+    <div class="card pull-up">
+      <div class="card-header">
+        <span class="card_header_text">Performance and Financials:</span>
+      </div>
+      <div class="card-body">
+        <div class="col-12">
+          <div id="loan_perf_metrix"></div>
+
+        </div>
+        <div class="row more-stats">
+          <div class="col-md-6 col-sm-6 col-6 left">
+            <!-- Content for the first sub-column of the third column -->
+            <div id="deliquency_rate"></div>
+            <p class="stat_text">Deliqueny Rate</p>
+          </div>
+          <div class="col-md-6 col-sm-6 col-6">
+            <!-- Content for the second sub-column of the third column -->
+            <div id="repayment_rate"></div>
+            <p class="stat_text">Default Rate</p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5 col-sm-6 col-12">
+    <div class="row">
+      <div class="col-md-6 col-12">
+        <div class="card pull-up mb-1">
+          <div class="card-body">
+            <div class="d-flex">
+              <div class="me-2">
+                <span class="badge bg-label-primary p-1"><i class="bx bx-dollar text-primary"></i></span>
+              </div>
+              <div class="d-flex flex-column">
+                <p class="stat_text_income">Interest Income</small>
+                <h6 class="mb-0">$32.5k</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12">
+        <div class="card pull-up mb-1">
+          <div class="card-body">
+            <div class="d-flex">
+              <div class="me-2">
+                <span class="badge bg-label-primary p-1"><i class="bx bx-dollar text-primary"></i></span>
+              </div>
+              <div class="d-flex flex-column">
+                <p class="stat_text_income">ROI</small>
+                <h6 class="mb-0">$32.5k</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Content for the third sub-column of the third column -->
+    <div class="card pull-up">
+      <div class="card-header">
+        <span class="card_header_text">Loan Maturity Distributions</span>
+      </div>
+      <div class="card-body distribution_chart">
+        <div class="col-12 chart-section">
+          <!-- Content for the third sub-column of the third column -->
+          <div id="distributions"></div>
+        </div>
+        <div class="row more-stats mt-1 mb-1">
+          <div class="col-md-6 col-sm-6 col-6 left">
+            <!-- Content for the first sub-column of the third column -->
+            <p class="text-uppercase stat_text">Loans Portfolio Size</p>
+            <p class="value">Ksh 999,999</p>
+          </div>
+          <div class="col-md-6 col-sm-6 col-6">
+            <!-- Content for the second sub-column of the third column -->
+            <p class="text-uppercase stat_text">Average Loans Size</p>
+            <p class="value">Ksh 999,999</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- End of the third column -->
+  </div>
+</div>
+<!-- more kpis-->
+<script>
+  function createChart(options) {
+    let cardColor, headingColor, axisColor, shadeColor, borderColor;
+
+    cardColor = "white";
+    headingColor = "black";
+    axisColor = "black";
+    borderColor = "transparent";
+
+    var chart = new ApexCharts(document.querySelector("#distributions"), options);
+    chart.render();
+  }
+
+  var chartOptions = {
+    chart: {
+      height: 150,
+      parentHeightOffset: 0,
+      parentWidthOffset: 0,
+      toolbar: {
+        show: false
+      },
+      type: 'bar',
+      dropShadow: {
+        enabled: true,
+        top: 0,
+        left: 0,
+        blur: 2,
+        offsetx: 0,
+        offsety: 7,
+        shadowColor: '#291F1F',
+        shadowOpacity: 0.75,
+      },
+    },
+    series: [{
+      name: 'Sales',
+      data: [30, 40, 35, 50, 49, 60, 70],
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shade: 'dark',
+          type: 'horizontal',
+          shadeIntensity: 0.5,
+          gradientToColors: ['#FFD700'],
+          opacityFrom: 0.7,
+          opacityTo: 0.9,
+          stops: [0, 95, 100]
+        },
+      }
+    }],
+    xaxis: {
+      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997],
+      axisBorder: {
+        show: false
+      },
+      axisTicks: {
+        show: false
+      },
+      labels: {
+        show: true,
+        style: {
+          fontSize: '12px',
+          colors: "black"
+        }
+      }
+    },
+    yaxis: {
+      labels: {
+        show: true
+      },
+      tickAmount: 4
+    },
+    stroke: {
+      show: true,
+      lineColors: "#E60101",
+      curve: 'smooth',
+      lineCap: 'butt', // Choose 'smooth' for a smooth line, or 'straight' for a straight line connecting points
+      width: 2, // Adjust the line width as desired
+      dashArray: 0, // Set the dash pattern for the line (0 for solid, any positive number for dashed)
+    },
+    legend: {
+      position: "top",
+      horizontalAlign: "right",
+      markers: {
+        radius: 12
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    markers: {
+      size: 6,
+      colors: 'transparent',
+      strokeColors: 'transparent',
+      strokeWidth: 4,
+      discrete: [
+        {
+          fillColor: 'white',
+          seriesIndex: 0,
+          dataPointIndex: 7,
+          strokeColor: "blue",
+          strokeWidth: 2,
+          size: 6,
+          radius: 8
+        }
+      ],
+      hover: {
+        size: 7
+      }
+    },
+    grid: {
+      borderColor: 'white',
+      strokeDashArray: 3,
+      padding: {
+        top: -20,
+        bottom: -8,
+        left: -10,
+        right: 8
+      }
+    }
+  };
+
+  createChart(chartOptions);
+
+</script>
+
+<script>
+  function createChart(options) {
+    let cardColor, headingColor, axisColor, shadeColor, borderColor;
+
+    cardColor = "white";
+    headingColor = "black";
+    axisColor = "black";
+    borderColor = "transparent";
+
+    var chart = new ApexCharts(document.querySelector("#disbursement_trend"), options);
+    chart.render();
+  }
+
+  var chartOptions = {
+    chart: {
+      height: 150,
+      parentHeightOffset: 0,
+      parentWidthOffset: 0,
+      toolbar: {
+        show: false
+      },
+      type: 'area',
+      dropShadow: {
+        enabled: true,
+        top: 0,
+        left: 0,
+        blur: 2,
+        offsetx: 0,
+        offsety: 7,
+        shadowColor: '#291F1F',
+        shadowOpacity: 0.75,
+      },
+    },
+    series: [{
+      name: 'Sales',
+      data: [30, 40, 35, 50, 49, 60, 70],
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shade: 'dark',
+          type: 'horizontal',
+          shadeIntensity: 0.5,
+          gradientToColors: ['#FFD700'],
+          opacityFrom: 0.7,
+          opacityTo: 0.9,
+          stops: [0, 95, 100]
+        },
+      }
+    }],
+    xaxis: {
+      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997],
+      axisBorder: {
+        show: false
+      },
+      axisTicks: {
+        show: false
+      },
+      labels: {
+        show: true,
+        style: {
+          fontSize: '12px',
+          colors: "black"
+        }
+      }
+    },
+    yaxis: {
+      labels: {
+        show: true
+      },
+      tickAmount: 4
+    },
+    stroke: {
+      show: true,
+      lineColors: "#E60101",
+      curve: 'smooth',
+      lineCap: 'butt', // Choose 'smooth' for a smooth line, or 'straight' for a straight line connecting points
+      width: 2, // Adjust the line width as desired
+      dashArray: 0, // Set the dash pattern for the line (0 for solid, any positive number for dashed)
+    },
+    legend: {
+      position: "top",
+      horizontalAlign: "right",
+      markers: {
+        radius: 12
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    markers: {
+      size: 6,
+      colors: 'transparent',
+      strokeColors: 'transparent',
+      strokeWidth: 4,
+      discrete: [
+        {
+          fillColor: 'white',
+          seriesIndex: 0,
+          dataPointIndex: 7,
+          strokeColor: "blue",
+          strokeWidth: 2,
+          size: 6,
+          radius: 8
+        }
+      ],
+      hover: {
+        size: 7
+      }
+    },
+    grid: {
+      borderColor: 'white',
+      strokeDashArray: 3,
+      padding: {
+        top: -20,
+        bottom: -8,
+        left: -10,
+        right: 8
+      }
+    }
+  };
+
+  createChart(chartOptions);
+
+</script>
+
+<script>
+  function createDefaultRateChart() {
+    var defaultRate = 80; // Replace this value with your actual default rate percentage
+    var chartOptions = {
+      chart: {
+        type: 'radialBar',
+        height: '250',
+      },
+      plotOptions: {
+        radialBar: {
+          startAngle: -90,
+          endAngle: 90,
+          strokeWidth: '8',
+          hollow: {
+            size: '50%',
+          },
+          dataLabels: {
+            name: {
+              offsetY: -10,
+              fontSize: '12px',
+              fontWeight: 'bold',
+              color: '#888',
+              show: true,
+            },
+            value: {
+              fontSize: '24px',
+              fontWeight: 'normal',
+              formatter: function (val) {
+                return val + '%';
+              }
+            }
+          },
+          track: {
+            background: "#534325"
+          },
+        }
+      },
+      grid: {
+        padding: {
+          top: -10,
+          bottom: 1,
+        }
+      },
+      series: [defaultRate],
+      labels: ['Repayment Rate'],
+      colors: [function ({ value }) {
+        if (value < 33) {
+          return '#d7263d'; // Green if default rate is less than 33%
+        } else if (value < 67) {
+          return '#f6c34f'; // Yellow if default rate is less than 67%
+        } else {
+          return '#3cba9f'; // Red if default rate is 67% or more
+        }
+      }],
+    };
+
+    var chart = new ApexCharts(document.querySelector("#loan_perf_metrix"), chartOptions);
+    chart.render();
+  }
+
+  createDefaultRateChart();
+</script>
+
+<script>
+  var defaultRate = 55; // Replace this value with your actual default rate percentage
+  var chartOptions = {
+    chart: {
+      type: 'radialBar',
+      width: 100,
+      height: 100, // Set the height of the chart to make it small
+      sparkline: {
+        enabled: true, // Set sparkline to true to remove unnecessary elements from the chart
+      },
+    },
+    plotOptions: {
+      radialBar: {
+        startAngle: -135,
+        endAngle: 135,
+        strokeWidth: '8',
+        hollow: {
+          margin: 32,
+          size: '45%' // Set the inner circle size to create a small radial chart
+        },
+        dataLabels: {
+          name: {
+            show: false, // Hide the name label
+          },
+          value: {
+            formatter: function (val) {
+              return '$' + parseInt(val);
+            },
+            offsetY: 5,
+            color: '#697a8d',
+            fontSize: '13px',
+            show: true
+          }
+        },
+        track: {
+          strokeWidth: '50%',
+          background: '#f2f2f2', // Set the background color of the semi-circle
+        },
+      }
+    },
+    series: [defaultRate],
+    colors: [function ({ value }) {
+      if (value < 33) {
+        return '#3cba9f'; // Green if default rate is less than 33%
+      } else if (value < 67) {
+        return '#f6c34f'; // Yellow if default rate is less than 67%
+      } else {
+        return '#d7263d'; // Red if default rate is 67% or more
+      }
+    }],
+    grid: {
+      padding: {
+        top: -10,
+        bottom: -5,
+      }
+    },
+    states: {
+      hover: {
+        filter: {
+          type: 'none'
+        }
+      },
+      active: {
+        filter: {
+          type: 'none'
+        }
+      }
+    }
+  };
+
+  var chart = new ApexCharts(document.querySelector("#deliquency_rate"), chartOptions);
+  chart.render();
+</script>
+
+<script>
+  var defaultRate = 27; // Replace this value with your actual default rate percentage
+  var chartOptions = {
+    chart: {
+      type: 'radialBar',
+      width: 100,
+      height: 100, // Set the height of the chart to make it small
+      sparkline: {
+        enabled: true, // Set sparkline to true to remove unnecessary elements from the chart
+      },
+    },
+    plotOptions: {
+      radialBar: {
+        startAngle: -135,
+        endAngle: 135,
+        strokeWidth: '8',
+        hollow: {
+          margin: 32,
+          size: '45%' // Set the inner circle size to create a small radial chart
+        },
+        dataLabels: {
+          name: {
+            show: false, // Hide the name label
+          },
+          value: {
+            formatter: function (val) {
+              return '$' + parseInt(val);
+            },
+            offsetY: 5,
+            color: '#697a8d',
+            fontSize: '13px',
+            show: true
+          }
+        },
+        track: {
+          strokeWidth: '50%',
+          background: '#f2f2f2', // Set the background color of the semi-circle
+        },
+      }
+    },
+    series: [defaultRate],
+    colors: [function ({ value }) {
+      if (value < 33) {
+        return '#3cba9f'; // Green if default rate is less than 33%
+      } else if (value < 67) {
+        return '#f6c34f'; // Yellow if default rate is less than 67%
+      } else {
+        return '#d7263d'; // Red if default rate is 67% or more
+      }
+    }],
+    grid: {
+      padding: {
+        top: -10,
+        bottom: -5,
+      }
+    },
+    states: {
+      hover: {
+        filter: {
+          type: 'none'
+        }
+      },
+      active: {
+        filter: {
+          type: 'none'
+        }
+      }
+    }
+  };
+
+  var chart = new ApexCharts(document.querySelector("#repayment_rate"), chartOptions);
+  chart.render();
+</script>
+{% endblock %}
