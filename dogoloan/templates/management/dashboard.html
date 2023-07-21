@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-Dashboard
+Admin Dashboard
 {% endblock %}
 {% block nav %}
 {% include 'includes/nav.html' %}
@@ -18,7 +18,7 @@ Dashboard
     <div class="breadcrumb-wrapper col-12">
       <ol class="breadcrumb">
         <li class="breadcrumb-item" title="Click to visit ">
-          <a href="index.html">Dashboard</a>
+          <a href="{% url 'management:home' %}">Dashboard</a>
         </li>
         {% comment %} <li class="breadcrumb-item active" title="Click to visit ">Buy ICO</li> {% endcomment %}
       </ol>
@@ -27,7 +27,7 @@ Dashboard
 </div>
 <div class="content-header-right col-md-4 col-12 d-none d-md-inline-block">
   <div class="btn-group float-md-right">
-    <a class="btn-gradient-secondary btn-xs white" href="wallet.html">Export</a>
+    <a class="btn-gradient-secondary btn-xs white" href="">Export</a>
   </div>
 </div>
 {% endblock %}
@@ -135,6 +135,25 @@ Dashboard
         <div class="col-12 chart-section">
           <!-- Content for the third sub-column of the third column -->
           <div id="disbursement_trend"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card pull-up mb-1">
+          <div class="card-body">
+            <div class="row more-stats">
+              <div class="col-md-6 col-sm-6 col-6 left top">
+                <!-- Content for the first sub-column of the third column -->
+                <p class="stat_text2">Disbursed today </p>
+              </div>
+              <div class="col-md-6 col-sm-6 col-6">
+                <!-- Content for the second sub-column of the third column -->
+                <p class="stat_text2">Ksh 5000 </p>
+    
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -648,7 +667,6 @@ Dashboard
       }
     }
   };
-
   var chart = new ApexCharts(document.querySelector("#deliquency_rate"), chartOptions);
   chart.render();
 </script>

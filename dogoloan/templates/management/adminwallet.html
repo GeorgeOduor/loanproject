@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  Admin wallet
+{% endblock %}
+{% block nav %}
+  {% include 'includes/nav.html' %}
+{% endblock %}
+
+{% block menu %}
+  {% include 'includes/menu.html' %}
+{% endblock %}
+
+{% block breadcrumbs %}
+  <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
+    <h3 class="content-header-title mb-0 d-inline-block">Admin</h3>
+    <div class="row breadcrumbs-top d-inline-block">
+      <div class="breadcrumb-wrapper col-12">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item" title="Click to visit ">
+            <a href="{% url 'management:adminwallet' %}">My Wallet</a>
+          </li>
+          <!-- <li class="breadcrumb-item active" title="Click to visit ">23 Cases</li> -->
+        </ol>
+      </div>
+    </div>
+  </div>
+  <div class="content-header-right col-md-4 col-12 d-none d-md-inline-block">
+    <div class="btn-group float-md-right">
+      {% comment %} <a class="btn-gradient-secondary btn-xs white" href="wallet.html">Export</a> {% endcomment %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block bodycontent %}
+<div class="row">
+  
+  <div class="col-md-9">
+    <!-- Content for the 8-column section -->
+    <div class="card pull-up">
+      <div class="card-header">
+        <h5 class="card-title mt-1">Wallet Size trend</h5>
+      </div>
+      <div class="card-body">
+        <div id="walet_size"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <!-- Content for the 4-column section -->
+    <div class="card pull-up">
+      <div class="card-header mt-1">
+        <h5 class="card-title">
+          My Wallet Balance
+        </h5>
+      </div>
+      <div class="card-content colapse show">
+        <div class="card-body">
+          <div class="text-center row clearfix mb-2">
+            <div class="col-12">
+              <i class="icon-wallet font-large-1 bg-primary bg-glow white rounded-circle p-2 d-inline-block"></i>
+            </div>
+          </div>
+          <h2 class="text-center wallet_balance">Ksh 999,999</h2>
+          <hr class="divider">
+          <div class="text-center wallet_top_ups">
+            <button class="mb-1 btn btn btn-success" onclick="approveLoan()">Top up wallet</button>
+          </div>
+          <div class="text-center wallet_top_ups">
+            <button class="mb-1 btn btn btn-primary" onclick="approveLoan()">Wallet Statement</button>
+          </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function createChart(options) {
+    let cardColor, headingColor, axisColor, shadeColor, borderColor;
+
+    cardColor = "white";
+    headingColor = "black";
+    axisColor = "black";
+    borderColor = "transparent";
+
+    var chart = new ApexCharts(document.querySelector("#walet_size"), options);
+    chart.render();
+  }
+
+  var chartOptions = {
+    chart: {
+      height: 260,
+      parentHeightOffset: 0,
+      parentWidthOffset: 0,
+      toolbar: {
+        show: false
+      },
+      type: 'area',
+      dropShadow: {
+        enabled: true,
+        top: 0,
+        left: 0,
+        blur: 2,
+        offsetx: 0,
+        offsety: 7,
+        shadowColor: '#291F1F',
+        shadowOpacity: 0.75,
+      },
+    },
+    series: [{
+      name: 'Sales',
+      data: [30, 40, 35, 50, 49, 60, 70],
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shade: 'dark',
+          type: 'horizontal',
+          shadeIntensity: 0.5,
+          gradientToColors: ['#FFD700'],
+          opacityFrom: 0.7,
+          opacityTo: 0.9,
+          stops: [0, 95, 100]
+        },
+      }
+    }],
+    xaxis: {
+      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997],
+      axisBorder: {
+        show: false
+      },
+      axisTicks: {
+        show: false
+      },
+      labels: {
+        show: true,
+        style: {
+          fontSize: '12px',
+          colors: "black"
+        }
+      }
+    },
+    yaxis: {
+      labels: {
+        show: true
+      },
+      tickAmount: 4
+    },
+    stroke: {
+      show: true,
+      lineColors: "#E60101",
+      curve: 'smooth',
+      lineCap: 'butt', // Choose 'smooth' for a smooth line, or 'straight' for a straight line connecting points
+      width: 2, // Adjust the line width as desired
+      dashArray: 0, // Set the dash pattern for the line (0 for solid, any positive number for dashed)
+    },
+    legend: {
+      position: "top",
+      horizontalAlign: "right",
+      markers: {
+        radius: 12
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    markers: {
+      size: 6,
+      colors: 'transparent',
+      strokeColors: 'transparent',
+      strokeWidth: 4,
+      discrete: [
+        {
+          fillColor: 'white',
+          seriesIndex: 0,
+          dataPointIndex: 7,
+          strokeColor: "blue",
+          strokeWidth: 2,
+          size: 6,
+          radius: 8
+        }
+      ],
+      hover: {
+        size: 7
+      }
+    },
+    grid: {
+      borderColor: 'white',
+      strokeDashArray: 3,
+      padding: {
+        top: -20,
+        bottom: -8,
+        left: -10,
+        right: 8
+      }
+    }
+  };
+
+  createChart(chartOptions);
+
+</script>
+{% endblock %}

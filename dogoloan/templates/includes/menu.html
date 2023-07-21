@@ -1,15 +1,21 @@
 {% load static %}
 
 <div class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow">
-  <div class="main-menu-content"><a class="navigation-brand d-none d-md-block d-lg-block d-xl-block" href="index.html"><img class="brand-logo" alt="CryptoDash admin logo" src="{% static '/images/logo/logo.png' %}"/></a>
+  <div class="main-menu-content">
+    <a class="navigation-brand d-none d-md-block d-lg-block d-xl-block" href="{% url 'management:home' %}">
+      <img class="brand-logo" alt="CryptoDash admin logo" src="{% static '/images/logo/logo.png' %}"/></a>
     <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+      <li class="active"><a href="{% url 'clients:home' %}"><i class="icon-home"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
+      </li>
+      <li class="active"><a href="{% url 'management:home' %}"><i class='bx bx-send'></i><span class="menu-title" data-i18n="">My Credit Data</span></a>
+      </li>
       <li class="active"><a href="{% url 'management:home' %}"><i class="icon-grid"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
       </li>
       <li class=" nav-item"><a href="{% url 'management:loanapplications' %}"><i class="icon-layers"></i><span class="menu-title" data-i18n="">New Requests</span></a>
       </li>
-      <li class=" nav-item"><a href="wallet.html"><i class="icon-wallet"></i><span class="menu-title" data-i18n="">Wallet</span></a>
+      <li class=" nav-item"><a href="{% url 'management:adminwallet' %}"><i class="icon-wallet"></i><span class="menu-title" data-i18n="">Wallet</span></a>
       </li>
-      <li class=" nav-item"><a href="transactions.html"><i class="icon-shuffle"></i><span class="menu-title" data-i18n="">Transactions</span></a>
+      {% comment %} <li class=" nav-item"><a href="transactions.html"><i class="icon-shuffle"></i><span class="menu-title" data-i18n="">Transactions</span></a>
       </li>
       <li class=" nav-item"><a href="faq.html"><i class="icon-support"></i><span class="menu-title" data-i18n="">FAQ</span></a>
       </li>
@@ -29,7 +35,7 @@
             </ul>
           </li>
         </ul>
-      </li>
+      </li> {% endcomment %}
     </ul>
   </div>
 </div>

@@ -1,91 +1,156 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-Dashboard
+  Loan Requests
 {% endblock %}
 {% block nav %}
-{% include 'includes/nav.html' %}
+  {% include 'includes/nav.html' %}
 {% endblock %}
 
 {% block menu %}
-{% include 'includes/menu.html' %}
+  {% include 'includes/menu.html' %}
 {% endblock %}
 
 {% block breadcrumbs %}
-<div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
-  <h3 class="content-header-title mb-0 d-inline-block">Admin</h3>
-  <div class="row breadcrumbs-top d-inline-block">
-    <div class="breadcrumb-wrapper col-12">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item" title="Click to visit ">
-          <a href="index.html">New Loan Requests</a>
-        </li>
-        <li class="breadcrumb-item active" title="Click to visit ">23 Cases</li>
-      </ol>
-    </div>
-  </div>
-</div>
-<div class="content-header-right col-md-4 col-12 d-none d-md-inline-block">
-  <div class="btn-group float-md-right">
-    <a class="btn-gradient-secondary btn-xs white" href="wallet.html">Export</a>
-  </div>
-</div>
-{% endblock %}
-
-{% block bodycontent %}
-<div class="row loan_requests">
-  <div class="card">
-    <div class="card-content">
-      <div class="table-responsive">
-        <table id="recent-orders" class="table table-hover table-sm mb-0">
-          <thead>
-            <tr>
-              <th class="border-top-0">Client Number</th>
-              <th class="border-top-0">Name</th>
-              <th class="border-top-0">Gender</th>
-              <th class="border-top-0">Date</th>
-              <th class="border-top-0">Details</th>
-              <th class="border-top-0">Amount</th>
-              <th class="border-top-0">Aprove <i class="la la-thumbs-up success float-right"></i></th>
-              <th class="border-top-0">Decline<i class="la la-thumbs-down danger float-right"></i></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-truncate"><i class="la la-dot-circle-o success font-medium-1 mr-1"></i>
-                29813942
-              </td>
-              <td class="text-truncate"><a href="#">GEORGE ODUOR</a></td>
-              <td class="text-truncate">
-                Male
-              </td>
-              <td class="text-truncate p-1">20-03-2022</td>
-              <td>
-                <a href="#" class="mb-0 btn-sm btn btn-outline-success round">View Details</a>
-              </td>
-              <td>
-                <a href="#" class="mb-0 btn-sm btn btn-outline-success round">Ksh 5999</a>
-              </td>
-              <td>
-                <a href="#" class="mb-0 btn-sm btn btn-success round">
-                  Approve
-                </a>
-
-              </td>
-              <td class="text-truncate">
-                <a href="#" class="mb-0 btn-sm btn btn-danger round">
-                  Decline
-                </a>
-              </td>
-              <!-- <td><i class="la la-thumbs-up warning float-right"></i></td> -->
-            </tr>
-          </tbody>
-        </table>
+  <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
+    <h3 class="content-header-title mb-0 d-inline-block">Admin</h3>
+    <div class="row breadcrumbs-top d-inline-block">
+      <div class="breadcrumb-wrapper col-12">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item" title="Click to visit ">
+            <a href="index.html">New Loan Requests</a>
+          </li>
+          <li class="breadcrumb-item active" title="Click to visit ">23 Cases</li>
+        </ol>
       </div>
     </div>
   </div>
-</div>
+  <div class="content-header-right col-md-4 col-12 d-none d-md-inline-block">
+    <div class="btn-group float-md-right">
+      <a class="btn-gradient-secondary btn-xs white" href="wallet.html">Export</a>
+    </div>
+  </div>
+{% endblock %}
 
-<!-- more kpis-->
+{% block bodycontent %}
+  <div class="row loan_requests">
+    <div class="card">
+      <div class="card-content">
+        <section id="tabs" class="project-tab">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <nav>
+                  <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">New Clients</a>
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Repeat Clients</a>
+                  </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="table-responsive">
+                      <table id="recent-orders" class="table table-hover table-sm mb-0">
+                        <thead>
+                          <tr>
+                            <th class="border-top-0">Client Number</th>
+                            <th class="border-top-0">Name</th>
+                            <th class="border-top-0">Gender</th>
+                            <th class="border-top-0">Date</th>
+                            <th class="border-top-0">Details</th>
+                            <th class="border-top-0">Amount</th>
+                            <th class="border-top-0">
+                              Aprove <i class="la la-thumbs-up success float-right"></i>
+                            </th>
+                            <th class="border-top-0">
+                              Decline<i class="la la-thumbs-down danger float-right"></i>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="text-truncate">
+                              <i class="la la-dot-circle-o success font-medium-1 mr-1"></i>
+                              29813942
+                            </td>
+                            <td class="text-truncate">
+                              <a href="#">GEORGE ODUOR</a>
+                            </td>
+                            <td class="text-truncate">Male</td>
+                            <td class="text-truncate p-1">20-03-2022</td>
+                            <td>
+                              <a href="#" class="mb-0 btn-sm btn btn-outline-success round">View Details</a>
+                            </td>
+                            <td>
+                              <a href="#" class="mb-0 btn-sm btn btn-outline-success round">Ksh 5999</a>
+                            </td>
+                            <td>
+                              <a href="#" class="mb-0 btn-sm btn btn-success round">Approve</a>
+                            </td>
+                            <td class="text-truncate">
+                              <a href="#" class="mb-0 btn-sm btn btn-danger round">Decline</a>
+                            </td>
+                            <!-- <td><i class="la la-thumbs-up warning float-right"></i></td> -->
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div class="table-responsive">
+                      <table id="recent-orders" class="table table-hover table-sm mb-0">
+                        <thead>
+                          <tr>
+                            <th class="border-top-0">Client Number</th>
+                            <th class="border-top-0">Name</th>
+                            <th class="border-top-0">Gender</th>
+                            <th class="border-top-0">Date</th>
+                            <th class="border-top-0">Details</th>
+                            <th class="border-top-0">Amount</th>
+                            <th class="border-top-0">
+                              Aprove <i class="la la-thumbs-up success float-right"></i>
+                            </th>
+                            <th class="border-top-0">
+                              Decline<i class="la la-thumbs-down danger float-right"></i>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="text-truncate">
+                              <i class="la la-dot-circle-o success font-medium-1 mr-1"></i>
+                              29813942
+                            </td>
+                            <td class="text-truncate">
+                              <a href="#">GEORGE ODUOR</a>
+                            </td>
+                            <td class="text-truncate">Male</td>
+                            <td class="text-truncate p-1">20-03-2022</td>
+                            <td>
+                              <a href="#" class="mb-0 btn-sm btn btn-outline-success round">View Details</a>
+                            </td>
+                            <td>
+                              <a href="#" class="mb-0 btn-sm btn btn-outline-success round">Ksh 5999</a>
+                            </td>
+                            <td>
+                              <a href="#" class="mb-0 btn-sm btn btn-success round">Approve</a>
+                            </td>
+                            <td class="text-truncate">
+                              <a href="#" class="mb-0 btn-sm btn btn-danger round">Decline</a>
+                            </td>
+                            <!-- <td><i class="la la-thumbs-up warning float-right"></i></td> -->
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
 
+  <!-- more kpis -->
 {% endblock %}

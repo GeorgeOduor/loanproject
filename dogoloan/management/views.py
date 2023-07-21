@@ -16,3 +16,8 @@ class LoanApplicatProfile(View):
 
     def get(self,request,pk):
         return render(request,'management/applicantdetails.html')
+    
+class AdminWallet(View):
+
+    def get(self,request):
+        return render(request,'management/adminwallet.html')
