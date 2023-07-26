@@ -44,6 +44,9 @@ Client Dashboard
     margin: 0 auto;
     padding-top: 3px;
   }
+  .upload-section {
+    padding: 0px 15px;
+}
   .jumbotron {
     background-color: #ffffff;
     color: #000;
@@ -180,6 +183,9 @@ body.vertical-layout.\32 -columns.fixed-navbar.pace-done.menu-open.vertical-comp
       font-size: 12px;
       padding:5px;
     }
+    .upload-section {
+      padding: 12px;
+  }
     .btn-secondary:hover {
       /* background-color: #5a6268; */
     }
@@ -209,16 +215,16 @@ body.vertical-layout.\32 -columns.fixed-navbar.pace-done.menu-open.vertical-comp
             <div class="functionality-section row">
               <div class="col-sm-3 col-md-6 col-6 pr-2 p-1">
                 {% comment %} <a href="#" class="functionality-btn check-loan">Loan Limit</a> {% endcomment %}
-                <button class="css-button css-button-arrow css-button-arrow btn-success"  data-toggle="modal" data-target="#loanLimitModal">Loan Limit </button>
+                <button class="css-button css-button-arrow btn-success"  data-toggle="modal" data-target="#loanLimitModal">Loan Limit </button>
               </div>
               <div class="col-sm-3 col-md-6 col-6 pr-2 p-1">
-                <button class="css-button css-button-arrow css-button-arrow btn-primary">Request Loan </button>   
+                <button class="css-button css-button-arrow btn-primary"  data-toggle="modal" data-target="#loanrequest">Request Loan </button>   
               </div>
               <div class="col-sm-3 col-md-6 col-6 pr-2 p-1">
-                <button class="css-button css-button-arrow css-button-arrow btn-gradient-primary">Pay Loan </button> 
+                <button class="css-button css-button-arrow btn-gradient-primary" data-toggle="modal" data-target="#payloan">Pay Loan </button> 
               </div>
               <div class="col-sm-3 col-md-6 col-6 pr-2 p-1">
-                <button class="css-button css-button-arrow css-button-arrow btn-gradient-secondary">Loan Balance </button> 
+                <button class="css-button css-button-arrow btn-gradient-secondary" data-toggle="modal" data-target="#loanbalance">Loan Balance </button> 
               </div>
             </div>
           </div>
@@ -235,16 +241,16 @@ body.vertical-layout.\32 -columns.fixed-navbar.pace-done.menu-open.vertical-comp
             <div class="functionality-section row">
               <div class="col-sm-3 col-md-6 col-6 pr-2 p-1">
                 {% comment %} <a href="#" class="functionality-btn check-loan">Loan Limit</a> {% endcomment %}
-                <button class="css-button css-button-arrow css-button-arrow btn-success"><i class="ficon icon-table"></i>Account Statement </button>
+                <button class="css-button css-button-arrow btn-success"><i class="ficon icon-table"></i>Account Statement </button>
               </div>
               <div class="col-sm-3 col-md-6 col-6 pr-2 p-1">
-                <button class="css-button css-button-arrow css-button-arrow btn-primary"><i class="ficon icon-users"></i></button>   
+                <button class="css-button css-button-arrow btn-primary"><i class="ficon icon-users"></i></button>   
               </div>
               <div class="col-sm-3 col-md-6 col-6 pr-2 p-1">
-                <button class="css-button css-button-arrow css-button-arrow btn-gradient-primary">Guarantors</button> 
+                <button class="css-button css-button-arrow btn-gradient-primary">Guarantors</button> 
               </div>
               <div class="col-sm-3 col-md-6 col-6 pr-2 p-1">
-                <button class="css-button css-button-arrow css-button-arrow btn-gradient-secondary">Messages 
+                <button class="css-button css-button-arrow btn-gradient-secondary">Messages 
                   <span class="badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">5</span>
                  </button> 
               </div>
@@ -261,7 +267,9 @@ body.vertical-layout.\32 -columns.fixed-navbar.pace-done.menu-open.vertical-comp
               </div>
             </div>
             <p class="leading m-0">You can improve your chances of approval by sharing the latest and authentic financial information with us now.</p>
-            <a href="file_upload.html" class="btn btn-primary m-2"><i class='bx bx-upload'></i> Proceed to File Upload</a>
+            <button  class="css-button btn btn-primary m-2" data-toggle="modal" data-target="#uploadfiles"><i class='bx bx-upload'></i> 
+              Proceed to File Upload
+            </button>
           </div>
         </div>
       </div>
@@ -275,4 +283,58 @@ body.vertical-layout.\32 -columns.fixed-navbar.pace-done.menu-open.vertical-comp
 <!-- more kpis-->
 
 {% include 'modals/loanlimit.html' %}
+{% include 'modals/dataupload.html' %}
+{% include 'modals/loan_request.html' %}
+{% include 'modals/payloan.html' %}
+{% include 'modals/loanbalance.html' %}
 {% endblock %}
+
+
+button {
+  min-height: 53px;
+  min-width: 166px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  position: relative;
+  cursor: pointer;
+  background: -webkit-gradient(linear, left top, right top, color-stop(-12.74%, rgba(110, 239, 255, .5)), color-stop(56.76%, rgba(106, 224, 255, .271)));
+  background: linear-gradient(90deg, rgba(110, 239, 255, .5) -12.74%, rgba(106, 224, 255, .271) 56.76%);
+  border: 2px solid #acf7ff;
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.sok-tile:before {
+  content: "";
+  width: 4px;
+  height: 28px;
+  background: #19173b;
+  border: 2px solid #acf7ff;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  position: absolute;
+  border-top: 0;
+  border-left: 0;
+  border-bottom: 0;
+  bottom: -7px;
+  left: 4px;
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.sok-tile:after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  bottom: -2px;
+  border-top: 15px solid transparent;
+  border-left: 15px solid #fffcf7;
+}

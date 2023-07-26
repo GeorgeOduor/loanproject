@@ -1,0 +1,39 @@
+<!-- Loan Limit Modal -->
+<div class="modal fade" id="uploadfiles" tabindex="-1" role="dialog" aria-labelledby="loanLimitModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loanLimitModalLabel"><i class='bx bx-file'></i> Credit Data Upload </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+          <form>
+            <div class="form-group">
+              <div class="custom-file mb-0s">
+                <input type="file" class="custom-file-input" id="customFile" name="filename">
+                <label class="custom-file-label" for="customFile">
+                  Document Upload
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="fileTypeSelect">Select File Type</label>
+              <select class="form-control" id="fileTypeSelect">
+                <option value="CRB">CRB Report</option>
+                <option value="MpesaStatement">Mpesa Statement</option>
+                <option value="BankStatement">Bank Statement</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-outline-success m-0">Submit</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

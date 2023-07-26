@@ -1,0 +1,45 @@
+<style>
+  input#user-name {
+    font-size: 20px;
+    text-align: center;
+    text-shadow: azure;
+    letter-spacing: 2px;
+    font-family: monospace;
+}
+input#loanamount {
+  font-size: 20px;
+  font-family: monospace;
+  text-align: center;
+  letter-spacing: 1px;
+  /* padding: 4px; */
+}
+</style><!-- Loan Limit Modal -->
+<div class="modal fade" id="loanrequest" tabindex="-1" role="dialog" aria-labelledby="loanLimitModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loanLimitModalLabel">Loan Request</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+          <form>
+            <div class="form-group">
+              <label for="user-name">Loan Amount (100 - 40000)</label>
+              <input type="number" class="form-control" id="loanamount" placeholder="5000" value="john" required="" autofocus="" max="40000",min="100" />
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-outline-success m-0">Submit</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+
+  </script>

@@ -7,5 +7,11 @@ class ClientsIndexView(View):
     def get(self, request):
         return render(request, self.template_name)
     
+
+class CreditDataUpload(View):
+    template_name = 'clients/data_upload.html'
+    def get(self, request):
+        return render(request, self.template_name)
+
     
 
