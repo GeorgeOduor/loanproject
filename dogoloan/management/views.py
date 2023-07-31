@@ -21,3 +21,8 @@ class AdminWallet(View):
 
     def get(self,request):
         return render(request,'management/adminwallet.html')
+
+class Settings(View):
+
+    def get(self,request):
+        return render(request,'management/settings.html')

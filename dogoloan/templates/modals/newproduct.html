@@ -1,0 +1,165 @@
+<style>
+.group {
+  position: relative;
+  }
+  
+  .input {
+  font-size: 15px;
+  padding: 5px 10px 6px 5px;
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #515151;
+  background: transparent;
+  }
+  
+  .input:focus {
+  outline: none;
+  }
+  
+  label {
+  color: #999;
+  font-size: 12px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 4px;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+  }
+  
+  .input:focus ~ label, .input:valid ~ label {
+  top: -20px;
+  font-size: 14px;
+  color: #5264AE;
+  }
+  
+  .bar {
+  position: relative;
+  display: block;
+  width: 100%;
+  }
+  
+  .bar:before, .bar:after {
+  content: '';
+  height: 2px;
+  width: 0;
+  bottom: 1px;
+  position: absolute;
+  background: #5264AE;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+  }
+  
+  .bar:before {
+  left: 50%;
+  }
+  
+  .bar:after {
+  right: 50%;
+  }
+  
+  .input:focus ~ .bar:before, .input:focus ~ .bar:after {
+  width: 50%;
+  }
+  
+  .highlight {
+  position: absolute;
+  height: 60%;
+  width: 100%;
+  top: 25%;
+  left: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  }
+  
+  .input:focus ~ .highlight {
+  animation: inputHighlighter 0.3s ease;
+  }
+  
+  @keyframes inputHighlighter {
+  from {
+    background: #5264AE;
+  }
+  
+  to {
+    width: 0;
+    background: transparent;
+  }
+  }
+</style>
+<!-- Loan Limit Modal -->
+<div class="modal fade" id="addnewproduct" tabindex="-1" role="dialog" aria-labelledby="loanLimitModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loanLimitModalLabel"><i class='bx bx-plus'></i> New Product </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group row">
+              <fieldset class="col-12">
+                <div class="group mt-1">
+                  <input required="" type="text" class="input">
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label>Product Name</label>
+                </div>
+              </fieldset>
+              <fieldset class="col-12 mt-1">
+                <div class="row">
+                  <div class="col-md-6 col-12">
+                    <div class="group mt-1">
+                      <input required="" type="text" class="input">
+                      <span class="highlight"></span>
+                      <span class="bar"></span>
+                      <label>Interest Rate (%)</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="group mt-1">
+                      <input required="" type="text" class="input">
+                      <span class="highlight"></span>
+                      <span class="bar"></span>
+                      <label>Payment Term</label>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset class="col-12 mt-1">
+                <div class="group mt-1">
+                  <input required="" type="number" class="input">
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label>Minimum Disbursable Amount</label>
+                </div>
+              </fieldset>
+              <fieldset class="col-12 mt-1">
+                <div class="group mt-1">
+                  <textarea class="input" name="" id="" cols="30" rows="2.5"></textarea>
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label>Product Description</label>
+                </div>
+              </fieldset>
+              <fieldset class="col-12 mt-1">
+                <div class="group mt">
+                  <button type="submit" class="btn btn-success" data-dismiss="modal">Save</button>
+                </div>
+              </fieldset>
+              
+          </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

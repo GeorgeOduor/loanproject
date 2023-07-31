@@ -39,4 +39,20 @@
     </p>
     </form>
   </div>
+  <script>
+    $(document).ready(function () {
+      $.ajax({
+        url: '{% url "users:ajax_view" %}',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+          // Handle the received JSON data
+          console.log(data)
+        },
+        error: function (xhr, errmsg, err) {
+          console.log(xhr.status + ': ' + xhr.responseText)
+        }
+      })
+    })
+  </script>
 {% endblock %}

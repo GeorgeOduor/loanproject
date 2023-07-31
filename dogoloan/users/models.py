@@ -49,13 +49,36 @@ class User(AbstractUser):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50, null=True, blank=True)
-    middle_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True)
     gender = models.CharField(max_length=50, null=True, blank=True,choices=[
         ('Male', 'Male'),
         ('Female', 'Female')
     ])
-    phone_number = models.CharField(max_length=12, null=True, blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
+    employment_status = models.CharField(max_length=50, null=True, blank=True,choices=[
+        ('Employed', 'Employed'),
+        ('Unemployed', 'Unemployed'),
+        ('Self Employed', 'Self Employed'),
+        ('Student', 'Student'),
+        ('Retired', 'Retired'),
+        ('Other', 'Other')
+    ])
+    marital_status = models.CharField(max_length=50, null=True, blank=True,choices=[
+        ('Married', 'Married'),
+        ('Single', 'Single'),
+    ])
+    education = models.CharField(max_length=50, null=True, blank=True,choices=[
+        ('Primary School', 'Primary School'),
+        ('Secondary School', 'Secondary School'),
+        ('University', 'University'),
+        ('Other', 'Other')
+    ])
+    email_address = models.EmailField(null=True, blank=True)
+    alternative_mobile_number = models.CharField(max_length=12, null=True, blank=True)
+    town = models.CharField(max_length=50, null=True, blank=True)
+    monthly_income = models.CharField(max_length=50, null=True, blank=True)
+    referer_mobile_number = models.CharField(max_length=12, null=True, blank=True)
+    social_reach = models.CharField(max_length=50, null=True, blank=True)
     nationa_id = models.CharField(max_length=12, null=True, blank=True)
     address = models.CharField(max_length=50, null=True, blank=True)
     birth_date = models.DateField(null=True, blank=True)

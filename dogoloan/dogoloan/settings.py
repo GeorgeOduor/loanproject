@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-s%lsso1$seg5-7%ujei98-$mc*7pcm0@)e_#aawq165x!#%k&a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','7dc0-154-159-252-113.ngrok-free.app']
+ALLOWED_HOSTS = ['127.0.0.1','f1df-197-254-8-170.ngrok-free.app']
 
 
 # Application definition
@@ -41,6 +41,12 @@ INSTALLED_APPS = [
     'users',
     'management',
     'clients',
+    'core',
+# otp
+    'django_otp',
+    'django_otp.plugins.otp_totp',
+    'django_otp.plugins.otp_hotp',
+    'django_otp.plugins.otp_static',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +55,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]

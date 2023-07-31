@@ -9,4 +9,5 @@ urlpatterns = [
     path("loanapplications",LoanApplications.as_view(),name="loanapplications"),
     path("applicant_details/<str:pk>",LoanApplicatProfile.as_view(),name="applicant"),
     path("adminwallet",AdminWallet.as_view(),name="adminwallet"),
+    path("settings",Settings.as_view(),name="settings"),
 ]

@@ -39,8 +39,8 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ("user", "first_name", "middle_name", "last_name", "gender", "phone_number", "nationa_id", "address", "birth_date")
-    search_fields = ("user", "first_name", "middle_name", "last_name", "gender", "phone_number", "nationa_id", "address", "birth_date")
+    list_display = ("user", "first_name", "last_name", "gender",  "nationa_id", "address", "birth_date")
+    search_fields = ("user", "first_name", "last_name", "gender","nationa_id", "address", "birth_date")
     add_fieldsets = (
         (
             None,

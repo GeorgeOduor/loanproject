@@ -31,7 +31,114 @@
     <link href='https://unpkg.com/boxicons@2.1.4/dist/boxicons.js' rel='stylesheet'>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+}
+  /* Loan Limit Modal Styles */
+.modal-content {
+  border-radius: 10px;
+}
+.modal-header {
+  background-color: #007bff;
+  color: #fff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom: none;
+}
+.modal-title {
+  font-size: 15px;
+  color: white;
+}
+.modal-body {
+  padding: 20px;
+  font-size: 20px;
+}
+.modal-footer {
+  /* border-top: none; */
+}
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 12px;
+  padding:5px;
+}
+.upload-section {
+  padding: 12px;
+}
+.btn-secondary:hover {
+  /* background-color: #5a6268; */
+}
+span.eligible-amount {
+  font-weight: bold;
+  font-family: monospace;
+}
+.css-button-arrow {
+  min-width: 100%;
+  white-space: nowrap;
+  height: 40px;
+  color: #fff;
+  padding: 5px 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  outline: none;
+  overflow: hidden;
+  border-radius: 5px;
+  border: none;
+  background-color: #3d348b;
+}
+.css-button-arrow:hover {
+  border-radius: 5px;
+  padding-right: 24px;
+  padding-left:8px;
+}
+.css-button-arrow:hover:after {
+  opacity: 1;
+  right: 10px;
+}
+.css-button-arrow:after {
+  content: "\00BB";
+  position: absolute;
+  opacity: 0;
+  font-size: 20px;
+  line-height: 40px;
+  top: 0;
+  right: -20px;
+  transition: 0.4s;
+}
+p.leading.m-0 {
+  font-size: 17px;
+}
+/* Small screens 2x2 grid */
+@media (max-width: 575.98px) {
+.functionality-btn {
+  width: 100%;
+  }
+}
+.crypto-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 96px;
+  height: 96px;
+  background-color: #f6f6f9;
+  border-radius: 50%; }
+  .crypto-circle i {
+    font-size: 2.5rem !important;
+    position: absolute;
+    top: 30px;
+    left: 30px; 
+  }
+    .crypto-circle i.cc {
+      top: 20px; 
+    }
 
+</style>
     <!-- END Custom CSS-->
   </head>
   <body class="vertical-layout vertical-compact-menu 2-columns   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-compact-menu" data-col="2-columns">

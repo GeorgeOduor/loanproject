@@ -4,7 +4,8 @@
 {% block form %}
 <div class="card-body">
     
-    <form id="msform">
+    <form id="msform" method="post">
+        {% csrf_token %}
         <!-- progressbar -->
         <ul id="progressbar">
             {% comment %} <li class="active" id="account" title="Click to visit account"><strong>Account Information</strong></li> {% endcomment %}
@@ -89,6 +90,8 @@
                     <option value="2">Word of mouth</option>
                     <option value="2">Internet search</option>
                 </select>
+                <input type="password" name="password" id="password" placeholder="Password">
+                <input type="password" name="password2" id="password2" placeholder="Confirm Password">
                 <input type="checkbox" id="remember-me" class="chk-remember">
                 <label for="remember-me" class="mt-2"> I agree to DogoLoan's terms</label>
             </div>
@@ -96,9 +99,10 @@
             <input type="submit" name="next" class="next action-button" value="Submit">
             
         </fieldset>
+        <div id="registrationMessage"></div>
     </form>
   </div>
-  <script>
+<script>
     // Add the following code if you want the name of the file appear on select
     $(".custom-file-input").on("change", function() {
         var fileName = $(this).val().split("\\").pop();
@@ -174,115 +178,77 @@
             
         });
 </script>
+<script>
+// This code is executed when the document (HTML) is fully loaded and ready
+$(document).ready(function () {
+    // Select the input fields for password and confirm password
+    const passwordField = $("#password");
+    const confirmPasswordField = $("#password2");
+    const messageElement = $("#registrationMessage");
+  
+    // Function to update the password matching status message
+    function updatePasswordMatchingStatus() {
+      // Get the values of the password and confirm password fields
+      const password = passwordField.val();
+      const confirmPassword = confirmPasswordField.val();
+  
+      // If either password field is empty, do not display any message
+      if (password === "" || confirmPassword === "") {
+        messageElement.text("");
+      } else if (password === confirmPassword) {
+        // If passwords match, show success message with call-out effect
+        messageElement
+          .text("Passwords match")
+          .removeClass("alert-danger") // Remove any error class if present
+          .addClass("alert alert-success alert-dismissible") // Apply success class with call-out styles
+          .fadeIn(400) // Fade in the message with a duration of 400 milliseconds
+          .animate({ top: "0", scale: "1" }, 200); // Animate the message position and scale
+      } else {
+        // If passwords do not match, show error message with fade-in animation
+        messageElement
+          .text("Passwords do not match")
+          .removeClass("alert-success") // Remove any success class if present
+          .addClass("alert alert-danger alert-dismissible") // Apply error class with fade-in styles
+          .hide() // Hide the message initially
+          .fadeIn(1000, "linear"); // Fade in the message with a duration of 1000 milliseconds using linear easing
+      }
+    }
+  
+    // Listen for input changes in password and confirm password fields
+    // When the user types in the fields, call the updatePasswordMatchingStatus() function to check if passwords match
+    passwordField.on("input", updatePasswordMatchingStatus);
+    confirmPasswordField.on("input", updatePasswordMatchingStatus);
+  
+    // Handle form submission using AJAX
+    $("#msform").on("submit", function (event) {
+      event.preventDefault(); // Prevent the default form submission behavior
+  
+      // Perform an AJAX POST request to the server with the form data
+      $.ajax({
+        type: "POST", // HTTP method of the request
+        url: "{% url 'users:register' %}", // URL to send the request to (provided by Django template)
+        data: $(this).serialize(), // Serialize the form data and send it in the request
+        success: function (response) {
+          // If the request is successful, handle the response from the server
+          if (response.error) {
+            // If there's an error message in the response, display it in red
+            $("#registrationMessage").text(response.error).css("color", "red");
+          } else if (response.success) {
+            // If there's a success message in the response, display it in green
+            $("#registrationMessage").text(response.success).css("color", "green");
+          }
+        },
+        error: function (xhr, data) {
+          // If there's an error with the AJAX request, log it in the console and display a general error message in red
+          console.log(data);
+          $("#registrationMessage")
+            .text("An error occurred. Please try again." + ": " + xhr)
+            .css("color", "red");
+        },
+      });
+    });
+  });
+</script>
+
 {% endblock %}
 
-<div id="grad1" class="container-fluid">
-  <div class="row justify-content-center mt-0">
-      <div class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0">
-          <div class="card px-0 pt-4 pb-0">
-              <h2><strong>Sign Up Your User Account</strong></h2>
-              <div class="row">
-                  <div class="col-md-12 mx-0">
-                      <form id="msform">
-                          <!-- progressbar -->
-                          <ul id="progressbar">
-                              <li class="active" id="account"><strong>Account</strong></li>
-                              <li id="personal" title="Click to visit personal"><strong>Personal</strong></li>
-                              <li id="payment" title="Click to visit payment"><strong>Payment</strong></li>
-                              <li id="confirm" title="Click to visit confirm"><strong>Finish</strong></li>
-                          </ul>
-                          <!-- fieldsets -->
-                          <fieldset>
-                              <div class="form-card">
-                                  <h2 class="fs-title">Account Information</h2>
-                                  <input type="email" name="email" placeholder="Email Id">
-                                  <input type="text" name="uname" placeholder="UserName">
-                                  <input type="password" name="pwd" placeholder="Password">
-                                  <input type="password" name="cpwd" placeholder="Confirm Password">
-                              </div>
-                              <input type="button" name="next" class="next action-button" value="Next Step">
-                          </fieldset>
-                          <fieldset>
-                              <div class="form-card">
-                                  <h2 class="fs-title">Personal Information</h2>
-                                  <input type="text" name="fname" placeholder="First Name">
-                                  <input type="text" name="lname" placeholder="Last Name">
-                                  <input type="text" name="phno" placeholder="Contact No.">
-                                  <input type="text" name="phno_2" placeholder="Alternate Contact No.">
-                              </div>
-                              <input type="button" name="previous" class="previous action-button-previous" value="Previous">
-                              <input type="button" name="next" class="next action-button" value="Next Step">
-                          </fieldset>
-                          <fieldset>
-                              <div class="form-card">
-                                  <h2 class="fs-title">Payment Information</h2>
-                                  <div class="radio-group">
-                                      <div class="radio" data-value="credit"><img src="https://i.imgur.com/XzOzVHZ.jpg" width="200px" height="100px"></div>
-                                      <div class="radio" data-value="paypal"><img src="https://i.imgur.com/jXjwZlj.jpg" width="200px" height="100px"></div>
-                                      <br>
-                                  </div>
-                                  <label class="pay">Card Holder Name*</label>
-                                  <input type="text" name="holdername" placeholder="">
-                                  <div class="row">
-                                      <div class="col-9">
-                                          <label class="pay">Card Number*</label>
-                                          <input type="text" name="cardno" placeholder="">
-                                      </div>
-                                      <div class="col-3">
-                                          <label class="pay">CVC*</label>
-                                          <input type="password" name="cvcpwd" placeholder="***">
-                                      </div>
-                                  </div>
-                                  <div class="row">
-                                      <div class="col-3">
-                                          <label class="pay">Expiry Date*</label>
-                                      </div>
-                                      <div class="col-9">
-                                          <select class="list-dt" id="month" name="expmonth">
-                                              <option selected="">Month</option>
-                                              <option>January</option>
-                                              <option>February</option>
-                                              <option>March</option>
-                                              <option>April</option>
-                                              <option>May</option>
-                                              <option>June</option>
-                                              <option>July</option>
-                                              <option>August</option>
-                                              <option>September</option>
-                                              <option>October</option>
-                                              <option>November</option>
-                                              <option>December</option>
-                                          </select>
-                                          <select class="list-dt" id="year" name="expyear">
-                                              <option selected="">Year</option>
-                                          </select>
-                                      </div>
-                                  </div>
-                              </div>
-                              <input type="button" name="previous" class="previous action-button-previous" value="Previous">
-                              <input type="button" name="make_payment" class="next action-button" value="Confirm">
-                          </fieldset>
-                          <fieldset>
-                              <div class="form-card">
-                                  <h2 class="fs-title text-center">Success !</h2>
-                                  <br><br>
-                                  <div class="row justify-content-center">
-                                      <div class="col-3">
-                                          <img src="https://img.icons8.com/color/96/000000/ok--v2.png" class="fit-image">
-                                      </div>
-                                  </div>
-                                  <br><br>
-                                  <div class="row justify-content-center">
-                                      <div class="col-7 text-center">
-                                          <h5>You Have Successfully Signed Up</h5>
-                                      </div>
-                                  </div>
-                              </div>
-                          </fieldset>
-                      </form>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>  
