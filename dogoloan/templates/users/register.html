@@ -62,6 +62,7 @@
             <div class="form-card">
                 <h2 class="fs-title">Client Details</h2>
                 <input type="email" name="email" placeholder="Email Address">
+                <div id="emailStatus text-small"></div>
                 <input type="text" name="mobileno" placeholder="Mobile Number">
                 <input type="text" name="mobileno2" placeholder="Alternative Number">
                 <input type="text" name="nationalid" placeholder="National ID">
@@ -82,7 +83,7 @@
         <fieldset>
             <div class="form-card mb-2">
                 <h2 class="fs-title">Confirm Submission</h2>
-                <input type="text" name="email" placeholder="Referer Mobile Number">
+                <input type="text" id="email" name="email" placeholder="Referer Mobile Number">
                 <select name="maritalstatus" class="form-select form-select-sm" aria-label=".form-select-sm">
                     <option selected="">How did you learn About Us?</option>
                     <option value="1">Social Media</option>
@@ -248,7 +249,6 @@ $(document).ready(function () {
       });
     });
   });
-</script>
-
+</script>  
 {% endblock %}
 

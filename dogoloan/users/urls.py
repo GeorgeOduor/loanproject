@@ -10,5 +10,4 @@ urlpatterns = [
     path("onboarding", Onboarding.as_view(), name="onboarding"),
     # ajax_views
     path("ajax_view/", ajax_view, name="ajax_view"),
-    path("check_email_unique/", check_email_unique, name="check_email_unique"),
 ]

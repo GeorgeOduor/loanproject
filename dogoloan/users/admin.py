@@ -1,5 +1,5 @@
 from django.contrib import admin
-from users.models import User, Profile
+from users.models import User, Profile,Agents
 from django.utils.translation import gettext_lazy as _
 
 
@@ -46,3 +46,14 @@ class ProfileAdmin(admin.ModelAdmin):
             None,
         )
     )
+
+@admin.register(Agents)
+class AgentsAdmin(admin.ModelAdmin):
+    list_display = ("created_on","supervisor","agent_location","modified_on")
+    search_fields = ("created_on","supervisor","agent_location","modified_on")
+    add_fieldsets = (
+        (
+            None,
+        )
+    )
+

@@ -19,11 +19,13 @@ class UserManager(BaseUserManager):
     def create_user(self, msisdn, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
+        extra_fields.setdefault('is_agent', False)
         return self._create_user(msisdn, password, **extra_fields)
 
     def create_superuser(self, msisdn, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_agent', False)
 
         if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_staff=True.')
@@ -91,3 +93,15 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+class Agents(models.Model):
+    supervisor = models.ForeignKey(User, on_delete=models.CASCADE)
+    agent_location = models.CharField(max_length=50, null=True, blank=True)
+    created_on = models.DateField(auto_now_add=True)
+    modified_on = models.DateField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'Agent'
+        verbose_name_plural = 'Agents'
+
+        
