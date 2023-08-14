@@ -9,8 +9,8 @@ class Message extends Component {
   render() {
     return (
       <div>
-        <h1>Displayed Message</h1>
-        {displayMessage()}
+        <h1> Message : {this.props.messagecode}</h1>
+        {/* <h1>Message Code</h1> */}
       </div>
     )
   }

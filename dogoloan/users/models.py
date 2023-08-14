@@ -11,7 +11,7 @@ class UserManager(BaseUserManager):
     def _create_user(self, msisdn, password, **extra_fields):
         if not msisdn:
             raise ValueError('Users require an functional mobile number')
-        user = self.model(msisdn=msisdn, **extra_fields)
+        user = self.model(msisdn = self.format_msisdn(msisdn), **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -19,13 +19,13 @@ class UserManager(BaseUserManager):
     def create_user(self, msisdn, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
-        extra_fields.setdefault('is_agent', False)
+        # extra_fields.setdefault('is_agent', False)
         return self._create_user(msisdn, password, **extra_fields)
 
     def create_superuser(self, msisdn, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('is_agent', False)
+        # extra_fields.setdefault('is_agent', False)
 
         if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_staff=True.')
@@ -33,7 +33,11 @@ class UserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True.')
 
         return self._create_user(msisdn, password, **extra_fields)
-
+    
+    def format_msisdn(self,msisdn):
+        msisdn = f"254{str(msisdn)[-9:]}"
+        print(msisdn)
+        return msisdn
 
 
 class User(AbstractUser):
@@ -44,46 +48,29 @@ class User(AbstractUser):
 
     USERNAME_FIELD = 'msisdn'
     REQUIRED_FIELDS = []
-    
-    
-
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True)
-    gender = models.CharField(max_length=50, null=True, blank=True,choices=[
+    gender    = models.CharField(max_length=50, null=True, blank=True,choices=[
         ('Male', 'Male'),
         ('Female', 'Female')
-    ])
+        ])
     date_of_birth = models.DateField(null=True, blank=True)
-    employment_status = models.CharField(max_length=50, null=True, blank=True,choices=[
-        ('Employed', 'Employed'),
-        ('Unemployed', 'Unemployed'),
-        ('Self Employed', 'Self Employed'),
-        ('Student', 'Student'),
-        ('Retired', 'Retired'),
-        ('Other', 'Other')
-    ])
-    marital_status = models.CharField(max_length=50, null=True, blank=True,choices=[
-        ('Married', 'Married'),
-        ('Single', 'Single'),
-    ])
-    education = models.CharField(max_length=50, null=True, blank=True,choices=[
-        ('Primary School', 'Primary School'),
-        ('Secondary School', 'Secondary School'),
-        ('University', 'University'),
-        ('Other', 'Other')
-    ])
     email_address = models.EmailField(null=True, blank=True)
     alternative_mobile_number = models.CharField(max_length=12, null=True, blank=True)
-    town = models.CharField(max_length=50, null=True, blank=True)
+    town           = models.CharField(max_length=50, null=True, blank=True)
     monthly_income = models.CharField(max_length=50, null=True, blank=True)
     referer_mobile_number = models.CharField(max_length=12, null=True, blank=True)
     social_reach = models.CharField(max_length=50, null=True, blank=True)
     nationa_id = models.CharField(max_length=12, null=True, blank=True)
     address = models.CharField(max_length=50, null=True, blank=True)
-    birth_date = models.DateField(null=True, blank=True)
+    # lender profile
+    paybillno = models.CharField(max_length=50, null=True, blank=True)
+    brand = models.CharField(max_length=50, null=True, blank=True)
+    date_created = models.DateField(auto_now_add=True)
+    
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -93,6 +80,29 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+class BorrowerProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    agent = models.ForeignKey('Agents', on_delete=models.CASCADE, null=True, blank=True)
+     # borower profile
+    employment_status = models.CharField(max_length=50, null=True, blank=True,choices=[
+        ('Employed', 'Employed'),
+        ('Unemployed', 'Unemployed'),
+        ('Self Employed', 'Self Employed'),
+        ('Student', 'Student'),
+        ('Retired', 'Retired'),
+        ('Other', 'Other')
+        ])
+    marital_status = models.CharField(max_length=50, null=True, blank=True,choices=[
+        ('Married', 'Married'),
+        ('Single', 'Single'),
+        ])
+    education = models.CharField(max_length=50, null=True, blank=True,choices=[
+        ('Primary School', 'Primary School'),
+        ('Secondary School', 'Secondary School'),
+        ('University', 'University'),
+        ('Other', 'Other')
+        ])
 
 class Agents(models.Model):
     supervisor = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -104,4 +114,3 @@ class Agents(models.Model):
         verbose_name = 'Agent'
         verbose_name_plural = 'Agents'
 
-        

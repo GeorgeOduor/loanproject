@@ -5,9 +5,9 @@ import Profile from './components/Profile';
 function App() {
   return (
     <div className="App">
-      <Hello />
-      <Message />
-      <Profile name = "George" lastname = "Oduor"/>
+      {/* <Hello /> */}
+      <Message messagecode = "10" messagecontent="Displayed Message from props" />
+      {/* <Profile name = "George" lastname = "Oduor"/> */}
     </div>
   );
 }
