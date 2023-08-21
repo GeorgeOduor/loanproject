@@ -1,254 +1,251 @@
 {% extends 'users/authbase.html' %}
-{% block title %} User Register {% endblock title %}
-
-{% block form %}
-<div class="card-body">
-    
-    <form id="msform" method="post">
-        {% csrf_token %}
-        <!-- progressbar -->
-        <ul id="progressbar">
-            {% comment %} <li class="active" id="account" title="Click to visit account"><strong>Account Information</strong></li> {% endcomment %}
-            {% comment %} <li id="personal" title="Click to visit personal" class="active"><strong class="auth_titles">Account Details</strong></li>
-            <li id="personal" title="Click to visit personal"><strong class="auth_titles">Contact Details</strong></li>
-            <li id="personal" title="Click to visit personal"><strong class="auth_titles">Identification Files</strong></li>
-            <li id="confirm" title="Click to visit confirm"><strong class="auth_titles">Terms &amp; Conditions</strong></li> {% endcomment %}
-        </ul> 
-        <!-- fieldsets -->
-       
-        <fieldset style="display: block; opacity: 1;">
-            <div class="form-card">
-                <h2 class="fs-title tracking-in-contract">Account Details</h2>
-                <input class="" type="text" name="fname" placeholder="First Name">
-                <input type="text" name="lname" placeholder="Last Name">
-                <select name="gender" class="form-select form-select-sm" aria-label=".form-select-sm">
-                    <option selected="">Gender</option>
-                    <option value="1">Male</option>
-                    <option value="2">Female</option>
-                </select>
-                <div class="row">
-                    <div class="col-5">
-                        <label class="dob" for="Date of birth">Birth Date</label>
-                    </div>
-                    <div class="col-7">
-                        <input type="date" name="class" placeholder="Date of birth">
-                    </div>
-                </div>
-                <select name="employment" class="form-select form-select-sm" aria-label=".form-select-sm">
-                    <option selected="">Employment Status</option>
-                    <option value="1">Employed</option>
-                    <option value="2">Unemployed</option>
-                    <option value="2">Student</option>
-                </select>
-                <select name="maritalstatus" class="form-select form-select-sm" aria-label=".form-select-sm">
-                    <option selected="">Marital Status</option>
-                    <option value="1">Married</option>
-                    <option value="2">Single</option>
-                </select>
-                <select name="maritalstatus" class="form-select form-select-sm" aria-label=".form-select-sm">
-                    <option selected="">Highest level of Education</option>
-                    <option value="1">Primary Education</option>
-                    <option value="2">Secondary Education</option>
-                    <option value="2">University</option>
-                    <option value="2">Post Graduate</option>
-                </select>
-            </div>
-            <input type="button" name="next" class="next action-button" value="Next Step">
-            <p class="text-center">
-                Returning Customer?<a href="/accounts/login" class="card-link">Login</a>
-            </p>
-        </fieldset>
-        <fieldset style="display: none; position: relative; opacity: 0;">
-            <div class="form-card">
-                <h2 class="fs-title">Client Details</h2>
-                <input type="email" name="email" placeholder="Email Address">
-                <div id="emailStatus text-small"></div>
-                <input type="text" name="mobileno" placeholder="Mobile Number">
-                <input type="text" name="mobileno2" placeholder="Alternative Number">
-                <input type="text" name="nationalid" placeholder="National ID">
-                <input type="text" name="mobileno2" placeholder="Current Residential town">
-                <input type="text" name="mobileno2" placeholder="Monthly Income">
-                <div class="custom-file mb-0s">
-                    <input type="file" class="custom-file-input" id="customFile" name="filename">
-                    <label class="custom-file-label" for="customFile">National ID Front Face</label>
-                </div>
-                <div class="custom-file mb-0">
-                    <input type="file" class="custom-file-input" id="customFile" name="filename">
-                    <label title="Recent MPESA Statement last 6 months" class="custom-file-label" for="customFile">Recent MPESA Statement(6months)</label>
-                </div>
-            </div>
-            <input type="button" name="previous" class="previous action-button-previous" value="Previous">
-            <input type="button" name="next" class="next action-button" value="Next Step">
-        </fieldset>
-        <fieldset>
-            <div class="form-card mb-2">
-                <h2 class="fs-title">Confirm Submission</h2>
-                <input type="text" id="email" name="email" placeholder="Referer Mobile Number">
-                <select name="maritalstatus" class="form-select form-select-sm" aria-label=".form-select-sm">
-                    <option selected="">How did you learn About Us?</option>
-                    <option value="1">Social Media</option>
-                    <option value="2">Referal</option>
-                    <option value="2">Word of mouth</option>
-                    <option value="2">Internet search</option>
-                </select>
-                <input type="password" name="password" id="password" placeholder="Password">
-                <input type="password" name="password2" id="password2" placeholder="Confirm Password">
-                <input type="checkbox" id="remember-me" class="chk-remember">
-                <label for="remember-me" class="mt-2"> I agree to DogoLoan's terms</label>
-            </div>
-            <input type="button" name="previous" class="previous action-button-previous" value="Previous">
-            <input type="submit" name="next" class="next action-button" value="Submit">
-            
-        </fieldset>
-        <div id="registrationMessage"></div>
-    </form>
-  </div>
-<script>
-    // Add the following code if you want the name of the file appear on select
-    $(".custom-file-input").on("change", function() {
-        var fileName = $(this).val().split("\\").pop();
-        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-    });
-
-    $(document).ready(function(){
-    
-        var current_fs, next_fs, previous_fs; //fieldsets
-        var opacity;
-        
-        $(".next").click(function(){
-            
-            current_fs = $(this).parent();
-            next_fs = $(this).parent().next();
-            
-            //Add Class Active
-            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-            
-            //show the next fieldset
-            next_fs.show(); 
-            //hide the current fieldset with style
-            current_fs.animate({opacity: 0}, {
-                step: function(now) {
-                    // for making fielset appear animation
-                    opacity = 1 - now;
-        
-                    current_fs.css({
-                        'display': 'none',
-                        'position': 'relative'
-                    });
-                    next_fs.css({'opacity': opacity});
-                }, 
-                duration: 600
-            });
-        });
-        
-        $(".previous").click(function(){
-            
-            current_fs = $(this).parent();
-            previous_fs = $(this).parent().prev();
-            
-            //Remove class active
-            $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
-            
-            //show the previous fieldset
-            previous_fs.show();
-        
-            //hide the current fieldset with style
-            current_fs.animate({opacity: 0}, {
-                step: function(now) {
-                    // for making fielset appear animation
-                    opacity = 1 - now;
-        
-                    current_fs.css({
-                        'display': 'none',
-                        'position': 'relative'
-                    });
-                    previous_fs.css({'opacity': opacity});
-                }, 
-                duration: 600
-            });
-        });
-        
-        $('.radio-group .radio').click(function(){
-            $(this).parent().find('.radio').removeClass('selected');
-            $(this).addClass('selected');
-        });
-        
-        $(".submit").click(function(){
-            return false;
-        })
-            
-        });
-</script>
-<script>
-// This code is executed when the document (HTML) is fully loaded and ready
-$(document).ready(function () {
-    // Select the input fields for password and confirm password
-    const passwordField = $("#password");
-    const confirmPasswordField = $("#password2");
-    const messageElement = $("#registrationMessage");
-  
-    // Function to update the password matching status message
-    function updatePasswordMatchingStatus() {
-      // Get the values of the password and confirm password fields
-      const password = passwordField.val();
-      const confirmPassword = confirmPasswordField.val();
-  
-      // If either password field is empty, do not display any message
-      if (password === "" || confirmPassword === "") {
-        messageElement.text("");
-      } else if (password === confirmPassword) {
-        // If passwords match, show success message with call-out effect
-        messageElement
-          .text("Passwords match")
-          .removeClass("alert-danger") // Remove any error class if present
-          .addClass("alert alert-success alert-dismissible") // Apply success class with call-out styles
-          .fadeIn(400) // Fade in the message with a duration of 400 milliseconds
-          .animate({ top: "0", scale: "1" }, 200); // Animate the message position and scale
-      } else {
-        // If passwords do not match, show error message with fade-in animation
-        messageElement
-          .text("Passwords do not match")
-          .removeClass("alert-success") // Remove any success class if present
-          .addClass("alert alert-danger alert-dismissible") // Apply error class with fade-in styles
-          .hide() // Hide the message initially
-          .fadeIn(1000, "linear"); // Fade in the message with a duration of 1000 milliseconds using linear easing
-      }
-    }
-  
-    // Listen for input changes in password and confirm password fields
-    // When the user types in the fields, call the updatePasswordMatchingStatus() function to check if passwords match
-    passwordField.on("input", updatePasswordMatchingStatus);
-    confirmPasswordField.on("input", updatePasswordMatchingStatus);
-  
-    // Handle form submission using AJAX
-    $("#msform").on("submit", function (event) {
-      event.preventDefault(); // Prevent the default form submission behavior
-  
-      // Perform an AJAX POST request to the server with the form data
-      $.ajax({
-        type: "POST", // HTTP method of the request
-        url: "{% url 'users:register' %}", // URL to send the request to (provided by Django template)
-        data: $(this).serialize(), // Serialize the form data and send it in the request
-        success: function (response) {
-          // If the request is successful, handle the response from the server
-          if (response.error) {
-            // If there's an error message in the response, display it in red
-            $("#registrationMessage").text(response.error).css("color", "red");
-          } else if (response.success) {
-            // If there's a success message in the response, display it in green
-            $("#registrationMessage").text(response.success).css("color", "green");
-          }
-        },
-        error: function (xhr, data) {
-          // If there's an error with the AJAX request, log it in the console and display a general error message in red
-          console.log(data);
-          $("#registrationMessage")
-            .text("An error occurred. Please try again." + ": " + xhr)
-            .css("color", "red");
-        },
-      });
-    });
-  });
-</script>  
+{% block title %}
+  User Register
 {% endblock %}
 
+{% block form %}
+  <div class="card-body bounce-in-top">
+    <form id="msform" method="post">
+      {% csrf_token %}
+      <!-- progressbar -->
+      <ul id="progressbar">
+        {% comment %} <li class="active" id="account" title="Click to visit account">
+          <strong>Account Information</strong>
+        </li> {% endcomment %}
+        {% comment %} <li id="personal" title="Click to visit personal" class="active">
+          <strong class="auth_titles">Account Details</strong>
+        </li>
+        <li id="personal" title="Click to visit personal">
+          <strong class="auth_titles">Contact Details</strong>
+        </li>
+        <li id="personal" title="Click to visit personal">
+          <strong class="auth_titles">Identification Files</strong>
+        </li>
+        <li id="confirm" title="Click to visit confirm">
+          <strong class="auth_titles">Terms &amp; Conditions</strong>
+        </li> {% endcomment %}
+      </ul>
+      <!-- fieldsets -->
+
+      <fieldset style="display: block; opacity: 1;">
+        <div class="form-card">
+          <p class="mb-0 text-center">Create your account</p>
+          <h2 class="fs-title">Account Details</h2>
+          <input class="" type="text" name="fname" placeholder="First Name" />
+          <input type="text" name="lname" placeholder="Last Name" />
+          <select name="gender" class="form-select form-select-sm" aria-label=".form-select-sm">
+            <option selected="">Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          <div class="row">
+            <div class="col-5">
+              <label class="dob" for="Date of birth">Birth Date</label>
+            </div>
+            <div class="col-7">
+              <input type="date" name="dob" placeholder="Date of birth" />
+            </div>
+          </div>
+        </div>
+        <input type="button" name="next" class="next action-button" value="Next Step" />
+        <p class="text-center">
+          Returning Customer?<a href="/accounts/login" class="card-link">Login</a>
+        </p>
+      </fieldset>
+      <fieldset style="display: none; position: relative; opacity: 0;">
+        <div class="form-card">
+          <p class="mb-0 text-center">Create your account</p>
+          <h2 class="fs-title mb-2">User Details</h2>
+          <input type="email" name="email_address" placeholder="Email Address" />
+          <div id="emailStatus text-small"></div>
+          <input type="text" name="msisdn" placeholder="Mobile Number" />
+          <input type="text" name="nationalid" placeholder="National ID" />
+          <input type="text" name="town" placeholder="Current Residential town" />
+          <div class="custom-file mb-0s">
+            <input type="file" class="custom-file-input" id="customFile" name="id_copy" />
+            <label class="custom-file-label" for="customFile">National ID Front Face</label>
+          </div>
+        </div>
+        <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+        <input type="button" name="next" class="next action-button" value="Next Step" />
+      </fieldset>
+      <fieldset>
+        <div class="form-card mb-2">
+          <p class="mb-0 text-center">Create your account</p>
+          <h2 class="fs-title">Confirm Submission</h2>
+          <select name="social_reach" class="form-select form-select-sm" aria-label=".form-select-sm">
+            <option selected="">How did you learn About Us?</option>
+            <option value="1">Social Media</option>
+            <option value="2">Referal</option>
+            <option value="2">Word of mouth</option>
+            <option value="2">Internet search</option>
+          </select>
+          <input type="password" name="password" id="password" placeholder="Password" />
+          <input type="password" name="password2" id="password2" placeholder="Confirm Password" />
+          <input type="checkbox" name="remember_me" id="remember-me" class="chk-remember" />
+          <label for="remember-me" class="mt-2">I agree to DogoLoan's terms</label>
+        </div>
+        <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+        <input type="submit" name="next" class="next action-button" value="Submit" />
+      </fieldset>
+      <div id="registrationMessage" style="opacity: 1 !important;"></div>
+    </form>
+  </div>
+  <script>
+    // Add the following code if you want the name of the file appear on select
+    $('.custom-file-input').on('change', function () {
+      var fileName = $(this).val().split('\\').pop()
+      $(this).siblings('.custom-file-label').addClass('selected').html(fileName)
+    })
+    
+    $(document).ready(function () {
+      var current_fs, next_fs, previous_fs //fieldsets
+      var opacity
+    
+      $('.next').click(function () {
+        current_fs = $(this).parent()
+        next_fs = $(this).parent().next()
+    
+        //Add Class Active
+        $('#progressbar li').eq($('fieldset').index(next_fs)).addClass('active')
+    
+        //show the next fieldset
+        next_fs.show()
+        //hide the current fieldset with style
+        current_fs.animate(
+          { opacity: 0 },
+          {
+            step: function (now) {
+              // for making fielset appear animation
+              opacity = 1 - now
+    
+              current_fs.css({
+                display: 'none',
+                position: 'relative'
+              })
+              next_fs.css({ opacity: opacity })
+            },
+            duration: 600
+          }
+        )
+      })
+    
+      $('.previous').click(function () {
+        current_fs = $(this).parent()
+        previous_fs = $(this).parent().prev()
+    
+        //Remove class active
+        $('#progressbar li').eq($('fieldset').index(current_fs)).removeClass('active')
+    
+        //show the previous fieldset
+        previous_fs.show()
+    
+        //hide the current fieldset with style
+        current_fs.animate(
+          { opacity: 0 },
+          {
+            step: function (now) {
+              // for making fielset appear animation
+              opacity = 1 - now
+    
+              current_fs.css({
+                display: 'none',
+                position: 'relative'
+              })
+              previous_fs.css({ opacity: opacity })
+            },
+            duration: 600
+          }
+        )
+      })
+    
+      $('.radio-group .radio').click(function () {
+        $(this).parent().find('.radio').removeClass('selected')
+        $(this).addClass('selected')
+      })
+    
+      $('.submit').click(function () {
+        return false
+      })
+    })
+  </script>
+  <script>
+    // This code is executed when the document (HTML) is fully loaded and ready
+    $(document).ready(function () {
+      // Select the input fields for password and confirm password
+      const passwordField = $('#password')
+      const confirmPasswordField = $('#password2')
+      const messageElement = $('#registrationMessage')
+    
+      // Function to update the password matching status message
+      function updatePasswordMatchingStatus() {
+        // Get the values of the password and confirm password fields
+        const password = passwordField.val()
+        const confirmPassword = confirmPasswordField.val()
+    
+        // If either password field is empty, do not display any message
+        if (password === '' || confirmPassword === '') {
+          messageElement.text('')
+        } else if (password === confirmPassword) {
+          // If passwords match, show success message with call-out effect
+          messageElement
+            .text('Passwords match')
+            .removeClass('alert-danger') // Remove any error class if present
+            .addClass('alert alert-success alert-dismissible') // Apply success class with call-out styles
+            .fadeIn(400) // Fade in the message with a duration of 400 milliseconds
+            .animate({ top: '0', scale: '1' }, 200) // Animate the message position and scale
+        } else {
+          // If passwords do not match, show error message with fade-in animation
+          messageElement
+            .text('Passwords do not match')
+            .removeClass('alert-success') // Remove any success class if present
+            .addClass('alert alert-danger alert-dismissible') // Apply error class with fade-in styles
+            .hide() // Hide the message initially
+            .fadeIn(1000, 'linear') // Fade in the message with a duration of 1000 milliseconds using linear easing
+        }
+      }
+    
+      // Listen for input changes in password and confirm password fields
+      // When the user types in the fields, call the updatePasswordMatchingStatus() function to check if passwords match
+      passwordField.on('input', updatePasswordMatchingStatus)
+      confirmPasswordField.on('input', updatePasswordMatchingStatus)
+    
+      // Handle form submission using AJAX
+      $('#msform').on('submit', function (event) {
+        event.preventDefault() // Prevent the default form submission behavior
+    
+        // Perform an AJAX POST request to the server with the form data
+        $.ajax({
+          type: 'POST', // HTTP method of the request
+          url: "{% url 'users:register' %}", // URL to send the request to (provided by Django template)
+          data: $(this).serialize(), // Serialize the form data and send it in the request
+          success: function (response) {
+            if (response.errors && response.errors.length > 0) {
+              // If there are error messages in the response, construct an HTML list of errors
+              var errorMessage = '<ul>'
+              for (var i = 0; i < response.errors.length; i++) {
+                errorMessage += '<li>' + response.errors[i] + '</li>'
+              }
+              errorMessage += '</ul>'
+    
+              $('#registrationMessage').html(errorMessage).removeClass('alert-success').addClass('alert alert-danger alert-dismissible').hide().fadeIn(1000, 'linear')
+            } else if (response.message) {
+              // If there's a success message in the response, display it in green
+              $('#registrationMessage').html(response.message).css('color', 'green')
+            }
+            setTimeout(function () {
+              window.location.href = "{% url 'users:login' %}"
+            }, 2000)
+          },
+          error: function (xhr, data) {
+            // If there's an error with the AJAX request, log it in the console and display a general error message in red
+            console.log(data)
+            $('#registrationMessage')
+              .text('An error occurred. Please try again.' + ': ' + xhr)
+              .css('color', 'red')
+          }
+        })
+      })
+    })
+  </script>
+{% endblock %}

@@ -1,153 +1,305 @@
 {% extends 'users/authbase.html' %}
 {% load static %}
-{% block title %} User Register {% endblock title %}
+{% block title %}
+User Register
+{% endblock %}
 
 {% block content %}
-<script>
-    $(document).ready(function(){
-    
-        var current_fs, next_fs, previous_fs; //fieldsets
-        var opacity;
-        
-        $(".next").click(function(){
-            
-            current_fs = $(this).parent();
-            next_fs = $(this).parent().next();
-            
-            //Add Class Active
-            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-            
-            //show the next fieldset
-            next_fs.show(); 
-            //hide the current fieldset with style
-            current_fs.animate({opacity: 0}, {
-                step: function(now) {
-                    // for making fielset appear animation
-                    opacity = 1 - now;
-        
-                    current_fs.css({
-                        'display': 'none',
-                        'position': 'relative'
-                    });
-                    next_fs.css({'opacity': opacity});
-                }, 
-                duration: 600
-            });
-        });
-        
-        $(".previous").click(function(){
-            
-            current_fs = $(this).parent();
-            previous_fs = $(this).parent().prev();
-            
-            //Remove class active
-            $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
-            
-            //show the previous fieldset
-            previous_fs.show();
-        
-            //hide the current fieldset with style
-            current_fs.animate({opacity: 0}, {
-                step: function(now) {
-                    // for making fielset appear animation
-                    opacity = 1 - now;
-        
-                    current_fs.css({
-                        'display': 'none',
-                        'position': 'relative'
-                    });
-                    previous_fs.css({'opacity': opacity});
-                }, 
-                duration: 600
-            });
-        });
-        
-        $('.radio-group .radio').click(function(){
-            $(this).parent().find('.radio').removeClass('selected');
-            $(this).addClass('selected');
-        });
-        
-        $(".submit").click(function(){
-            return false;
-        })
-            
-        });
-</script>
-  <div class="card-body">
-    <section id="account-login" class="flexbox-container">    
-        <div class="col-12 d-flex align-items-center justify-content-center">
-            {% comment %} <div class="col-xl-3 col-lg-4 col-md-5 col-sm-5 col-12 p-0 text-center d-none d-md-block">
-                <div class="border-grey border-lighten-3 m-0 box-shadow-0 card-account-left height-400">
-                    <img src="{% static '/images/pages/account-login.png' %}" class="card-account-img width-200" alt="card-account-img">
-                </div>
-            </div> {% endcomment %}
-    <!-- MultiStep Form -->
-            <div id="grad1" class="container-fluid">
-                <div class="row justify-content-center mt-0">
-                    <div class="col-2 text-center p-0">
-                        <div class="card px-0 pt-4 pb-0">
-                            
-                        </div>
-                    </div>
-                    <div class="col- text-center p-0">
-                        <div class="card px-0 pt-4 pb-0">
-                            <h2><strong>Sign Up Your User Account</strong></h2>
-                            <div class="row">
-                                <div class="col-md-12 mx-0">
-                                    <form id="msform">
-                                        <!-- progressbar -->
-                                        {% comment %} <ul id="progressbar">
-                                            <li class="active" id="account"><strong>Account</strong></li>
-                                            <li id="personal" title="Click to visit personal"><strong>Personal Details</strong></li>
-                                            <li id="confirm" title="Click to visit confirm"><strong>Terms & Conditions</strong></li>
-                                        </ul> {% endcomment %}
-                                        <!-- fieldsets -->
-                                        <fieldset>
-                                            <div class="form-card">
-                                                <h2 class="fs-title">Account Information</h2>
-                                                <input type="email" name="email" placeholder="Email Id">
-                                                <input type="text" name="uname" placeholder="UserName">
-                                                <input type="password" name="pwd" placeholder="Password">
-                                                <input type="password" name="cpwd" placeholder="Confirm Password">
-                                            </div>
-                                            <input type="button" name="next" class="next action-button" value="Next Step">
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="form-card">
-                                                <h2 class="fs-title">Personal Information</h2>
-                                                <input type="text" name="fname" placeholder="First Name">
-                                                <input type="text" name="lname" placeholder="Last Name">
-                                                <input type="text" name="gender" placeholder="Gender">
-                                                <input type="date" name="class" placeholder="Date of birth">
-                                                <input type="text" name="class" placeholder="Employment Status">
-                                            </div>
-                                            <input type="button" name="previous" class="previous action-button-previous" value="Previous">
-                                            <input type="button" name="next" class="next action-button" value="Next Step">
-                                        </fieldset>
-                                    
-                                        <fieldset>
-                                            <div class="form-card">
-                                                <h2 class="fs-title text-center">Confirm submission</h2>
-                                                <br><br>
-                                                <div class="row justify-content-center">
-                                                    
-                                                </div>
-                                                <br><br>
-                                                <div class="row justify-content-center">
-                                                    <p>I accept terms and conditions</p>
-                                                </div>
-                                            </div>
-                                            <input type="button" name="previous" class="previous action-button-previous" value="Previous">
-                                            <input type="submit" name="next" class="next action-button" value="Submit">
-                                        </fieldset>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>  
+<style>
+  /* this card is inspired form this - https://georgefrancis.dev/ */
+
+  .onboarding-action {
+    --border-radius: 0.75rem;
+    --primary-color: #7257fa;
+    --secondary-color: #3c3852;
+    width: 100%;
+    font-family: 'Arial';
+    padding: 1rem;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    background: #f1f1f3;
+    box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 3%);
+    position: relative;
+  }
+
+  .onboarding-action>*+* {
+    margin-top: 1.1em;
+  }
+
+  .onboarding-action .card__content {
+    color: var(--secondary-color);
+    /* font-size: 0.86rem; */
+  }
+
+  .card .card__title {
+    padding: 0;
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+
+  .card .card__date {
+    color: #6e6b80;
+    font-size: 0.8rem;
+  }
+
+  .onboarding-action .card__arrow {
+    position: absolute;
+    background: var(--primary-color);
+    padding: 0.4rem;
+    border-top-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    bottom: 0;
+    right: 0;
+    transition: 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card svg {
+    transition: 0.2s;
+  }
+
+  /* hover */
+  .card:hover .card__title {
+    color: var(--primary-color);
+    text-decoration: underline;
+  }
+
+  .card:hover .card__arrow {
+    background: #111;
+  }
+
+  .card:hover .card__arrow svg {
+    transform: translateX(3px);
+  }
+
+  p.card__content {
+    font-size: 50px;
+  }
+
+  .onboarding-action {
+    height: 200px;
+    /* padding: 5em; */
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    align-items: stretch;
+    justify-items: center;
+    margin-bottom: 1em;
+    border-radius: 14px;
+    background: #e0e0e0;
+    box-shadow: 7px 9px 13px #d0d0d0, -6px -6px 13px #f0f0f0;
+  }
+
+
+  .card-header {
+    font-size: 28px;
+    display: grid;
+    border-radius: 10px !important;
+    height: 153px;
+    background: #f1f1f3;
+    margin-bottom: 10px;
+    align-content: center;
+    justify-content: space-around;
+    align-items: start;
+    justify-items: center;
+    border-radius: 14px;
+    background: #e0e0e0;
+    box-shadow: 7px 9px 13px #d0d0d0, -6px -6px 13px #f0f0f0;
+  }
+
+
+
+  p.card__content {
+    font-size: 30px;
+    padding: 65px;
+    margin-top: 58px;
+  }
+
+  .logo_image {
+    height: 97px;
+    border-radius: 50%;
+  }
+
+
+  img.onboarding_logo.logo_image {
+    position: absolute;
+    height: 72px;
+    margin-top: 20px;
+  }
+
+  .onboarding-action-agents {
+    height: 100px;
+    /* padding: 5em; */
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    align-items: stretch;
+    justify-items: center;
+    margin-bottom: 1em;
+    border-radius: 14px;
+    background: #e0e0e0;
+    box-shadow: 7px 9px 13px #d0d0d0, -6px -6px 13px #f0f0f0;
+  }
+  .lend {
+    width: 47%;
+    float: left;
+}
+
+.borrow {
+    width: 47%;
+    float: right;
+}
+.agent-ui {
+    clear: both;
+}
+a.button {
+ position: relative;
+ display: inline-block;
+ cursor: pointer;
+ outline: none;
+ border: 0;
+ vertical-align: middle;
+ text-decoration: none;
+ background: transparent;
+ padding: 0;
+ font-size: inherit;
+ font-family: inherit;
+}
+
+a.button.learn-more {
+ width: 15rem;
+ height: auto;
+}
+
+a.button.learn-more .circle {
+ transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+ position: relative;
+ display: block;
+ margin: 0;
+ width: 3rem;
+ height: 3rem;
+ background: #3F51B5;
+ border-radius: 1.625rem;
+}
+
+a.button.learn-more .circle .icon {
+ transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+ position: absolute;
+ top: 0;
+ bottom: 0;
+ margin: auto;
+ background: #fff;
+}
+
+a.button.learn-more .circle .icon.arrow {
+ transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+ left: 0.625rem;
+ width: 1.125rem;
+ height: 0.125rem;
+ background: none;
+}
+
+a.button.learn-more .circle .icon.arrow::before {
+ position: absolute;
+ content: "";
+ top: -0.29rem;
+ right: 0.0625rem;
+ width: 0.625rem;
+ height: 0.625rem;
+ border-top: 0.125rem solid #fff;
+ border-right: 0.125rem solid #fff;
+ transform: rotate(45deg);
+}
+
+a.button.learn-more .button-text {
+ transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+ position: absolute;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ padding: 0.75rem 0;
+ margin: 0 0 0 1.85rem;
+ color: #282936;
+ font-weight: 700;
+ line-height: 1.6;
+ text-align: center;
+ text-transform: uppercase;
+ white-space: nowrap;
+}
+
+a.button:hover .circle {
+ width: 100%;
+}
+
+a.button:hover .circle .icon.arrow {
+ background: #fff;
+ transform: translate(1rem, 0);
+}
+
+a.button:hover .button-text {
+ color: #fff;
+}
+a.button.learn-more.btn-borrow {
+    width: 10rem;
+}
+.onboarding-card {
+    width: 600px;
+}
+</style>
+<section id="account-login" class="flexbox-container">
+  <div class="col-12 d-flex align-items-center justify-content-center">
+    <div class="onboarding-card">
+      <div class="card-header bounce-in-top" >
+        <img src="{% static 'images/logo1.jpg' %}" alt="" srcset="" class="logo_image">
+        I want to:
+      </div>
+      <div class="choice-panel">
+        <div class="lend">
+          <div class="onboarding-action bounce-in-left" style="animation-delay: .5s;">
+            <img src="{% static 'images/lend.png' %}" alt="" srcset="" class="onboarding_logo logo_image">
+            <a   class="learn-more btn-borrow mt-5 button" id="lend">
+              <span class="circle" aria-hidden="true">
+              <span class="icon arrow"></span>
+              </span>
+              <span class="button-text">Lend</span>
+            </a>
+          </div>
         </div>
-    </section>
+        <div class="borrow">
+          <div class="onboarding-action bounce-in-right" style="animation-delay: 1s;">
+            <img src="{% static 'images/borrow.png' %}" alt="" srcset="" class="onboarding_logo logo_image">
+            <!-- <p class="card__content">Borrow</p> -->
+            <a class="learn-more btn-borrow mt-5 button">
+              <span class="circle" aria-hidden="true">
+              <span class="icon arrow"></span>
+              </span>
+              <span class="button-text">Borrow</span>
+            </a>
+          </div>
+        </div>
+        <div class="agent-ui">
+          <div class="onboarding-action-agents bounce-in-bottom" style="animation-delay: 1.5s;">
+            <a class="learn-more button" id="borrow">
+              <span class="circle" aria-hidden="true">
+              <span class="icon arrow"></span>
+              </span>
+              <span class="button-text">Proceed as agent</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+</section>
+<script>
+   $(document).ready(function(){
+     $('#lend').click(function(){
+        //access the lend page
+        window.location.href = "{% url 'lenders:lend' %}";
+     });
+   })
+</script>
 {% endblock %}

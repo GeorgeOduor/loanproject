@@ -1,5 +1,5 @@
 from django.contrib import admin
-from users.models import User, Profile,Agents,BorrowerProfile
+from users.models import User, Profile
 from django.utils.translation import gettext_lazy as _
 
 
@@ -39,31 +39,11 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ("user", "first_name", "last_name", "gender",  "nationa_id", "address")
-    search_fields = ("user", "first_name", "last_name", "gender","nationa_id", "address")
+    list_display = ("user", "first_name", "last_name", "gender",  "nationa_id", "social_reach")
+    search_fields = ("user", "first_name", "last_name", "gender","nationa_id", "social_reach")
     add_fieldsets = (
         (
             None,
         )
     )
-
-@admin.register(Agents)
-class AgentsAdmin(admin.ModelAdmin):
-    list_display = ("created_on","supervisor","agent_location","modified_on")
-    search_fields = ("created_on","supervisor","agent_location","modified_on")
-    add_fieldsets = (
-        (
-            None,
-        )
-    )
-
-@admin.register(BorrowerProfile)
-class BorrowerProfileAdmin(admin.ModelAdmin):
-    list_display = ('user','agent','employment_status','marital_status','education')
-    search_fields = ('user','agent','employment_status','marital_status','education')
-    add_fieldsets = (
-        (
-            None,
-        )
-    )
-
+    

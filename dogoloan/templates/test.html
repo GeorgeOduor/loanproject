@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Carousel</title>
+      </head>
+  <body>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+    <style>
+            .carousel-container {
+              max-width: 1200px;
+              margin: 0 auto;
+              padding: 20px;
+            }
+            .product-card {
+              height: auto;
+              /* border: 1px solid; */
+              margin: 5px;
+              padding: 10px;
+              border-radius: 10px;
+              background: whitesmoke !important; 
+              box-shadow: 4px 4px 8px #bebebe, -4px -5px 3px #ffffff;
+            }
+            .product-card img {
+              max-width: 100%;
+              height: auto;
+              width: auto;
+              border-radius: 10px;
+            }
+            .product-name {
+              font-size: 20px;
+              margin-top: 10px;
+              color: #333;
+            }
+            .product-price {
+              font-size: 18px;
+              color: #666;
+              margin-top: 5px;
+            }
+            .cta-button {
+             margin-top: 15px; */
+        display: block;
+        width: 100%;
+        padding: 2px;
+        text-align: center;
+        background-color: #cd7e09;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+            }
+            .cta-button:hover {
+              background-color: #0056b3;
+            }
+            .slick-slider {
+              width: 100%;
+              margin: 0 auto;
+              position: relative;
+            }
+            .slick-prev,
+            .slick-next {
+              font-size: 24px;
+              color: #333;
+              position: absolute;
+              bottom: -40px;
+              z-index: 1;
+            }
+            
+            .slick-prev {
+              left: 11px;
+            }
+            .slick-next {
+              right: 60px;
+            }
+            @media (max-width: 768px) {
+              .product-card {
+                width: 100%;
+              }
+              .slick-prev,
+              .slick-next {
+                font-size: 20px;
+                bottom: -30px;
+              }
+            }
+            
+            .product-card {
+              height: auto;
+              /* border: 1px solid; */
+              margin: 5px;
+              padding: 5px;
+              border-radius: 5px;
+              background: #e0e0e0;
+              box-shadow: 4px 4px 8px #bebebe, -4px -5px 3px #ffffff;
+            }
+            
+            img.product-image {
+              height: 63px;
+            }
+            table.table.table-responsive {
+              width: 100%;
+            }
+          </style>
+    <div class="carousel-container">
+      <div class="slick-slider">
+        <div class="product-card">
+          <div class="product_image">
+            <img src="https://placehold.co/400" class="product" alt="Product 1" />
+          </div>
+          <div class="product-name">Product 1</div>
+          <div class="product-price">$49.99</div>
+          <table class="table table-responsive w-100">
+            <tr>
+              <td>Store</td>
+              <td>Price</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Jumia</td>
+              <td>Ksh 2,500</td>
+              <td>
+                <a href="#" class="btn btn-primary cta-button">Buy Now</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+          $(document).ready(function () {
+            $('.slick-slider').slick({
+              infinite: true,
+              slidesToShow: 3,
+              slidesToScroll: 1,
+              autoplay: true, // Enable autoplay
+              autoplaySpeed: 2000.000, // Set autoplay speed to 10 seconds (10000 milliseconds)
+              responsive: [
+                {
+                  breakpoint: 768,
+                  settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                  }
+                }
+              ]
+            })
+          })
+    </script>
+   
+
+  </body>
+</html>

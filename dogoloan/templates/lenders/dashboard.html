@@ -13,12 +13,12 @@ Admin Dashboard
 
 {% block breadcrumbs %}
 <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
-  <h3 class="content-header-title mb-0 d-inline-block">Admin</h3>
+  <h3 class="content-header-title mb-0 d-inline-block">Lender</h3>
   <div class="row breadcrumbs-top d-inline-block">
     <div class="breadcrumb-wrapper col-12">
       <ol class="breadcrumb">
         <li class="breadcrumb-item" title="Click to visit ">
-          <a href="{% url 'management:home' %}">Dashboard</a>
+          <a href="{% url 'lenders:lender_dashboard' %}">My Lending Dashboard</a>
         </li>
         {% comment %} <li class="breadcrumb-item active" title="Click to visit ">Buy ICO</li> {% endcomment %}
       </ol>
