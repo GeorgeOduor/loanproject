@@ -30,12 +30,15 @@ class LoanApplications(View):
 
 class LenderSettings(View):
     template_name = 'lenders/settings.html'
-    def get(self, request):
+
+    def get(self, request,category):
         context = {
             'user_type': 'lender',
+            'category': category
         }
         return render(request, self.template_name,context=context)
-    
+
+
 class Lend(View):
     template_name = 'lenders/loanapplications.html'
     def get(self, request):

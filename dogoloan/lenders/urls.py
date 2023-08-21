@@ -8,7 +8,8 @@ urlpatterns = [
     path("", Lend.as_view(), name="lend"),
     path("stats/", LendersHomeView.as_view(), name="lender_dashboard"),
     path("mywallet/", LendersWallet.as_view(), name="lender_wallet"),
-    path("settings/", LenderSettings.as_view(), name="lender_settings"),
+    path("settings/<str:category>/", LenderSettings.as_view(), name="lender_settings"),
+    
 
 ]
 

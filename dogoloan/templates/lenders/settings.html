@@ -55,10 +55,10 @@ Admin Dashboard
 <div class="row navigation_utils pull-up ">
     <ul class="nav nav-pills nav-justified">
         <li class="nav-item">
-          <a class="nav-link {% if request.path == '/lend/settings/' %}active{% endif %}" href="{% url 'lenders:lender_settings' %}">My Profile</a>
+          <a class="nav-link {% if request.path == '/lend/settings/profile/' %}active{% endif %}" href="/lend/settings/profile">My Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">My Loan Products</a>
+          <a id="products" class="nav-link {% if request.path == '/lend/settings/products/' %}active{% endif %}"  href='/lend/settings/products/'>My Loan Products</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Link</a>
@@ -69,53 +69,43 @@ Admin Dashboard
       </ul>
 </div>
 
-<div class="row">
-  {% if request.path == '/lend/settings/' %}
-  {% elif request.path == '/lend/mt_products/' %}
-  <div class="col-12 mb-2">
-    <button type="submit" class="btn-success round line-height-2" data-toggle="modal" data-target="#addnewproduct" style="cursor: pointer;" >Add New Loan Product</button>
-  </div>
-  <div class="col-12">
-      <!--/ BTC -->
-      <section class="card pull-up">
-          <div class="card-content">
-              <div class="card-body">
-                  <div class="col-12">
-                      <div class="row">
-                          <div class="col-md-3 col-xl-2 col-12 d-none d-md-block">
-                              <div class="crypto-circle rounded-circle">
-                                  <i class="la la-dollar"></i>
-                              </div>
-                          </div>
-                          <div class="col-md-9 col-12">
-                              <p><strong>Swafi 1 Month</strong></p>
-                              <p>Click the buttons below to see the details.</p>
-                              {% comment %} <button type="button" class="btn btn-warning round mr-1 mb-0">Details</button> {% endcomment %}
-                              <div class="row">
-                                  <div class="col-md-2 col-4 py-1 text-center">
-                                      <button type="button" class="btn btn-success btn-sm round mr-1" data-toggle="modal" data-target="#productdetails" style="cursor: pointer;" >Details</button>
-                                  </div>
-                                  <div class="col-md-2 col-4 py-1 text-center">
-                                      <button type="button" class="btn btn-success btn-sm round mr-1" data-toggle="modal" data-target="#productdetails" style="cursor: pointer;" >Settings</button>
-                                  </div>
-                                  <div class="col-md-2 col-4 py-1 text-center">
-                                      <button type="button" class="btn btn-success btn-sm round mr-1" data-toggle="modal" data-target="#productdetails" style="cursor: pointer;" >Remove</button>
-                                  </div>
-                              </div>
-
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </section>
-  </div>
-  {% endif %}
+<div class="row content">
+ 
+  {% comment %} {% if request.path == '/lend/settings/profile/' %}
+  {% include 'includes/profile.html' %}
+  {% elif request.path == '/lend/settings/products/' %}
+  {% include 'includes/products.html' %}
+  {% endif %} {% endcomment %}
     
 </div>
 <!-- more kpis-->
 
 {% include 'modals/newproduct.html' %}
 {% include 'modals/productdetails.html' %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const navLinks = document.querySelectorAll('ul.nav.nav-pills li a.nav-link');
+    const contentDiv = document.getElementById('content');
+  
+    navLinks.forEach(link => {
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+        const page = this.getAttribute('data-page');
+  
+        // Fetch the content for the selected page
+        fetch(`/load/${page}/`) // Replace with the actual URL for loading content
+          .then(response => response.text())
+          .then(data => {
+            contentDiv.innerHTML = data;
+          })
+          .catch(error => {
+            console.error('Error loading content:', error);
+          });
+      });
+    });
+  });
+  
+</script>
 
 {% endblock %}
