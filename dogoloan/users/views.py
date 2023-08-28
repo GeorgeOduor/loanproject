@@ -118,4 +118,9 @@ class Onboarding(View):
             return redirect('users:login')
         return render(request, 'users/onboarding.html')
     
-    
+
+# class UserProfile(View):
+#     def get(self,request):
+#         if not request.user.is_authenticated:
+#             return redirect('users:login')
+#         return render(request, 'users/profile.html')

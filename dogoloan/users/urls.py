@@ -5,9 +5,11 @@ from .views import *
 app_name = "users"
 
 urlpatterns = [
+    # path("", UserProfile.as_view(), name="profile"),
     path("login/", LoginView.as_view(), name="login"),
     path("register/", RegisterView.as_view(), name="register"),
     path("onboarding/", Onboarding.as_view(), name="onboarding"),
     # ajax_views
     path("ajax_view/", ajax_view, name="ajax_view"),
+    
 ]

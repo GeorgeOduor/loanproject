@@ -25,8 +25,8 @@ class LenderProfileAdmin(admin.ModelAdmin):
 
 @admin.register(LoanProduct)
 class LoanProductAdmin(admin.ModelAdmin):
-    list_display = ('lender','name','interest_rate','min_loan_amount','max_loan_amount','min_duration')
-    search_fields = ('lender','name','interest_rate','min_loan_amount','max_loan_amount','min_duration')
+    list_display = ('lender','name','interest_rate','min_loan_amount','max_loan_amount','repayment_term')
+    search_fields = ('lender','name','interest_rate','min_loan_amount','max_loan_amount','repayment_term')
     add_fieldsets = (
         (
             None,

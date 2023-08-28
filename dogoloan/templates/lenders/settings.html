@@ -52,60 +52,103 @@ Admin Dashboard
         background: white;
     }
 </style>
-<div class="row navigation_utils pull-up ">
+<div class="row navigation_utils">
     <ul class="nav nav-pills nav-justified">
-        <li class="nav-item">
-          <a class="nav-link {% if request.path == '/lend/settings/profile/' %}active{% endif %}" href="/lend/settings/profile">My Profile</a>
+        {% comment %} <li class="nav-item">
+          <a data-target="profile" class="nav-link active" href="/lend/loanapplications/profile">My Profile</a>
+        </li> {% endcomment %}
+        <li data-target="products" class="nav-item">
+          <a id="products" class="nav-link" href='/lend/loanapplications/products'>My Loan Products</a>
         </li>
-        <li class="nav-item">
-          <a id="products" class="nav-link {% if request.path == '/lend/settings/products/' %}active{% endif %}"  href='/lend/settings/products/'>My Loan Products</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
+        <li data-target="agents" class="nav-item">
+          <a id="products" class="nav-link" href='/lend/loanapplications/agents'>My Agents</a>
         </li>
       </ul>
 </div>
+<div id="loader" class="loader">
+  <div class="boxes">
+    <div class="box">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="box">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="box">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="box">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+ </div>
+</div>
 
-<div class="row content">
- 
-  {% comment %} {% if request.path == '/lend/settings/profile/' %}
-  {% include 'includes/profile.html' %}
-  {% elif request.path == '/lend/settings/products/' %}
-  {% include 'includes/products.html' %}
-  {% endif %} {% endcomment %}
-    
+<div class="row ">
+ <div id="content" style="width: 100%;">
+   
+ </div>
 </div>
 <!-- more kpis-->
 
 {% include 'modals/newproduct.html' %}
-{% include 'modals/productdetails.html' %}
-
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const navLinks = document.querySelectorAll('ul.nav.nav-pills li a.nav-link');
-    const contentDiv = document.getElementById('content');
-  
-    navLinks.forEach(link => {
-      link.addEventListener('click', function (event) {
-        event.preventDefault();
-        const page = this.getAttribute('data-page');
-  
-        // Fetch the content for the selected page
-        fetch(`/load/${page}/`) // Replace with the actual URL for loading content
-          .then(response => response.text())
-          .then(data => {
-            contentDiv.innerHTML = data;
-          })
-          .catch(error => {
-            console.error('Error loading content:', error);
-          });
-      });
+  $(document).ready(function () {
+    const loader = $('#loader'); // Reference to the loader element
+    const contentDiv = $('#content'); // Reference to the content area
+    function showLoader() {
+      loader.show();
+      contentDiv.hide();
+    };
+
+    function hideLoader() {
+        loader.hide();
+        contentDiv.show();
+    };
+    function loadContent(url,targetSelector){
+        showLoader(); // Show the loader before making the AJAX request
+          $.ajax({
+            url: url,
+            success: function (data) {
+                var content = $(data).find(targetSelector).html();
+                $('#content').html(data);
+                hideLoader();
+            },
+            error: function (error) {
+                console.log('Error loading content:', error);
+                hideLoader();
+            }
+        });
+    };
+         // Attach click event to navigation links
+    $('ul.nav.nav-pills li a.nav-link').click(function (event) {
+      event.preventDefault();
+      // Remove "active" class from all navigation links
+      $('ul.nav.nav-pills li a.nav-link').removeClass('active');
+      // Add "active" class to the clicked link
+      $(this).addClass('active');
+      var targetSelector = $(this).data('target');
+      var url = $(this).attr('href');
+      // Load content for the selected tab link
+      loadContent(url, targetSelector);
+        // auto click the first tab
     });
-  });
-  
+    $('ul.nav.nav-pills li a.nav-link:first').click();
+    });
+    
+
+
 </script>
+
 
 {% endblock %}

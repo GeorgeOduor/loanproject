@@ -260,3 +260,6 @@ p.card-text {
 .modal {
   top: 50px !important;
 }
+.checked {
+  color: orange;
+}
