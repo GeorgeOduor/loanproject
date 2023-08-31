@@ -9,8 +9,8 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          <form>
+        <form action="post">
+          <div class="modal-body">
             <div class="form-group row">
               <fieldset class="col-12">
                 <div class="group mt-1">
@@ -57,12 +57,14 @@
                   <label>Product Description</label>
                 </div>
               </fieldset>              
+            </div>
           </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-secondary" id="update_product">Edit</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: none;">Close</button>
+          </div>
+       </form>
       </div>
     </div>
   </div>
