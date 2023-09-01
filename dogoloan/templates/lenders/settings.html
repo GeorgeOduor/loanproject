@@ -103,49 +103,51 @@ Admin Dashboard
 
 {% include 'modals/newproduct.html' %}
 <script>
-  $(document).ready(function () {
+$(document).ready(function() {
     const loader = $('#loader'); // Reference to the loader element
     const contentDiv = $('#content'); // Reference to the content area
     function showLoader() {
-      loader.show();
-      contentDiv.hide();
+        loader.show();
+        contentDiv.hide();
     };
-
+    // loader functionality
     function hideLoader() {
         loader.hide();
         contentDiv.show();
     };
-    function loadContent(url,targetSelector){
+
+    function loadContent(url, targetSelector) {
         showLoader(); // Show the loader before making the AJAX request
-          $.ajax({
+        $.ajax({
             url: url,
-            success: function (data) {
+            success: function(data) {
                 var content = $(data).find(targetSelector).html();
                 $('#content').html(data);
                 hideLoader();
             },
-            error: function (error) {
+            error: function(error) {
                 console.log('Error loading content:', error);
                 hideLoader();
             }
         });
     };
-         // Attach click event to navigation links
-    $('ul.nav.nav-pills li a.nav-link').click(function (event) {
-      event.preventDefault();
-      // Remove "active" class from all navigation links
-      $('ul.nav.nav-pills li a.nav-link').removeClass('active');
-      // Add "active" class to the clicked link
-      $(this).addClass('active');
-      var targetSelector = $(this).data('target');
-      var url = $(this).attr('href');
-      // Load content for the selected tab link
-      loadContent(url, targetSelector);
+    // Attach click event to navigation links
+    $('ul.nav.nav-pills li a.nav-link').click(function(event) {
+        event.preventDefault();
+        // Remove "active" class from all navigation links
+        $('ul.nav.nav-pills li a.nav-link').removeClass('active');
+        // Add "active" class to the clicked link
+        $(this).addClass('active');
+        var targetSelector = $(this).data('target');
+        var url = $(this).attr('href');
+        // Load content for the selected tab link
+        loadContent(url, targetSelector);
         // auto click the first tab
     });
     $('ul.nav.nav-pills li a.nav-link:first').click();
-    });
+
     
+});
 
 
 </script>

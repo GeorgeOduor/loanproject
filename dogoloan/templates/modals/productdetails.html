@@ -9,8 +9,9 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="post">
+        
           <div class="modal-body">
+            <form action="post">
             <div class="form-group row">
               <fieldset class="col-12">
                 <div class="group mt-1">
@@ -56,15 +57,25 @@
                   <span class="bar"></span>
                   <label>Product Description</label>
                 </div>
-              </fieldset>              
+              </fieldset>    
+              <button type="submit" class="btn btn-secondary" id="save_changes" style="display: none;">Save Changes</button>         
             </div>
+          </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-secondary" id="update_product">Edit</button>
+            <button type="button" class="btn btn-secondary" id="update_product-{{product.id}}">Edit</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: none;">Close</button>
           </div>
-       </form>
+
       </div>
     </div>
   </div>
+  <script>
+    $(document).ready(function() {
+        $('#update_product-{{product.id}}').click(function() {
+            //$(this).hide();
+            $('#save_changes').show();
+        });
+    });
+    </script>
