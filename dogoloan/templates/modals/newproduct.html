@@ -1,6 +1,6 @@
 
 <!-- Loan Limit Modal -->
-<div class="modal fade" id="addnewproduct-{{product.id}}" tabindex="-1" role="dialog" aria-labelledby="loanLimitModalLabel" aria-hidden="true">
+<div class="modal fade" id="addnewproduct" tabindex="-1" role="dialog" aria-labelledby="loanLimitModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -10,60 +10,91 @@
           </button>
         </div>
         <div class="modal-body">
-          <form>
-            <div class="form-group row">
-              <fieldset class="col-12">
-                <div class="group mt-1">
-                  <input required="" type="text" class="input">
-                  <span class="highlight"></span>
-                  <span class="bar"></span>
-                  <label>Product Name</label>
-                </div>
-              </fieldset>
-              <fieldset class="col-12 mt-1">
-                <div class="row">
-                  <div class="col-md-6 col-12">
-                    <div class="group mt-1">
-                      <input required="" type="text" class="input">
-                      <span class="highlight"></span>
-                      <span class="bar"></span>
-                      <label>Interest Rate (%)</label>
+            <form  method="post" action="" id="new_product_form">
+              {% csrf_token %}
+              <div class="form-group row">
+                <fieldset class="col-12">
+                  <div class="group mt-1">
+                    <input required name="product_name" type="text" class="input" value="{{product.name}}">
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Product Name</label>
+                  </div>
+                </fieldset>
+                <fieldset class="col-12 mt-1">
+                  <div class="row">
+                    <div class="col-md-6 col-12">
+                      <div class="group mt-2">
+                        <input required name="interest_rate" type="number" class="input" value="{{product.interest_rate}}" >
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Interest Rate (%)</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <div class="group mt-2">
+                        <input required name="repayment_term" type="text" class="input" value="{{product.repayment_term}}">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Repayment Term</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                      <div class="group mt-2">
+                        <input required name="penalties" type="number" class="input" value="{{product.penalties}}">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Penalty(%)</label>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-md-6 col-12">
-                    <div class="group mt-1">
-                      <input required="" type="text" class="input">
-                      <span class="highlight"></span>
-                      <span class="bar"></span>
-                      <label>Payment Term</label>
+          
+                </fieldset>
+                <fieldset class="col-12 mt-1">
+                  <div class="row">
+                    <div class="col-md-6 col-12">
+                      <div class="group mt-1">
+                        <input required="" name="min_loan_amount" type="number" class="input" value={{product.min_loan_amount}}>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Minimum Disbursable Amount</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                      <div class="group mt-1">
+                        <input required="" name="max_loan_amount" type="number" class="input" value={{product.max_loan_amount}}>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Maximum Disbursable Amount</label>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </fieldset>
-              <fieldset class="col-12 mt-1">
-                <div class="group mt-1">
-                  <input required="" type="number" class="input">
-                  <span class="highlight"></span>
-                  <span class="bar"></span>
-                  <label>Minimum Disbursable Amount</label>
-                </div>
-              </fieldset>
-              <fieldset class="col-12 mt-1">
-                <div class="group mt-1">
-                  <textarea class="input" name="" id="" cols="30" rows="2.5"></textarea>
-                  <span class="highlight"></span>
-                  <span class="bar"></span>
-                  <label>Product Description</label>
-                </div>
-              </fieldset>
-              <fieldset class="col-12 mt-1">
-                <div class="group mt">
-                  <button type="submit" class="btn btn-success" data-dismiss="modal">Save</button>
-                </div>
-              </fieldset>
-              
-          </div>
-          </form>
+                </fieldset>
+                <fieldset class="col-12 mt-1">
+                  <div class="group mt-1 py-1">
+                    <select name = "status" class="form-select form-select-sm input" aria-label=".form-select-sm example">
+                      <option class="mt-1"  selected>{{product.status}}</option>
+                      <option class="mt-1" value="Active">Active</option>
+                      <option class="mt-1" value="Inactive">Inactive</option>
+                    </select>
+                    <label class="mt-1">Product Status</label>
+                  </div>
+                  <div class="group mt-1">
+                    <textarea class="input"  name="productDescription" cols="30" rows="2.5">{{product.product_description}}
+                    </textarea>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Product Description</label>
+                    <input type="text" value="" hidden name="product_id">
+                    <input type="text" value="add_new" hidden name="form_action">
+                  </div>
+                  
+                </fieldset>  
+                <fieldset class="col-12 mt-1 ">
+                  <button name="add_new" type="submit" class="btn btn-secondary btn-sm animate__animated animate__zoomIn" id="add_new">Submit </button>         
+                </fieldset>  
+              </div>
+            </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -71,3 +102,58 @@
       </div>
     </div>
   </div>
+
+<script>
+  $(document).ready(function () {
+    $("#new_product_form").submit(function (event) {
+      event.preventDefault();
+      var closeButton = $("button.btn.btn-secondary[data-dismiss='modal']");
+      // Serialize the form data
+      var formData = $(this).serialize();
+  
+      $.ajax({
+        type: "POST",
+        url: "{% url 'lenders:lender_settings' %}",
+        data: formData,
+        success: function (response) {
+          if (response.errors) {
+            console.log(response.errors);
+  
+            // If there are error messages in the response, construct an HTML list of errors
+            var errorMessage = response.errors;
+  
+            $('#registrationMessage')
+              .html(errorMessage)
+              .removeClass('alert-success')
+              .addClass('alert alert-danger alert-dismissible')
+              .hide()
+              .fadeIn(1000, 'linear');
+          } else if (response.message) {
+            // If there's a success message in the response, display it in green
+            $('#registrationMessage')
+              .html(response.message)
+              .css({
+                'color': 'green',
+                'background': '#17cc17',
+                'padding': '5px',
+                'border-radius': '5px',
+                'opacity': '1',
+              })
+              .addClass('alert-success animate__animated animate__zoomIn')
+              .show();
+              closeButton.click();
+              
+            setTimeout(function () {
+              $('#registrationMessage').fadeOut(1000);
+            }, 5000);
+          }
+        },
+        error: function (xhr, status, error) {
+          // Handle errors here
+          console.error("Error:", error);
+        }
+      });
+    });
+  });
+  
+</script>

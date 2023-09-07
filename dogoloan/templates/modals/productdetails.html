@@ -11,73 +11,196 @@
         </div>
         
           <div class="modal-body">
-            <form action="post">
-            <div class="form-group row">
-              <fieldset class="col-12">
-                <div class="group mt-1">
-                  <input required="" type="text" class="input" value="{{product.name}}">
-                  <span class="highlight"></span>
-                  <span class="bar"></span>
-                  <label>Product Name</label>
-                </div>
-              </fieldset>
-              <fieldset class="col-12 mt-1">
-                <div class="row">
-                  <div class="col-md-6 col-12">
-                    <div class="group mt-1">
-                      <input required="" type="text" class="input" value="{{product.interest_rate}}%" >
-                      <span class="highlight"></span>
-                      <span class="bar"></span>
-                      <label>Interest Rate (%)</label>
-                    </div>
+            <div id="delete_notification-{{product.id}}" style="display: none;">
+              <div class="card-body text-center">
+                <p class="query" style="color: red;">Are you sure you want to delete this product?<br>Archive instead.</p>
+                <div class="row mt-2 p-2">
+                  <div class="col-md-6">
+                    <form action="" method="post">
+                      {% csrf_token %}
+                      <input type="text" name="product_id" hidden value="{{product.id}}">
+                      <input type="text" value="archive" hidden name="form_action">
+                      <button type="submit" class="btn btn-success" ><i class="fa fa-archive mr-1" aria-hidden="true"></i> Archive</button>
+                    </form>
                   </div>
-                  <div class="col-md-6 col-12">
-                    <div class="group mt-1">
-                      <input required="" type="text" class="input" value="{{product.repayment_term}}">
-                      <span class="highlight"></span>
-                      <span class="bar"></span>
-                      <label>Repayment Term</label>
-                    </div>
+                  <div class="col-md-6">
+                    <form action="" method="post">
+                      {% csrf_token %}
+                      <input type="text" name="product_id" hidden value="{{product.id}}">
+                      <input type="text" value="delete" hidden name="form_action">
+                      <button type="submit" class="btn btn-danger" ><i class="fa fa-trash mr-1" aria-hidden="true"></i>Delete</button>
+                    </form>
                   </div>
                 </div>
-              </fieldset>
-              <fieldset class="col-12 mt-1">
-                <div class="group mt-1">
-                  <input required="" type="number" class="input" value={{product.min_loan_amount}}>
-                  <span class="highlight"></span>
-                  <span class="bar"></span>
-                  <label>Minimum Disbursable Amount</label>
-                </div>
-              </fieldset>
-              <fieldset class="col-12 mt-1">
-                <div class="group mt-1">
-                  <textarea class="input" name="" id="" cols="30" rows="2.5">{{product.product_description}}
-                  </textarea>
-                  <span class="highlight"></span>
-                  <span class="bar"></span>
-                  <label>Product Description</label>
-                </div>
-              </fieldset>    
-              <button type="submit" class="btn btn-secondary" id="save_changes" style="display: none;">Save Changes</button>         
+                
+                
+              </div>
             </div>
-          </form>
+            <div id= "detailsform-{{product.id}}">
+              <form  method="post" id="productUpdate-{{product.id}}">
+                {% csrf_token %}
+                <div class="form-group row">
+                  <fieldset class="col-12">
+                    <div class="group mt-1">
+                      <input required name="product_name" type="text" class="input" value="{{product.name}}">
+                      <span class="highlight"></span>
+                      <span class="bar"></span>
+                      <label>Product Name</label>
+                    </div>
+                  </fieldset>
+                  <fieldset class="col-12 mt-1">
+                    <div class="row">
+                      <div class="col-md-6 col-12">
+                        <div class="group mt-2">
+                          <input required name="interest_rate" type="number" class="input" value="{{product.interest_rate}}" >
+                          <span class="highlight"></span>
+                          <span class="bar"></span>
+                          <label>Interest Rate (%)</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="group mt-2">
+                          <input required name="repayment_term" type="text" class="input" value="{{product.repayment_term}}">
+                          <span class="highlight"></span>
+                          <span class="bar"></span>
+                          <label>Repayment Term</label>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-12">
+                        <div class="group mt-2">
+                          <input required name="penalties" type="number" class="input" value="{{product.penalties}}">
+                          <span class="highlight"></span>
+                          <span class="bar"></span>
+                          <label>Penalty(%)</label>
+                        </div>
+                      </div>
+                    </div>
+            
+                  </fieldset>
+                  <fieldset class="col-12 mt-1">
+                    <div class="row">
+                      <div class="col-md-6 col-12">
+                        <div class="group mt-1">
+                          <input required="" name="min_loan_amount" type="number" class="input" value={{product.min_loan_amount}}>
+                          <span class="highlight"></span>
+                          <span class="bar"></span>
+                          <label>Minimum Disbursable Amount</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="group mt-1">
+                          <input required="" name="max_loan_amount" type="number" class="input" value={{product.max_loan_amount}}>
+                          <span class="highlight"></span>
+                          <span class="bar"></span>
+                          <label>Maximum Disbursable Amount</label>
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                  <fieldset class="col-12 mt-1">
+                    <div class="group mt-1 py-1">
+                      <select name = "status" class="form-select form-select-sm input" aria-label=".form-select-sm example">
+                        <option class="mt-1"  selected>{{product.status}}</option>
+                        <option class="mt-1" value="Active">Active</option>
+                        <option class="mt-1" value="Inactive">Inactive</option>
+                      </select>
+                      <label class="mt-1">Product Status</label>
+                    </div>
+                    <div class="group mt-1">
+                      <textarea class="input"  name="productDescription" cols="30" rows="2.5">{{product.product_description}}
+                      </textarea>
+                      <span class="highlight"></span>
+                      <span class="bar"></span>
+                      <label>Product Description</label>
+                      <input type="text" value="{{product.id}}" hidden name="product_id">
+                      <input type="text" value="update" hidden name="form_action">
+                    </div>
+                    
+                  </fieldset>  
+                  <fieldset class="col-12 mt-1 ">
+                    <button name="save_changes" type="submit" class="btn btn-secondary animate__animated animate__zoomIn" id="save_changes-{{product.id}}" style="display: none;">Save Changes</button>         
+                  </fieldset>  
+                </div>
+              </form>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-secondary" id="update_product-{{product.id}}">Edit</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" style="display: none;">Close</button>
+            <button type="button" class="btn btn-secondary" style="color: red;" id="delete_product-{{product.id}}">Delete</button>
           </div>
 
       </div>
     </div>
   </div>
-  <script>
-    $(document).ready(function() {
-        $('#update_product-{{product.id}}').click(function() {
-            //$(this).hide();
-            $('#save_changes').show();
-        });
-    });
+<script>
+$(document).ready(function() {
+  $('#delete_product-{{product.id}}').click(function(){
+    $('#detailsform-{{product.id}}').fadeOut()
+    $('#save_changes-{{product.id}}').fadeOut();
+    $("#delete_notification-{{product.id}}").fadeIn()
+  });
+  //confirm deletion
 
+  $('#update_product-{{product.id}}').click(function() {
+      //$(this).hide();
+      $("#delete_notification-{{product.id}}").fadeOut()
+      $('#detailsform-{{product.id}}').fadeIn()
+      $('#save_changes-{{product.id}}').show();
+      
+  });
+    // submit update form without reloading page
+  $("#productUpdate-{{product.id}}").submit(function(event) {
+    event.preventDefault(); // Prevent the default form submission
+    var closeButton = $("button.btn.btn-secondary[data-dismiss='modal']");
+
+    // Serialize the form data
+    var formData = $(this).serialize();
+
+    $.ajax({
+      type: "POST",
+      url: "{% url 'lenders:lender_settings' %}",
+      data: formData,
+      success: function(response) {
+        if (response.errors) {
+          console.log(response.errors)
+          // If there are error messages in the response, construct an HTML list of errors
+          var errorMessage = response.errors
+
+          $('#registrationMessage')
+            .html(errorMessage)
+            .removeClass('alert-success')
+            .addClass('alert alert-danger alert-dismissible')
+            .hide()
+            .fadeIn(1000, 'linear')
+          
+        } else if (response.message) {
+          // If there's a success message in the response, display it in green
+          //$('#registrationMessage')
+          $('#registrationMessage').html(response.message).css({
+            'color': 'green',
+            'background': '#17cc17',
+            'padding': '5px',
+            'border-radius': '5px',
+            'opacity': '1',
+          })
+          .addClass('alert-success animate__animated animate__zoomIn')
+          .show();
+          $('#save_changes-{{product.id}}').fadeOut();
+          $("#update_product-{{product.id}}").show()
+          closeButton.click();
+          setTimeout(function() {
+            $('#registrationMessage').fadeOut(1000);
+          }, 5000);
+        }
+      },
+      error: function(xhr, status, error) {
+        // Handle errors here
+        console.error("Error:", error);
+      }
+    });
+  });
+    
+});
   
-    </script>
+</script>

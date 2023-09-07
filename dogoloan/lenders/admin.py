@@ -32,4 +32,5 @@ class LoanProductAdmin(admin.ModelAdmin):
             None,
         )
     )
+    list_filter = ('status',)
 

@@ -44,7 +44,7 @@
 <div class="col-12">
   <!-- / BTC -->
   {% for product in products %}
-    <section class="card pull-up">
+    <section class="card animate__animated animate__zoomIn">
       <div class="card-content">
         <div class="card-body">
           <div class="col-12">
@@ -56,26 +56,29 @@
               </div>
               <div class="col-md-9 col-12">
                 <p>
-                  <strong>{{product.name}}</strong>
+                  <strong>{{ product.name }}</strong>
                 </p>
                 <p>Click the buttons below to see the details.</p>
                 {% comment %} <button type="button" class="btn btn-warning round mr-1 mb-0">Details</button> {% endcomment %}
                 <div class="row">
-                  <div class="col-md-4 col-4 py-1 text-center">
+                  <div class="col-md-4 col-sm-6 col-12 py-1 text-center">
                     {% comment %} <button t class="btn btn-success btn-sm round mr-1" style="cursor: pointer;">Details</button> {% endcomment %}
-                    <button type="button" class="btn" data-toggle="modal" data-target="#productdetails-{{product.id}}" >
-                      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 192 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M48 80a48 48 0 1 1 96 0A48 48 0 1 1 48 80zM0 224c0-17.7 14.3-32 32-32H96c17.7 0 32 14.3 32 32V448h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64V256H32c-17.7 0-32-14.3-32-32z"/></svg>
-                       Product Details
+                    <button type="button" class="btn" data-toggle="modal" data-target="#productdetails-{{ product.id }}">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 192 512">
+                        <!-- ! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                        <path d="M48 80a48 48 0 1 1 96 0A48 48 0 1 1 48 80zM0 224c0-17.7 14.3-32 32-32H96c17.7 0 32 14.3 32 32V448h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64V256H32c-17.7 0-32-14.3-32-32z" />
+                      </svg>Product Details
                     </button>
                   </div>
-                  <div class="col-md-4 col-4 py-1 text-center">
-                    <button type="button" class="btn" data-toggle="modal" data-target="#productdetails-{{product.id}}" >
-                      Product Details
-                    </button>                  </div>
-                  <div class="col-md-4 col-4 py-1 text-center">
-                    <button type="button" class="btn" data-toggle="modal" data-target="#productdetails-{{product.id}}" >
-                      Product Details
-                    </button>                  </div>
+                  <div class="col-md-4 col-sm-6 col-12 py-1 text-center">
+                    <button type="button" style="color: white;"
+                    {% if product.status == "Active" %}
+                    class="btn btn-success">Active
+                    {% else %}
+                    class="btn btn-danger status">Inactive
+                    {% endif %}
+                  </button>
+                  </div> 
                 </div>
               </div>
             </div>
@@ -84,6 +87,6 @@
       </div>
     </section>
     {% include 'modals/productdetails.html' %}
-
   {% endfor %}
 </div>
+{% include 'modals/newproduct.html' %}

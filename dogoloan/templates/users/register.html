@@ -170,7 +170,7 @@
     })
   </script>
   <script>
-    // This code is executed when the document (HTML) is fully loaded and ready
+    {% comment %} // This code is executed when the document (HTML) is fully loaded and ready
     $(document).ready(function () {
       // Select the input fields for password and confirm password
       const passwordField = $('#password')
@@ -246,6 +246,6 @@
           }
         })
       })
-    })
+    }) {% endcomment %}
   </script>
 {% endblock %}
