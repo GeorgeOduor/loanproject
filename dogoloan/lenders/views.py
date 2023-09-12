@@ -12,20 +12,60 @@ class LendersDashboard(View):
     def get(self, request):
         context = {
             'user_type': 'lender',
+
         }
         return render(request, self.template_name,context=context)
 
 class LenderProfileView(View):
-    template_name = 'lenders/lenderprofile.html'
+    template_name = 'lenders/profile.html'
+    profiles = Profile.objects
+    lenders = LenderProfile.objects
     def get(self, request):
+        
+        profile = self.profiles.get(user=request.user)
+        lender = self.lenders.get(user=request.user)
+        
+        context = {
+            'user_type': 'lender',
+            'first_name': profile.first_name,
+            'last_name': profile.last_name,
+            'mobile_no': profile.user.msisdn,
+            'email': profile.email_address,
+            'paybillno': lender.paybillno,
+            'brand': lender.brand,
+            'zip_code': lender.zip_code,
+            'county': lender.county,
+            'industry': lender.industry,
+            'town': profile.town
+        }
+        
+        return render(request, self.template_name,context=context)
+    
+    def post(self,request):
         context = {
             'user_type': 'lender',
         }
-        user_profile   = Profile.objects.get(user = request.user)
-        context['first_name'] = user_profile.first_name
-        context['last_name']  = user_profile.last_name
-        context['mobile_no']  = user_profile.user.msisdn
-        return render(request, self.template_name,context=context)
+        form_data           = request.POST
+        # profile information
+        userProfile = Profile.objects.get(user = request.user)
+        userProfile.first_name    = form_data['first_name']
+        userProfile.last_name     = form_data['last_name']
+        userProfile.email_address = form_data['email']
+        userProfile.town          = form_data['town']
+        userProfile.save()
+        # Lender profile information
+        if not self.lenders.filter(user = request.user).exists():
+            LenderProfile.objects.create(user = request.user)
+        lender_profile = self.lenders.get(user = request.user)
+        lender_profile.lending_mobile_no = form_data['mobile_number']
+        lender_profile.paybillno         = form_data['paybillno']
+        lender_profile.brand             = form_data['brand']
+        lender_profile.zip_code          = form_data['zip_code']
+        lender_profile.county            = form_data['county']
+        lender_profile.country           = "Kenya"
+        lender_profile.industry          = form_data['industry']
+        lender_profile.save()
+        return JsonResponse({'message': "Your profile has been updated successfully,Happy Lending!"})
 
 class LendersWallet(View):
     template_name = 'lenders/adminwallet.html'
@@ -135,12 +175,15 @@ def lender_application(request,category):
     if request.method == 'GET':
         if category == 'products':
             # fetch products
-            lender_profile = LenderProfile.objects.get(user = request.user)
-            products = LoanProduct.objects.filter(lender = lender_profile)
-            context = {
-                'products': products
-            }
-            return render(request, 'includes/products.html',context=context)
+            try:
+                lender_profile = LenderProfile.objects.get(user = request.user)
+                products = LoanProduct.objects.filter(lender = lender_profile)
+                context = {
+                    'products': products
+                }
+                return render(request, 'includes/products.html',context=context)
+            except Exception as e:
+                return render(request, 'includes/products.html')
         if category == 'agents':
             return render(request,'includes/agents.html')
         

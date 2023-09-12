@@ -173,7 +173,10 @@ $(document).ready(function() {
             .addClass('alert alert-danger alert-dismissible')
             .hide()
             .fadeIn(1000, 'linear')
-          
+            closeButton.click();
+            setTimeout(function() {
+              $('#registrationMessage').fadeOut(1000);
+            }, 5000);
         } else if (response.message) {
           // If there's a success message in the response, display it in green
           //$('#registrationMessage')
@@ -191,7 +194,9 @@ $(document).ready(function() {
           closeButton.click();
           setTimeout(function() {
             $('#registrationMessage').fadeOut(1000);
+            window.location.href = "{% url 'lenders:lender_settings' %}";
           }, 5000);
+
         }
       },
       error: function(xhr, status, error) {

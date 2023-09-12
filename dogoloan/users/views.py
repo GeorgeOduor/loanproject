@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
 from django.views import View
 from django.http import JsonResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login,logout
+
 
 from .models import User,Profile
 
@@ -40,7 +41,9 @@ class LoginView(View):
     
 class RegisterView(View):
     def get(self, request):
-        return render(request, 'users/register.html')
+        if not request.user.is_authenticated:
+            return render(request, 'users/register.html')
+        return render(request, 'users/onboarding.html')
     
     def post(self, request):
         data = request.POST
@@ -73,7 +76,7 @@ class RegisterView(View):
             profileinfo.date_of_birth = data['dob']
             profileinfo.email_address = data['email_address']
             profileinfo.town          = data['town']
-            profileinfo.nationa_id    = data['nationalid']
+            profileinfo.national_id    = data['nationalid']
             profileinfo.social_reach  = data['social_reach']
             profileinfo.save()
             return JsonResponse({'message': 'Data submitted successfully'})
@@ -119,8 +122,23 @@ class Onboarding(View):
         return render(request, 'users/onboarding.html')
     
 
-# class UserProfile(View):
-#     def get(self,request):
-#         if not request.user.is_authenticated:
-#             return redirect('users:login')
-#         return render(request, 'users/profile.html')
+# logout view
+def logout_view(request):
+    logout(request)
+    return redirect("users:login")
+
+class AccountsVerification(View):
+
+    def get(self,request,user_action):
+        if not request.user.is_authenticated:
+            return redirect('users:login')
+        first_name = Profile.objects.get(user=request.user).first_name
+        context = {
+            'user_action': user_action,
+            'first_name': first_name
+        }
+        return render(request, 'users/accounts_verification.html',context)
+    
+    def post(self,request):
+        return redirect('users:onboarding')
+    

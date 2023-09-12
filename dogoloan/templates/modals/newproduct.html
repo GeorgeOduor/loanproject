@@ -105,6 +105,7 @@
 
 <script>
   $(document).ready(function () {
+    var closeButton = $("button.btn.btn-secondary[data-dismiss='modal']");
     $("#new_product_form").submit(function (event) {
       event.preventDefault();
       var closeButton = $("button.btn.btn-secondary[data-dismiss='modal']");
@@ -128,6 +129,10 @@
               .addClass('alert alert-danger alert-dismissible')
               .hide()
               .fadeIn(1000, 'linear');
+              closeButton.click()
+              setTimeout(function() {
+                $('#registrationMessage').fadeOut(1000);
+              }, 5000);
           } else if (response.message) {
             // If there's a success message in the response, display it in green
             $('#registrationMessage')
@@ -153,7 +158,9 @@
           console.error("Error:", error);
         }
       });
+      
     });
+    
   });
   
 </script>

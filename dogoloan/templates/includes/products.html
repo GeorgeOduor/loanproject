@@ -43,6 +43,8 @@
 </div>
 <div class="col-12">
   <!-- / BTC -->
+
+  {% if products %}
   {% for product in products %}
     <section class="card animate__animated animate__zoomIn">
       <div class="card-content">
@@ -88,5 +90,17 @@
     </section>
     {% include 'modals/productdetails.html' %}
   {% endfor %}
+  {% else %}
+  <section class="card animate__animated animate__zoomIn">
+    <div class="card-content">
+      <div class="card-body">
+        <p class="no-products" style="font-size: 2.1em;color: black;">
+          Opps!seems you do not have any product at the moment.
+        </p>
+        <p>Click the <strong>Add New</strong> button above to create some products.</p>
+      </div>
+    </div>
+  </section>
+  {% endif %}
 </div>
 {% include 'modals/newproduct.html' %}

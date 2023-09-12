@@ -19,7 +19,7 @@ class UserManager(BaseUserManager):
     def create_user(self, msisdn, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
-        # extra_fields.setdefault('is_agent', False)
+        extra_fields.setdefault('is_active', False)
         return self._create_user(msisdn, password, **extra_fields)
 
     def create_superuser(self, msisdn, password, **extra_fields):
@@ -38,7 +38,6 @@ class UserManager(BaseUserManager):
         msisdn = f"254{str(msisdn)[-9:]}"
         print(msisdn)
         return msisdn
-
 
 class User(AbstractUser):
     username = None
@@ -60,7 +59,7 @@ class Profile(models.Model):
     town                      = models.CharField(max_length=50, null=True, blank=True)
     # monthly_income            = models.CharField(max_length=50, null=True, blank=True)
     social_reach              = models.CharField(max_length=50, null=True, blank=True)
-    nationa_id                = models.CharField(max_length=12, null=True, blank=True)
+    national_id                = models.CharField(max_length=12, null=True, blank=True)
     # social_reach              = models.CharField(max_length=50, null=True, blank=True)
 
 @receiver(post_save, sender=User)

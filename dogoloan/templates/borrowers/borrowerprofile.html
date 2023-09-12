@@ -1,0 +1,246 @@
+{% load static %}
+
+<div class="user_details_edit" style="padding: 0px 15px;">
+  <div id="registrationMessage" class="mt-1 mb-1"></div>
+    <div class="row sticky_container">
+      <div class="col-12">
+        <div class="card-body animate__animated animate__fadeInLeftBig" 
+        style="justify-content: flex-end;display: flex;position: fixed;z-index: 1;float: right;align-content: space-between;align-items: center;/* bottom: 27px; */right: 47px;top: 102px;">
+          <button class="edit-button" id="edit_user" type="button">
+            <svg class="svgIcon" viewBox="0 0 512 512">
+              <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <form action="" method="post" id="lenderInfo">
+      {% csrf_token %}
+    <div class="row">
+      <div class="col-md-3 file_upload">
+        
+        <div class="card">
+          <div class="card-body" imageview style="height: 225px;text-align: center;display: none;">
+            <img src="{% static 'images/useravatar.png' %}" alt="" srcset="" class="portfolio-image" style="width: 100%">
+          </div>
+          <div class="card-body imageuplaod" style="height: 225px;text-align: center;">
+            <div class="file-upload-wrapper">
+              <div class="file-upload">
+                <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
+              
+                <div class="image-upload-wrap">
+                  <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+                  <div class="drag-text">
+                    <h3>Drag and drop a file or select add Image</h3>
+                  </div>
+                </div>
+                <div class="file-upload-content">
+                  <img class="file-upload-image" src="#" alt="your image" />
+                  <div class="image-title-wrap">
+                    <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 names">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="firstName">First Name</label>
+                  <input required name = "first_name"  type="text" class="form-control" id="firstName" placeholder="Enter first name" 
+                  value="{{first_name}}">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="lastName">Last Name</label>
+                  <input type="text" required name = "last_name"  class="form-control" id="lastName" placeholder="Enter last name" value="{{first_name}}">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" required name = "email"  class="form-control" id="email" placeholder="Enter email" value="{{email}}">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-12">
+        <div class="card">
+          <div class="card-header mt-1"> Lending Details </div>
+          <div class="card-body">
+              <div class="form-group">
+                <label for="mobile">Mobile Number</label>
+                <input  required name = "mobile_number" value="{{mobile_no}}"  type="lending_mobile_no" class="form-control" id="mobile" placeholder="Enter mobile number">
+              </div>
+              <div class="form-group">
+                <label for="mobile">Lending as:</label>
+                <input required name =  'brand' value="{{brand}}" type="text" class="form-control" id="lending_name" placeholder="Enter mobile lending name">
+              </div>
+              <div class="form-group">
+                <label for="paybil">Paybill Number</label>
+                <input required name =  'paybillno' value={{paybillno}} type="text" class="form-control" id="paybil" placeholder="Enter Paybill number">
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12">
+        <div class="card">
+          <div class="card-header mt-1"> Physical Address </div>
+          <div class="card-body">
+              <div class="form-group">
+                <label for="mobile">County</label>
+                <input required name = "county"  value="{{county}}" type="lending_mobile_no" class="form-control" id="mobile" placeholder="Enter your current county">
+              </div>
+              <div class="form-group">
+                <label for="mobile">Town:</label>
+                <input required name =  'town' value="{{town}}" type="text" class="form-control" id="lending_name" placeholder="Enteryour current town">
+              </div>
+              <div class="form-group">
+                <label for="paybil">Zip Code</label>
+                <input required name =  'zip_code' value="{{zip_code}}"   type="text" class="form-control" id="paybil" placeholder="Enter your zip code">
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12">
+        <div class="card">
+          <div class="card-header mt-1"> Lending Preferences </div>
+          <div class="card-body">
+              <div class="form-group">
+                <label for="mobile">Which Industry</label>
+                <input  required name =   "industry" value="{{industry}}"  type="lending_mobile_no" class="form-control" id="mobile" placeholder="Enter prefered industry">
+              </div>
+              {% comment %} <div class="form-group">
+                <label for="mobile">Lending as:</label>
+                <input required name =   'brand' type="text" class="form-control" id="lending_name" placeholder="Enter mobile lender name">
+              </div>
+              <div class="form-group">
+                <label for="paybil">Paybill Number</label>
+                <input required name =   'paybillno' type="text" class="form-control" id="paybil" placeholder="Enter Paybill number">
+              </div> {% endcomment %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+             <button type="submit" class="save-button animate__animated animate__fadeInDownBig" id="save_user" style="display: none;"> 
+               <svg class="svgIcon" style="enable-background:new 0 0 30 30;" version="1.1" viewBox="0 0 25 25" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <path d="M22,4h-2v6c0,0.552-0.448,1-1,1h-9c-0.552,0-1-0.448-1-1V4H6C4.895,4,4,4.895,4,6v18c0,1.105,0.895,2,2,2h18  c1.105,0,2-0.895,2-2V8L22,4z M22,24H8v-6c0-1.105,0.895-2,2-2h10c1.105,0,2,0.895,2,2V24z" />
+                <rect height="5" width="2" x="16" y="4" />
+              </svg> 
+            </button> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </form> 
+</div>
+
+<script>
+  $(document).ready(function () {
+    $('#edit_user').click(function () {
+        // Hide the user details interface and show the new UI container
+        $('.user_profile').remove();
+        $('.user_details_edit').show();
+    });
+    var cards = document.querySelectorAll(".card");
+
+  // Function to apply animation classes and show cards sequentially
+  function applyAnimationAndShow(cards, index) {
+    if (index < cards.length) {
+      setTimeout(function () {
+        cards[index].style.display = "block"; // Show the card
+        cards[index].classList.add("animate__animated", "animate__zoomIn");
+        applyAnimationAndShow(cards, index + 1); // Recursively apply to the next card
+      }, 500); // Adjust the delay as needed (in milliseconds)
+    }
+  }
+  // Start applying animations and showing cards
+  applyAnimationAndShow(cards, 0);
+
+  // display save utton after edit-button is clicked
+  function displaySaveButton() {
+    // Show the "save_user" button
+    $("#save_user").css("display", "flex");
+
+    // Hide the "edit_user" button
+    $("#edit_user").css("display", "none");
+  }
+
+// Add an event listener to the "edit_user" button to call the function
+  $("#edit_user").click(displaySaveButton);
+
+  // submit form contents
+  $("#lenderInfo").submit(function (event) {
+    event.preventDefault();
+    var closeButton = $("button.btn.btn-secondary[data-dismiss='modal']");
+    // Serialize the form data
+    var formData = $(this).serialize();
+
+    $.ajax({
+      type: "POST",
+      url: "{% url 'borrow:borrower_profile' %}",
+      data: formData,
+      success: function (response) {
+        if (response.errors) {
+          console.log(response.errors);
+
+          // If there are error messages in the response, construct an HTML list of errors
+          var errorMessage = response.errors;
+
+          $('#registrationMessage')
+            .html(errorMessage)
+            .removeClass('alert-success')
+            .addClass('alert alert-danger alert-dismissible')
+            .hide()
+            .fadeIn(1000, 'linear');
+            setTimeout(function() {
+              $('#registrationMessage').fadeOut(1000);
+            }, 5000);
+        } else if (response.message) {
+          // If there's a success message in the response, display it in green
+          $('#registrationMessage')
+            .html(response.message)
+            .css({
+              'color': 'green',
+              'background': '#17cc17',
+              'padding': '5px',
+              'border-radius': '5px',
+              'opacity': '1',
+            })
+            .addClass('alert-success animate__animated animate__zoomIn')
+            .show();
+            
+          setTimeout(function () {
+            $('#registrationMessage').fadeOut(1000);
+            window.location.href = "{% url 'lenders:profile' %}";
+          }, 5000);
+          
+        }
+      },
+      error: function (xhr, status, error) {
+        // Handle errors here
+        console.error("Error:", error);
+      }
+    });
+    
+  });
+
+
+});
+
+</script>
+
+
+

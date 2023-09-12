@@ -9,13 +9,23 @@ from users.models import User
 class LenderProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # lender profile
-    lending_mobile_no = models
+    lending_mobile_no = models.CharField(max_length=12, null=True, blank=True)
     paybillno         = models.CharField(max_length=50, null=True, blank=True)
     brand             = models.CharField(max_length=50, null=True, blank=True)
+    # addres details
+    zip_code          = models.CharField(max_length=50, null=True, blank=True)
+    county            = models.CharField(max_length=50, null=True, blank=True)
+    country           = models.CharField(max_length=50, null=True, blank=True,default="Kenya")
+    # # account details
+    # account_name      = models.CharField(max_length=50, null=True, blank=True)
+    # account_number    = models.CharField(max_length=50, null=True, blank=True)
+    # bank_name         = models.CharField(max_length=50, null=True, blank=True)
+    # lending preferences
+    industry          = models.CharField(max_length=50, null=True, blank=True)
     date_created      = models.DateField(auto_now_add=True)
 
-    # def __str__(self):
-    #     return self.brand
+    def __str__(self):
+        return self.brand
     class Meta:
         verbose_name = 'Lender Profile'
         verbose_name_plural = 'Lender Profile'
@@ -50,7 +60,7 @@ class LoanProduct(models.Model):
     modified_on         = models.DateField(auto_now=True)
 
     def __str__(self):
-        return self.lender
+        return self.name
 class LoanApplications(models.Model):
     lender       = models.ForeignKey(LenderProfile, on_delete=models.CASCADE)
     loan_product = models.ForeignKey(LoanProduct, on_delete=models.CASCADE)

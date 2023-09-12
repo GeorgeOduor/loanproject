@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'clients',
     'core',
     'lenders',
+    'borrow'
 # otp
     # 'django_otp',
     # 'django_otp.plugins.otp_totp',
@@ -140,3 +141,4 @@ AUTH_USER_MODEL = 'users.User'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGOUT_REDIRECT_URL = "/accounts/login" 

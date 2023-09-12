@@ -66,34 +66,7 @@ Admin Dashboard
         </li>
       </ul>
 </div>
-<div id="loader" class="loader">
-  <div class="boxes">
-    <div class="box">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-    <div class="box">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-    <div class="box">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-    <div class="box">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
- </div>
-</div>
+<div id="loader" class="loader"></div>
 <div id="registrationMessage"></div>
 {% if messages %}
 <ul class="messages" style="padding: 0;">
@@ -154,13 +127,6 @@ $(document).ready(function() {
     });
     $('ul.nav.nav-pills li a.nav-link:first').click();
 
-    // Function to remove the element after 5 seconds
-    setTimeout(function () {
-      var registrationMessage = document.getElementsByClassName("messages");
-      if (registrationMessage) {
-          registrationMessage.parentNode.removeChild(registrationMessage);
-      }
-    }, 3000); // 3000 milliseconds = 3 seconds
 });
 </script>
 
