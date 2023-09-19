@@ -1,0 +1,164 @@
+{% load static %}
+<div class="container">
+  <div class="card">
+    <div class="form">
+      <div class="left-side">
+        <div class="left-heading">
+          <h3 style="color: white;">Dogo Credit</h3>
+        </div>
+        <div class="steps-content">
+          <h3 style="color: white;">Step <span class="step-number">1</span></h3>
+          {% comment %} <p class="step-number-content active">
+            Welcome! <br /> {{ first_name }}
+          </p> {% endcomment %}
+          <p class="step-number-content d-none">Get to know better by adding your diploma,certificate and education life.</p>
+          <p class="step-number-content d-none">Help companies get to know you better by telling then about your past experiences.</p>
+          <p class="step-number-content d-none">Add your profile piccture and let companies find youy fast.</p>
+        </div>
+        <ul class="progress-bar">
+          <li class="active">Welcome {{ first_name }}</li>
+          <li>Lending Info</li>
+          <li>Work Experience</li>
+          <li>User Photo</li>
+        </ul>
+      </div>
+      <div class="right-side">
+        <form action="" method="POST" id="lender_verification" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="main active">
+            <small><i class="fa fa-smile-o"></i></small>
+            <div class="text">
+              <img src="{% static 'images/welcome.png' %}" class="animate__animated animate__zoomIn" alt="" srcset="" style="margin: 10px 0;border-radius: 14px;max-width: 100%;height: 100px;" />
+              <h2 style="font-size: x-large;" class="animate__animated animate__lightSpeedInRight">Welcome to Dogo Credit!</h2>
+              <p style="color: #000 !important;font-size: large;" class="mb-1 mt-1 animate__animated animate__lightSpeedInLeft">Before you start Lending,you have to tell us a few things about your self.</p>
+            </div>
+            <div class="input-text animate__animated animate__fadeInDown">
+              <div class="input-div">
+                <input type="text" hidden value="{{ first_name }}" id="user_name" style="display: none;" />
+
+                {% comment %} <span>First Name</span> {% endcomment %}
+              </div>
+            </div>
+            <div class="buttons">
+              <button class="next_button">Sure!</button>
+            </div>
+          </div>
+          <div class="main">
+            <small><i class="fa fa-smile-o"></i></small>
+            <div class="text animate__animated animate__fadeInDown">
+              <h2>Lending Information</h2>
+              <p>Tell us how you want to lend.</p>
+            </div>
+            <div class="input-text animate__animated animate__fadeInDown">
+              <div class="input-div">
+                <select name="lending_as">
+                  <option>I want to lend as:</option>
+                  <option value="individual">Individual</option>
+                  <option value="business">Business</option>
+                  <option value="chama">Chama</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-text animate__animated animate__fadeInDown">
+              <div class="input-div">
+                <select name="industry">
+                  <option>Prefered Industry</option>
+                  <option value="education">Education</option>
+                  <option value="health">Health</option>
+                  <option value="retail">Retail</option>
+                  <option value="finance">Finance</option>
+                  <option value="construction">Construction</option>
+                  <option value="agriculture">Agriculture</option>
+                  <option value="manufacturing">Manufacturing</option>
+                  <option value="services">Services</option>
+                  <option value="other">Other</option>
+                  <option value="any">I have no Prefered Industry</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-text animate__animated animate__fadeInDown">
+              <div class="input-div">
+                <input type="text" name="brand" required require />
+                <span>My Lending brand name is:</span>
+              </div>
+            </div>
+            <div class="buttons button_space">
+              <button class="back_button">Back</button>
+              <button class="next_button">Next Step</button>
+            </div>
+          </div>
+          <div class="main">
+            <small><i class="fa fa-smile-o"></i></small>
+            <div class="text animate__animated animate__fadeInDown">
+              <h2>Physical Address</h2>
+              <p>Tell us where you are Lending from</p>
+            </div>
+            <div class="input-text animate__animated animate__fadeInDown">
+              <div class="input-div">
+                {% comment %} <input type="text" name="county" required require />
+                <span>County</span> {% endcomment %}
+                <select id="countySelect" name="county">
+                  <option value="">Select your county:</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-text animate__animated animate__fadeInDown">
+              <div class="input-div">
+                <input type="text" name="town" required require />
+                <span>Town</span>
+              </div>
+            </div>
+            <div class="input-text animate__animated animate__fadeInDown">
+              <div class="input-div">
+                <input type="text" name="zip_code" required require />
+                <span>Zip code</span>
+              </div>
+            </div>
+            <div class="buttons button_space">
+              <button class="back_button">Back</button>
+              <button class="next_button">Next Step</button>
+            </div>
+          </div>
+          <div class="main">
+            <small><i class="fa fa-smile-o"></i></small>
+            <div class="text animate__animated animate__fadeInDown">
+              <h2>Files</h2>
+              <p>Upload the following files to help us verify your identity.</p>
+            </div>
+            <div class="input-text animate__animated animate__fadeInDown" style="justify-content: center;">
+              <div class="mb-2">
+                <label for="formFile" class="form-label">National ID front face</label>
+                <input name="national_id_copy" required class="form-control" type="file" id="formFile" style="width: 100%;" />
+                <input type="text" hidden value="lender_verification" name="action" style="display: none;" />
+              </div>
+            </div>
+            <div class="buttons button_space">
+              <button class="back_button">Back</button>
+              <button type="submit" class="submit_button">Submit</button>
+            </div>
+          </div>
+        </form>
+        <div class="main">
+          <div id="successMessage" style="display: none;">
+            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+              <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+              <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+            </svg>
+            <div class="text congrats">
+              <h2>Congratulations!</h2>
+              <p style="color: #000;">
+                Thanks <span class="shown_name">{{ first_name }}</span>, your information has been submitted successfully. Our team will review and get back to you once you are approved as soon as possible.
+              </p>
+            </div>
+          </div>
+          <div id="errorMessage" style="display: none;">
+            <div class="text error">
+              <h2>Heads Up {{ first_name }}!</h2>
+              <p style="color: #000;" id="errorText"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

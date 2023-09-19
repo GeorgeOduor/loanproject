@@ -23,6 +23,13 @@ class LenderProfile(models.Model):
     # lending preferences
     industry          = models.CharField(max_length=50, null=True, blank=True)
     date_created      = models.DateField(auto_now_add=True)
+    lending_as        = models.CharField(max_length=50, null=True, blank=True)
+    # lender status
+    status            = models.CharField(max_length=50, null=True, blank=True,choices=[
+        ('Active', 'Active'),
+        ('Inactive', 'Inactive'),
+        ],default='Inactive')
+    
 
     def __str__(self):
         return self.brand

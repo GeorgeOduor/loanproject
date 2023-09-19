@@ -12,31 +12,30 @@ class LendersDashboard(View):
     def get(self, request):
         context = {
             'user_type': 'lender',
-
-        }
+            }
         return render(request, self.template_name,context=context)
 
 class LenderProfileView(View):
     template_name = 'lenders/profile.html'
     profiles = Profile.objects
     lenders = LenderProfile.objects
+    
     def get(self, request):
-        
         profile = self.profiles.get(user=request.user)
         lender = self.lenders.get(user=request.user)
         
         context = {
-            'user_type': 'lender',
+            'user_type' : 'lender',
             'first_name': profile.first_name,
-            'last_name': profile.last_name,
-            'mobile_no': profile.user.msisdn,
-            'email': profile.email_address,
-            'paybillno': lender.paybillno,
-            'brand': lender.brand,
-            'zip_code': lender.zip_code,
-            'county': lender.county,
-            'industry': lender.industry,
-            'town': profile.town
+            'last_name' : profile.last_name,
+            'mobile_no' : profile.user.msisdn,
+            'email'     : profile.email_address,
+            'paybillno' : lender.paybillno,
+            'brand'     : lender.brand,
+            'zip_code'  : lender.zip_code,
+            'county'    : lender.county,
+            'industry'  : lender.industry,
+            'town'      : profile.town
         }
         
         return render(request, self.template_name,context=context)

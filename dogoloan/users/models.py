@@ -59,8 +59,8 @@ class Profile(models.Model):
     town                      = models.CharField(max_length=50, null=True, blank=True)
     # monthly_income            = models.CharField(max_length=50, null=True, blank=True)
     social_reach              = models.CharField(max_length=50, null=True, blank=True)
-    national_id                = models.CharField(max_length=12, null=True, blank=True)
-    # social_reach              = models.CharField(max_length=50, null=True, blank=True)
+    national_id               = models.CharField(max_length=12, null=True, blank=True)
+    # social_reach            = models.CharField(max_length=50, null=True, blank=True)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

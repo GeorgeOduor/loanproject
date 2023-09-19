@@ -1,0 +1,198 @@
+{% load static %}
+<div class="container">
+  <div class="card">
+    <div class="form">
+      <div class="left-side">
+        <div class="left-heading">
+          <h3 style="color: white;">Dogo Credit</h3>
+        </div>
+        <div class="steps-content">
+          <h3 style="color: white;">Step <span class="step-number">1</span></h3>
+          {% comment %} <p class="step-number-content active">
+            Welcome! <br /> {{ first_name }}
+          </p> {% endcomment %}
+          <p class="step-number-content d-none">Get to know better by adding your diploma,certificate and education life.</p>
+          <p class="step-number-content d-none">Help companies get to know you better by telling then about your past experiences.</p>
+          <p class="step-number-content d-none">Add your profile piccture and let companies find youy fast.</p>
+        </div>
+        <ul class="progress-bar">
+          <li class="active">Welcome {{ first_name }}</li>
+          <li>Lending Info</li>
+          <li>Work Experience</li>
+          <li>User Photo</li>
+        </ul>
+      </div>
+      <div class="right-side">
+        <form action="" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="main active">
+            <small><i class="fa fa-smile-o"></i></small>
+            <div class="text">
+              <img src="{% static 'images/welcome.png' %}" class="animate__animated animate__zoomIn" alt="" srcset="" style="margin: 10px 0;border-radius: 14px;max-width: 100%;height: 100px;" />
+              <h2 style="font-size: x-large;" class="animate__animated animate__lightSpeedInRight">Welcome to Dogo Credit!</h2>
+              <p style="color: #000 !important;font-size: large;" class="mb-1 mt-1 animate__animated animate__lightSpeedInLeft">
+                We're excited to help you achieve your financial goals. <br />
+                Before you start borrowing,please tell us a few things about yourself.
+              </p>
+            </div>
+            <div class="input-text animate__animated animate__fadeInDown">
+              <div class="input-div">
+                <input type="text" hidden value="{{ first_name }}" id="user_name" style="display: none;" />
+                {% comment %} <span>First Name</span> {% endcomment %}
+              </div>
+            </div>
+            <div class="buttons">
+              <button class="next_button">Sure!</button>
+            </div>
+          </div>
+          <div class="main">
+            <small><i class="fa fa-smile-o"></i></small>
+            <div class="text animate__animated animate__fadeInDown">
+              <h2>Borower Information</h2>
+            </div>
+            <div class="input-text animate__animated animate__fadeInDown">
+              <div class="input-div">
+                <select name="employment" id="employmentSelect">
+                  <option>Employment Status:</option>
+                  <option value="employed">Employed</option>
+                  <option value="unemployed">Unemployed</option>
+                  <option value="self-employed">Self-Employed</option>
+                  <option value="student">Student</option>
+                  <option value="retired">Retired</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="input-div" id="employment_sector" style="display: none;">
+                <select name="employment_sector">
+                  <option>Specify sector</option>
+                  <option value="agriculture">Agriculture</option>
+                  <option value="manufacturing">Manufacturing</option>
+                  <option value="services">Services</option>
+                  <option value="construction">Construction</option>
+                  <option value="retail">Retail</option>
+                  <option value="wholesale">Wholesale</option>
+                  <option value="transport">Transport</option>
+                  <option value="education">Education</option>
+                  <option value="health">Health</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-text animate__animated animate__fadeInDown">
+              <div class="input-div">
+                <select name="education">
+                  <option>Highest Level of Education:</option>
+                  <option value="primary">Primary</option>
+                  <option value="secondary">Secondary</option>
+                  <option value="tertiary">Tertiary</option>
+                  <option value="university">University</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-text animate__animated animate__fadeInDown">
+              <div class="input-div">
+                <select name="marital_status">
+                  <option>Marital Status:</option>
+                  <option value="single">Single</option>
+                  <option value="married">Married</option>
+                  <option value="divorced">Divorced</option>
+                  <option value="widowed">Widowed</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-text animate__animated animate__fadeInDown">
+              <div class="input-div">
+                <select name="income_range">
+                  <option>Income Range(Ksh) per month:</option>
+                  <option value="1">0-10,000</option>
+                  <option value="2">10,000-20,000</option>
+                  <option value="3">20,000-30,000</option>
+                  <option value="4">30,000-40,000</option>
+                  <option value="5">40,000-50,000</option>
+                  <option value="6">Above 50,000</option>
+                </select>
+              </div>
+            </div>
+            <div class="buttons button_space">
+              <button class="back_button">Back</button>
+              <button class="next_button">Next Step</button>
+            </div>
+          </div>
+          <div class="main">
+            <small><i class="fa fa-smile-o"></i></small>
+            <div class="text animate__animated animate__fadeInDown">
+              <h2>Physical Address</h2>
+              {% comment %} <p>Tell us where you are Borrowing from</p> {% endcomment %}
+            </div>
+            <div class="input-text animate__animated animate__fadeInDown">
+              <div class="input-div">
+                <input type="text" name="county" required require />
+                <span>County</span>
+              </div>
+            </div>
+            <div class="input-text animate__animated animate__fadeInDown">
+              <div class="input-div">
+                <input type="text" name="altenative_mobile_number" required require />
+                <span>Alternative Mobile Number</span>
+              </div>
+            </div>
+            <div class="input-text animate__animated animate__fadeInDown">
+              <div class="input-div">
+                <input type="text" name="referer_mobile_number" />
+                <span>Referer Mobile Number</span>
+              </div>
+            </div>
+            <div class="buttons button_space">
+              <button class="back_button">Back</button>
+              <button class="next_button">Next Step</button>
+            </div>
+          </div>
+          <div class="main">
+            <small><i class="fa fa-smile-o"></i></small>
+            <div class="text animate__animated animate__fadeInDown">
+              <h2>Files</h2>
+              <p>Upload the following files to help us verify your identity and check your credit worthiness.</p>
+            </div>
+            <div class="input-text lastpage animate__animated animate__fadeInDown" style="justify-content: center;">
+              <div class="input-div">
+                <label for="formFile" class="form-label">National ID front face</label>
+                <input name="national_id_copy" required class="form-control" type="file" id="formFile" style="width: 100%;" />
+              </div>
+            </div>
+            {% comment %} <div class="input-text lastpage animate__animated animate__fadeInDown" style="justify-content: center;">
+              <div class="input-div">
+                <label for="formFile" class="form-label m-0">Latest 3 Month M-Pesa Statement</label>
+                <input name="latest_mpesa_statement" required class="form-control" type="file" id="formFile" style="width: 100%;" />
+              </div>
+            </div> {% endcomment %}
+            {% comment %} <div class="input-text lastpage animate__animated animate__fadeInDown" style="justify-content: center;">
+              <div class="input-div">
+                <input type="text" name="mpesa_code" required require />
+                <span>M-Pesa Statement Code</span>
+              </div>
+            </div> {% endcomment %}
+            <div class="buttons button_space">
+              <button class="back_button">Back</button>
+              <button class="submit_button">Submit</button>
+            </div>
+          </div>
+        </form>
+        <div class="main">
+          <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+          </svg>
+
+          <div class="text congrats">
+            <h2>Congratulations!</h2>
+            <p style="color: #000;">
+              Thanks <span class="shown_name">{{ first_name }}</span> your information have been submitted successfully. Our team will review and get back to you once you are approved as soon as possible.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
