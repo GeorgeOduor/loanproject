@@ -23,7 +23,7 @@
         </ul>
       </div>
       <div class="right-side">
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="" method="POST" enctype="multipart/form-data" id="loaner_verification" >
           {% csrf_token %}
           <div class="main active">
             <small><i class="fa fa-smile-o"></i></small>
@@ -188,7 +188,8 @@
           <div class="text congrats">
             <h2>Congratulations!</h2>
             <p style="color: #000;">
-              Thanks <span class="shown_name">{{ first_name }}</span> your information have been submitted successfully. Our team will review and get back to you once you are approved as soon as possible.
+              Thanks <span class="shown_name">{{ first_name }}</span> your information have been submitted successfully. 
+              Our team will review and get back to you once you are approved as soon as possible.
             </p>
           </div>
         </div>
@@ -196,3 +197,38 @@
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function(){
+    // form submision
+    $("#loaner_verification").submit(function(e){
+      e.preventDefault();
+      $.ajax({
+        type: "POST",
+        url: "/accounts/onboarding/borrow/",
+        data: $("#loaner_verification").serialize(),
+        success: function(response){
+          if (response.error){
+            var errorMessage = response.error
+            $('#errorMessage').show();
+            $('#errorText')
+            .html(errorMessage)
+            .addClass('alert alert-danger alert-dismissible')
+            .fadeIn(1000)
+            .delay(3000)
+            .fadeOut(1000);
+            setTimeout(function() {
+              window.location.href = "/accounts/borrow/";
+            }, 3000);
+          } else {
+            console.log(response);
+            $('#successMessage').show();
+            setTimeout(function() {
+              window.location.href = "/borrow";
+            }, 3000)
+          }
+        }
+      })
+    })
+  })
+</script>
+

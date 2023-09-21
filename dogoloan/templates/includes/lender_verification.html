@@ -162,3 +162,37 @@
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function(){
+    // form submision
+    $("#lender_verification").submit(function(e){
+      e.preventDefault();
+      $.ajax({
+        type: "POST",
+        url: "/accounts/onboarding/lend/",
+        data: $("#lender_verification").serialize(),
+        success: function(response){
+          if (response.error){
+            var errorMessage = response.error
+            $('#errorMessage').show();
+            $('#errorText')
+            .html(errorMessage)
+            .addClass('alert alert-danger alert-dismissible')
+            .fadeIn(1000)
+            .delay(3000)
+            .fadeOut(1000);
+            setTimeout(function() {
+              window.location.href = "/accounts/onboarding/lend/";
+            }, 3000);
+          } else {
+            console.log(response);
+            $('#successMessage').show();
+            setTimeout(function() {
+              window.location.href = "/lend";
+            }, 3000)
+          }
+        }
+      })
+    })
+  })
+</script>

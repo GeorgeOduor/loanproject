@@ -74,16 +74,32 @@
     <div class="row">
       <div class="col-md-4 col-12">
         <div class="card">
-          <div class="card-header mt-1"> Lending Details </div>
+          <div class="card-header mt-1"> Demographics </div>
           <div class="card-body">
               <div class="form-group">
-                <label for="mobile">Mobile Number</label>
-                <input  required name = "mobile_number" value="{{mobile_no}}"  type="lending_mobile_no" class="form-control" id="mobile" placeholder="Enter mobile number">
+                {% comment %} <label for="mobile">Marital Status</label> {% endcomment %}
+                <select name="marital_status">
+                  <option>Marital Status:</option>
+                  <option value="single">Single</option>
+                  <option value="married">Married</option>
+                  <option value="divorced">Divorced</option>
+                  <option value="widowed">Widowed</option>
+                  <option value="other">Other</option>
+                </select>
+                
+                <!--- <input  required name = "marital_status" value="{{mobile_no}}"  type="lending_mobile_no" class="form-control" id="mobile" placeholder="Enter mobile number"> -->
               </div>
               <div class="form-group">
-                <label for="mobile">Lending as:</label>
-                <input required name =  'brand' value="{{brand}}" type="text" class="form-control" id="lending_name" placeholder="Enter mobile lending name">
-              </div>
+              <select name="employment" id="employmentSelect">
+                  <option>Employment Status:</option>
+                  <option value="employed">Employed</option>
+                  <option value="unemployed">Unemployed</option>
+                  <option value="self-employed">Self-Employed</option>
+                  <option value="student">Student</option>
+                  <option value="retired">Retired</option>
+                  <option value="other">Other</option>
+                </select>
+                              </div>
               <div class="form-group">
                 <label for="paybil">Paybill Number</label>
                 <input required name =  'paybillno' value={{paybillno}} type="text" class="form-control" id="paybil" placeholder="Enter Paybill number">
@@ -96,12 +112,12 @@
           <div class="card-header mt-1"> Physical Address </div>
           <div class="card-body">
               <div class="form-group">
-                <label for="mobile">County</label>
-                <input required name = "county"  value="{{county}}" type="lending_mobile_no" class="form-control" id="mobile" placeholder="Enter your current county">
+                <label for="mobile">Country</label>
+                <input required name = "country"  value="{{country}}" type="lending_mobile_no" class="form-control" id="mobile" placeholder="Enter your current county">
               </div>
               <div class="form-group">
-                <label for="mobile">Town:</label>
-                <input required name =  'town' value="{{town}}" type="text" class="form-control" id="lending_name" placeholder="Enteryour current town">
+                <label for="mobile">County:</label>
+                <input required name =  'county' value="{{county}}" type="text" class="form-control" id="lending_name" placeholder="Enteryour current town">
               </div>
               <div class="form-group">
                 <label for="paybil">Zip Code</label>
