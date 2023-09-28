@@ -25,7 +25,7 @@
       <li class="active"><a href="{% url 'management:home' %}"><i class='bx bx-send'></i><span class="menu-title" data-i18n="">My Credit Data</span></a>
       </li>
       {% else %}
-      agent
+      {{user_type}}
       {% endif %}
     </ul>
   </div>

@@ -122,9 +122,8 @@ class Onboarding(View):
         if not request.user.is_authenticated:
             return redirect('users:login')
         return render(request, 'users/onboarding.html')
-    
-
 # logout view
+
 def logout_view(request):
     logout(request)
     return redirect("users:login")

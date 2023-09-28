@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  Admin Dashboard
+{% endblock %}
+{% block nav %}
+  {% include 'includes/nav.html' %}
+{% endblock %}
+
+{% block menu %}
+  {% include 'includes/menu.html' %}
+{% endblock %}
+
+{% block breadcrumbs %}
+  <style>
+    .view-group {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      padding-left: 0;
+      margin-bottom: 0;
+    }
+    .thumbnail {
+      margin-bottom: 30px;
+      padding: 0px;
+      -webkit-border-radius: 0px;
+      -moz-border-radius: 0px;
+      border-radius: 0px;
+    }
+    
+    .item.list-group-item {
+      float: none;
+      width: 100%;
+      background-color: #fff;
+      margin-bottom: 30px;
+      -ms-flex: 0 0 100%;
+      flex: 0 0 100%;
+      max-width: 100%;
+      padding: 0 1rem;
+      border: 0;
+    }
+    .item.list-group-item .img-event {
+      float: left;
+      width: 30%;
+    }
+    
+    .item.list-group-item .list-group-image {
+      margin-right: 10px;
+    }
+    .item.list-group-item .thumbnail {
+      margin-bottom: 0px;
+      display: inline-block;
+    }
+    .item.list-group-item .caption {
+      float: left;
+      width: 70%;
+      margin: 0;
+    }
+    
+    .item.list-group-item:before,
+    .item.list-group-item:after {
+      display: table;
+      content: ' ';
+    }
+    
+    .item.list-group-item:after {
+      clear: both;
+    }
+    i.fa.fa-star, i.fa.fa-star-half {
+        /* background-color: aqua; */
+        color: #11db14;
+        font-size: 18px;
+    }
+  </style>
+  <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
+    <h3 class="content-header-title mb-0 d-inline-block">Borrow</h3>
+    <div class="row breadcrumbs-top d-inline-block">
+      <div class="breadcrumb-wrapper col-12">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item" title="Click to visit ">
+            <a href="{% url 'borrow:borrower_profile' %}">Profile</a>
+          </li>
+          {% comment %} <li class="breadcrumb-item active" title="Click to visit ">Buy ICO</li> {% endcomment %}
+        </ol>
+      </div>
+    </div>
+  </div>
+  <div class="content-header-right col-md-4 col-12 d-none d-md-inline-block">
+    <div class="btn-group float-md-right">
+      {% comment %} <button class="edit-button" id="edit_user">
+        <svg class="edit-svgIcon" viewBox="0 0 512 512">
+          <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path>
+        </svg>
+      </button>
+      <button class="edit-button" id="save_user" style="display: none;">
+        <svg class="edit-svgIcon" style="enable-background:new 0 0 30 30;" version="1.1" viewBox="0 0 25 25" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <path d="M22,4h-2v6c0,0.552-0.448,1-1,1h-9c-0.552,0-1-0.448-1-1V4H6C4.895,4,4,4.895,4,6v18c0,1.105,0.895,2,2,2h18  c1.105,0,2-0.895,2-2V8L22,4z M22,24H8v-6c0-1.105,0.895-2,2-2h10c1.105,0,2,0.895,2,2V24z" />
+          <rect height="5" width="2" x="16" y="4" />
+        </svg>
+      </button> {% endcomment %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block bodycontent %}
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 my-3">
+        <div class="pull-right">
+          <div class="btn-group">
+            <button class="btn btn-info" id="list">List View</button>
+            <button class="btn btn-danger" id="grid">Grid View</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="products" class="row view-group">
+      <div class="item col-xs-4 col-lg-4 animate__animated animate__fadeInDownBig" style="border-radius: 10px;">
+        <div class="thumbnail card">
+          <div class="img-event">
+            <img class="group list-group-image img-fluid" src="http://placehold.it/400x250/000/fff" alt="" />
+          </div>
+          <div class="caption card-body">
+            <h4 class="group card-title inner list-group-item-heading" style="font-weight: 900;">Swafi 1 month</h4>
+            <p class="lender-name mb-1">
+                <strong>Lender Name</strong>
+                <span class="lender-name-actual">Swafi Credit</span>
+            </p>
+            <p class="lender-rating mb-1">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-half"></i>
+            </p>
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <a class="btn btn-success" href="http://www.jquery2dotnet.com">View Terms</a>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <a class="btn btn-success" href="http://www.jquery2dotnet.com">Request Loan</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function() {
+        $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
+        $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
+    });
+  </script>
+{% endblock %}

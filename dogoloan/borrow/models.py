@@ -66,4 +66,5 @@ class BorrowerProfile(models.Model):
     status = models.CharField(max_length=50, null=True, blank=True,
                                choices=[('Active', 'Active'), ('Inactive', 'Inactive')],
                                default='Active')
+    loan_limit = models.CharField(max_length=50, null=True, blank=False, default=0)
     
