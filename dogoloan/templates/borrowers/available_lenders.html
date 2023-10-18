@@ -13,6 +13,61 @@
 
 {% block breadcrumbs %}
   <style>
+    input#user-name {
+      font-size: 20px;
+      text-align: center;
+      text-shadow: azure;
+      letter-spacing: 2px;
+      font-family: monospace;
+  }
+  input#loanamount {
+    font-size: 20px;
+    font-family: monospace;
+    text-align: center;
+    letter-spacing: 1px;
+    /* padding: 4px; */
+  }
+  .form-group {
+    margin: 4px 0px !important;
+  }
+    button {
+      padding: 15px 25px;
+      border: unset;
+      border-radius: 15px;
+      color: #212121;
+      z-index: 1;
+      background: #e8e8e8;
+      position: relative;
+      font-weight: 1000;
+      font-size: 17px;
+      -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+      box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+      transition: all 250ms;
+      overflow: hidden;
+     }
+     
+    button::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0;
+      border-radius: 15px;
+      background-color: #27387c;
+      z-index: -1;
+      -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+      box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+      transition: all 250ms
+     }
+     
+    button:hover {
+      color: #e8e8e8;
+     }
+     
+    button:hover::before {
+      width: 100%;
+     }
     .view-group {
       display: -ms-flexbox;
       display: flex;
@@ -26,9 +81,11 @@
       padding: 0px;
       -webkit-border-radius: 0px;
       -moz-border-radius: 0px;
-      border-radius: 0px;
+      border-radius: 15px;
     }
-    
+    img.group.list-group-image.img-fluid {
+      border-radius: 15px 15px 0 0;
+    }
     .item.list-group-item {
       float: none;
       width: 100%;
@@ -79,7 +136,7 @@
       <div class="breadcrumb-wrapper col-12">
         <ol class="breadcrumb">
           <li class="breadcrumb-item" title="Click to visit ">
-            <a href="{% url 'borrow:borrower_profile' %}">Profile</a>
+            <a href="{% url 'borrow:available_loans' %}">Available Lenders</a>
           </li>
           {% comment %} <li class="breadcrumb-item active" title="Click to visit ">Buy ICO</li> {% endcomment %}
         </ol>
@@ -105,51 +162,54 @@
 
 {% block bodycontent %}
   <div class="container">
-    <div class="row">
-      <div class="col-lg-12 my-3">
-        <div class="pull-right">
-          <div class="btn-group">
-            <button class="btn btn-info" id="list">List View</button>
-            <button class="btn btn-danger" id="grid">Grid View</button>
-          </div>
-        </div>
-      </div>
-    </div>
+{% for product in lendersl %}
+<p>Product Name: {{product.name}}</p>
+<p>Lender Name: {{product.lender.brand}}</p>
+<p>Interest Rate: {{product.interest_rate}}</p>
+{% endfor %}
     <div id="products" class="row view-group">
+      {% for product in lenders %}
+     
       <div class="item col-xs-4 col-lg-4 animate__animated animate__fadeInDownBig" style="border-radius: 10px;">
         <div class="thumbnail card">
           <div class="img-event">
             <img class="group list-group-image img-fluid" src="http://placehold.it/400x250/000/fff" alt="" />
           </div>
           <div class="caption card-body">
-            <h4 class="group card-title inner list-group-item-heading" style="font-weight: 900;">Swafi 1 month</h4>
+            <h4 class="group card-title inner list-group-item-heading" style="font-weight: 900;">{{product.name}}</h4>
             <p class="lender-name mb-1">
                 <strong>Lender Name</strong>
-                <span class="lender-name-actual">Swafi Credit</span>
+                <span class="lender-name-actual">{{product.lender.brand}}</span>
             </p>
             <p class="lender-rating mb-1">
               <i class="fa fa-star"></i>
               <i class="fa fa-star"></i>
               <i class="fa fa-star"></i>
               <i class="fa fa-star-half"></i>
+              <span class="charges pl-2"><strong>Interest Rate :</strong> {{product.interest_rate}}%</span>
             </p>
+            
             <div class="row">
-              <div class="col-xs-12 col-md-6">
-                <a class="btn btn-success" href="http://www.jquery2dotnet.com">View Terms</a>
-              </div>
-              <div class="col-xs-12 col-md-6">
-                <a class="btn btn-success" href="http://www.jquery2dotnet.com">Request Loan</a>
+              {% comment %} <div class="col-xs-6 col-md-6 col-6">
+                <button type="submit" class="btn btn-success btn-xs" >View Details</button>
+              </div> {% endcomment %}
+              <div class="col-xs-6 col-md-6 col-6">
+                <button type="submit" class="btn" style="border-radius: 15px;border: 1px #27387c solid;" 
+                data-toggle="modal" data-target="#loanrequest-{{product.id}}">
+                  <img src="{% static 'images/icons/requestloan.svg' %}" alt="" style="height: 18px;padding: 0 2px 0 2px;">
+                  Apply Loan
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
+      
+      {% include 'modals/loan_request.html' %}
+      {% endfor %}
     </div>
   </div>
-  <script>
-    $(document).ready(function() {
-        $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
-        $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
-    });
-  </script>
+<script>
+
+</script>
 {% endblock %}

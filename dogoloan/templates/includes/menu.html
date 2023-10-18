@@ -20,7 +20,7 @@
       </li> 
    
       {% elif user_type == 'borrower'%}
-      <li class="active"><a href="{% url 'clients:home' %}"><i class="icon-home"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
+      <li class="active"><a href="{% url 'borrow:borrower_landing' %}"><i class="icon-home"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
       </li>
       <li class="active"><a href="{% url 'management:home' %}"><i class='bx bx-send'></i><span class="menu-title" data-i18n="">My Credit Data</span></a>
       </li>

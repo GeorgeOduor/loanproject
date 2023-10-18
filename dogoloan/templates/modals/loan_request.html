@@ -1,20 +1,7 @@
 <style>
-  input#user-name {
-    font-size: 20px;
-    text-align: center;
-    text-shadow: azure;
-    letter-spacing: 2px;
-    font-family: monospace;
-}
-input#loanamount {
-  font-size: 20px;
-  font-family: monospace;
-  text-align: center;
-  letter-spacing: 1px;
-  /* padding: 4px; */
-}
+
 </style><!-- Loan Limit Modal -->
-<div class="modal fade" id="loanrequest" tabindex="-1" role="dialog" aria-labelledby="loanLimitModalLabel" aria-hidden="true">
+<div class="modal fade" id="loanrequest-{{product.id}}" tabindex="-1" role="dialog" aria-labelledby="loanLimitModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -26,8 +13,20 @@ input#loanamount {
         <div class="modal-body text-center">
           <form>
             <div class="form-group">
-              <label for="user-name">Loan Amount (100 - 40000)</label>
+              <label for="user-name" style="display: contents;font-size: 17px !important;">Loan Amount (100 - 40000)</label>
               <input type="number" class="form-control" id="loanamount" placeholder="5000" value="john" required="" autofocus="" max="40000",min="100" />
+            </div>
+            <div class="form-group">
+              <label for="user-name" style="display: contents;font-size: 17px !important;">Interest ({{product.interest_rate}})%</label>
+              <input type="number" class="form-control" id="interest" placeholder="5000" value="john" required="" autofocus="" max="100",min="0" disabled />
+            </div>
+            <div class="form-group">
+              <label for="user-name" style="display: contents;font-size: 17px !important;">Facilitation Fees ()% of the interest</label>
+              <input type="number" class="form-control" id="fees" placeholder="5000" value="john" required="" autofocus="" max="100",min="0" disabled />
+            </div>
+            <div class="form-group">
+              <label for="user-name" style="display: contents;font-size: 17px !important;">Total</label>
+              <input type="number" class="form-control" id="total" placeholder="5000" value="john" required="" autofocus="" disabled />
             </div>
             <div class="form-group">
               <button type="submit" class="btn btn-outline-success m-0">Submit</button>

@@ -37,7 +37,7 @@ Client Dashboard
     height: 100%;
     width: 0;
     border-radius: 15px;
-    background-color: #212121;
+    background-color: #27387c;
     z-index: -1;
     -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
     box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
@@ -93,6 +93,9 @@ Client Dashboard
   .loan-balance {
     background-color: #007bff;
   }
+  span.card-label {
+    font-size: 14px;
+}
 </style>
 <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
   <h3 class="content-header-title mb-0 d-inline-block">Client</h3>
@@ -120,10 +123,10 @@ Client Dashboard
     <div class="row">
         <div class="col-md-4">
           <div class="card text-center">
-            <div class="card-header mt-1">
-              <div class="card-title">
+            <div class="cardheader mt-1">
+              {% comment %} <div class="card-title"> {% endcomment %}
                 <h2>My Loans</h2>
-              </div>
+              {% comment %} </div> {% endcomment %}
             </div>
             <div class="card-body">
               <div class="functionality-section row">
@@ -134,7 +137,7 @@ Client Dashboard
                    </button>
                 </div>
                 <div class="col-sm-3 col-md-6 col-6 pr-2 p-1">
-                  <button class = ""  data-toggle="modal" data-target="#loanrequest">
+                  <button class = "" onclick="location.href='{% url 'borrow:available_loans' %}'">
                     <img src="{% static 'images/icons/requestloan.svg' %}" alt="" height="59px">
                     Request Loan 
                   </button>   
@@ -142,6 +145,7 @@ Client Dashboard
                 <div class="col-sm-3 col-md-6 col-6 pr-2 p-1">
                   <button class = "" data-toggle="modal" data-target="#payloan">
                     <img src="{% static 'images/icons/payloan.svg' %}" alt="" height="59px">
+                    
                     Pay Loan
                    </button> 
                 </div>
@@ -155,27 +159,24 @@ Client Dashboard
         </div>
         <div class="col-md-4">
           <div class="card text-center">
-            <div class="card-header mt-1">
-              <div class="card-title">
+            <div class="cardheader mt-1">
                 <h2>My Account</h2>
-              </div>
             </div>
             <div class="card-body">
               <div class="functionality-section row">
-                <div class="col-sm-3 col-md-6 col-6 pr-2 p-1">
-                  {% comment %} <a href="#" class="functionality-btn check-loan">Loan Limit</a> {% endcomment %}
-                  <button class="css-button css-button-arrow btn-success"><i class="ficon icon-table"></i>Account Statement </button>
+                <div class="col-sm-3 col-md-6 col-6  p-1">
+                   <button class="" data-toggle="modal" data-target="#accountStatement">
+                    {% comment %} <img src="{% static 'images/icons/loanlimit.svg' %}" alt="" height="59px"> {% endcomment %}
+                    <img src="{% static 'images/icons/acctstatement.svg' %}" alt="" height="59px">
+                    <span class="card-label">Account Statement </span> 
+                   </button>
                 </div>
-                <div class="col-sm-3 col-md-6 col-6 pr-2 p-1">
-                  <button class="css-button css-button-arrow btn-primary"><i class="ficon icon-users"></i></button>   
-                </div>
-                <div class="col-sm-3 col-md-6 col-6 pr-2 p-1">
-                  <button class="css-button css-button-arrow btn-gradient-primary">Guarantors</button> 
-                </div>
-                <div class="col-sm-3 col-md-6 col-6 pr-2 p-1">
-                  <button class="css-button css-button-arrow btn-gradient-secondary">Messages 
-                    <span class="badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">5</span>
-                   </button> 
+                <div class="col-sm-3 col-md-6 col-6  p-1">
+                  <button class="" data-toggle="modal" data-target="#accountStatement">
+                    {% comment %} <img src="{% static 'images/icons/loanlimit.svg' %}" alt="" height="59px"> {% endcomment %}
+                    <img src="{% static 'images/icons/guarantor.svg' %}" alt="" height="59px">
+                    <span class="card-label">My Guarantors  </span>
+                   </button>
                 </div>
               </div>
             </div>
@@ -208,7 +209,8 @@ Client Dashboard
 
 {% include 'modals/loanlimit.html' %}
 {% include 'modals/dataupload.html' %}
-{% include 'modals/loan_request.html' %}
+{% comment %} {% include 'modals/loan_request.html' %} {% endcomment %}
 {% include 'modals/payloan.html' %}
 {% include 'modals/loanbalance.html' %}
+{% include 'modals/account_statement.html' %}
 {% endblock %}

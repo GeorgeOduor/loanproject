@@ -4,6 +4,7 @@ from django.http import JsonResponse
 # Create your views here.
 from users.models import Profile
 from .models import BorrowerProfile
+from lenders.models import LoanProduct,LenderProfile
 
 class BorrowerLandingView(View):
     def get(self,request):
@@ -90,12 +91,19 @@ class BorrowerProfileView(View):
 
 
 class AvailableLoansView(View):
-
+    loanproducts = LoanProduct.objects.select_related('lender')#.filter(status = "Active")
+    # lenders = LenderProfile
     def get(self,request):
+        
         try:
             context = {
                 'user_type': 'borrower',
+                'lenders':self.loanproducts
+
             }
+            print(self.loanproducts.values())
+            
             return render(request, 'borrowers/available_lenders.html',context=context)
-        except:
-            return JsonResponse({'error': 'Something went wrong,please try again'})
+        except Exception as e:
+            raise e
+            return JsonResponse({'error': f'Something went wrong,please try again:{e}'})

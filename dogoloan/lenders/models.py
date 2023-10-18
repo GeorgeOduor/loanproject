@@ -68,6 +68,7 @@ class LoanProduct(models.Model):
 
     def __str__(self):
         return self.name
+
 class LoanApplications(models.Model):
     lender       = models.ForeignKey(LenderProfile, on_delete=models.CASCADE)
     loan_product = models.ForeignKey(LoanProduct, on_delete=models.CASCADE)
