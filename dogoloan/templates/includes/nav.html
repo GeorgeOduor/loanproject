@@ -31,24 +31,14 @@
           </li>
         </ul>
         <ul class="nav navbar-nav float-right">
-          <li class="dropdown dropdown-user nav-item">
+          <li class="dropdown dropdown-notification nav-item">
             {% if user_type == 'lender' %}
-              <a class="dropdown-toggle nav-link dropdown-user-link" href="/borrow" data-toggle="dropdown">
-                <span class="avatar avatar-online"><img src="{% static '/images/loanapplication.png' %}" alt="avatar" /></span>
-                <span class="mr-1"><span class="user-name text-bold-700" style="
-                color: green;
-                text-decoration: underline;
-                ">Switch to borowing</span></span>
-              </a>
-            {% else %}
-              <a class="nav-lin dropdown-user-lin" href="lend" data-toggle="dropdown">
-                <span class="avatar avatar-online"><img src="{% static '/images/loanapplication.png' %}" alt="avatar" /></span>
-                <span class="mr-1"><span class="user-name text-bold-700" style="
-                color: green;
-                text-decoration: underline;
-                ">Switch to lending</span></span>
-              </a>
-            {% endif %}
+            <a class="nav-link nav-link-label" href="{% url 'borrow:borrower_landing' %}" style="color: green;font-weight: bold;">
+              Switch to borrowing
+            </a>{% else %}
+            <a class="nav-link nav-link-label" href="{% url 'lenders:lend' %}" style="color: green;font-weight: bold;">
+              Switch to lending
+            </a>{% endif %}
           </li>
           <li class="dropdown dropdown-notification nav-item">
             <a class="nav-link nav-link-label" href="#" data-toggle="dropdown">
@@ -90,13 +80,8 @@
             <div class="dropdown-menu dropdown-menu-right">
               <a class="dropdown-item" href="account-profile.html"><i class="ft-award"></i>John Doe</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item"
-                href="
-              {% if user_type == 'lender' %}
-                  {% url 'lenders:profile' %}
-                {% endif %}">
-                <i class="ft-user"></i> Profile
-              </a>
+              <a class="dropdown-item" href="
+              {% if user_type == 'lender' %}{% url 'lenders:profile' %}{% endif %}"><i class="ft-user"></i> Profile</a>
               <a class="dropdown-item" href="{% url 'lenders:lender_wallet' %}"><i class="icon-wallet"></i> My Wallet</a>
               <a class="dropdown-item" href="transactions.html"><i class="ft-check-square"></i> Transactions</a>
               <div class="dropdown-divider"></div>
@@ -108,3 +93,18 @@
     </div>
   </div>
 </nav>
+
+{% comment %} {% if user_type == 'lender' %}
+  <a class="nav-link nav-link-label" href="{% url 'borrow:borrower_landing' %}" data-toggle="dropdown">
+    <span class="avatar avatar-online"><img src="{% static '/images/loanapplication.png' %}" alt="avatar" /></span>
+    <span class="mr-2"><span class="user-name text-bold-700" style="color: green;text-decoration: underline;">Switch to borowing</span></span>
+  </a>
+{% else %}
+  <a class="nav-link nav-link-label" href="/lend/" data-toggle="dropdown">
+    <span class="avatar avatar-online"><img src="{% static '/images/loanapplication.png' %}" alt="avatar" /></span>
+    <span class="mr-1"><span class="user-name text-bold-700" style="
+                color: green;
+                text-decoration: underline;
+                ">Switch to lending</span></span>
+  </a>
+{% endif %} {% endcomment %}

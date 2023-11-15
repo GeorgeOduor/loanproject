@@ -67,4 +67,18 @@ class BorrowerProfile(models.Model):
                                choices=[('Active', 'Active'), ('Inactive', 'Inactive')],
                                default='Active')
     loan_limit = models.CharField(max_length=50, null=True, blank=False, default=0)
-    
+
+class Notifications(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_type = models.CharField(max_length=50, null=True, blank=True,choices=[
+        ('borrower', 'Borrower'),
+        ('lender', 'Lender'),
+        ('admin', 'Admin')
+    ])
+    type = models.CharField(max_length=50, null=True, blank=True,choices=[
+        ('loan_disbursement', 'Loan Disbursement'),
+        ('loan_repayment', 'Loan Repayment'),
+    ])
+    title = models.CharField(max_length=50, null=True, blank=True)
+    message = models.TextField(null=True, blank=True)
+    created_on = models.DateField(auto_now_add=True)

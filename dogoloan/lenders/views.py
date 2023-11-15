@@ -3,9 +3,13 @@ from django.http import JsonResponse
 from django.views import View
 from time import sleep
 from django.contrib import messages
+
+
 # Create your views here.
-from .models import LoanProduct,LenderProfile
-from users.models import Profile
+from .models import LoanProduct,LenderProfile,LoansCounter, Transaction
+from .models import LoanApplications as applicants
+from borrow.models import BorrowerProfile
+from users.models import Profile,User
 
 class LendersDashboard(View):
     template_name = 'lenders/dashboard.html'
@@ -188,15 +192,20 @@ def lender_application(request,category):
         
 class Lend(View):
     template_name = 'lenders/loanapplications.html'
+    user = LenderProfile.objects
     def get(self, request):
         context = {
-            'user_type': 'lender',
+            'user_type' : 'lender',
         }
         # check if user's lender profile is set
-        lender_profile = LenderProfile.objects.filter(user = request.user)
+        lender_profile = self.user.filter(user = request.user)
 
         if lender_profile.exists():
-            # check if profile fields are complete
+            # fetch new loan applicants
+            new_applicants = applicants.objects.filter(application_status='Pending',
+                                                       lender = self.user.get(user = request.user)).\
+                order_by('-created_on')
+            context['new_applicants'] = new_applicants
             return render(request, self.template_name,context=context)
         else:
             return redirect('lenders:profile')
@@ -206,5 +215,90 @@ class Lend(View):
             'user_type': 'lender',
         }
         form_data           = request.POST
+    
+
+class CreditDetails(View):
+    template_name = 'lenders/applicant_details.html'   
+
+    def get(self, request, pk, application_id):
+        user = User.objects.get(id = pk)
+        profile_info = Profile.objects.get(user = user)
+        borrower_profile = BorrowerProfile.objects.get(user = user)
+        # application Details
+        applications_details = applicants.objects.get(id = application_id)
+        context = {
+            'user_type'         : 'lender',
+            'first_name'        : profile_info.first_name,
+            'last_name'         : profile_info.last_name,
+            'national_id'       : profile_info.national_id,
+            'email'             : profile_info.email_address,
+            'mobile_no'         : user.msisdn,
+            'gender'            : profile_info.gender,
+            'town'              : profile_info.town,
+            'dob'               : profile_info.date_of_birth,
+            'marital_status'    : borrower_profile.marital_status,
+            'education'         : borrower_profile.education,
+            # financial details
+            'employment_status' : borrower_profile.employment_status,
+            'income_range'      : borrower_profile.income_range,
+            'credit_score'      : None,
+            'expenses'          : None,
+            'Collateral'        : None,
+            'Guarantor'         : None,
+            'apl_details'       :applications_details,
+            
+        }
+
         
-        
+        return render(request, self.template_name,context=context)  
+    
+    def post(self, request, pk, application_id):
+        context = {
+            'user_type': 'lender',
+        }
+        loan_approval(request, application_id)
+        return redirect('lenders:lend')
+    
+    
+def loan_approval(request,application_id):
+    application_id      = application_id
+    action              = request.POST.get('action')
+    try:
+        lender = LenderProfile.objects.get(user = request.user)
+        counter = LoansCounter.objects.filter(lender = lender )
+        if action == 'Approve':
+            # approve application
+            application = applicants.objects.get(id=application_id)
+            application.application_status = 'Approved'
+            # send 
+            # save transaction details
+            Transaction.objects.create_borrowing_transaction(
+                borrower    = application.borrower,
+                lender      = application.lender,
+                product     = application.loan_product,
+                principle   = application.principle,
+                interest    = application.interest,
+                excise_duty = application.fees
+                )
+            application.save()
+            # send approval message to borrower on browser
+            messages.success(request, 'This loan application has been approved')
+            # update counter
+            if counter.exists():
+                approved_loans = counter.get().approved_loans
+                counter.update(approved_loans = approved_loans + 1)
+        else:
+            # reject application
+            application = applicants.objects.get(id=application_id)
+            application.delete()
+            # send rejection message to borrower on browser
+            messages.error(request, 'This loan application has been rejected')
+            
+    except Exception as e:
+        # messages.error(request, f'Application could not be approved due to {e}')
+        # return render(request, 'includes/applications.html')
+        return JsonResponse({'error': f'Something went wrong,please try again:{e}'})
+    return redirect('lenders:lend')
+
+
+

@@ -34,3 +34,32 @@ class LoanProductAdmin(admin.ModelAdmin):
     )
     list_filter = ('status',)
 
+@admin.register(LoanApplications)
+class LoanApplicationsAdmin(admin.ModelAdmin):
+    list_display = ('lender','loan_product','borrower','principle','interest','fees','total','application_status')
+    search_fields = ('lender','loan_product','borrower','principle','interest','fees','total','application_status')
+    add_fieldsets = (
+        (
+            None,
+        )
+    )
+
+@admin.register(Transaction)
+class TransactionAdmin(admin.ModelAdmin):
+    list_display = ('borrower','product','lender','transaction_id','transaction_type','transaction_date','debit','credit','description','balance')
+    search_fields = ('borrower','product','lender','transaction_id','transaction_type','transaction_date','debit','credit','description','balance')
+    add_fieldsets = (
+        (
+            None,
+        )
+    )
+
+@admin.register(LoansCounter)
+class LoansCounterAdmin(admin.ModelAdmin):
+    list_display = ('lender','applied_loans','approved_loans')
+    search_fields = ('lender','applied_loans','approved_loans')
+    add_fieldsets = (
+        (
+            None,
+        )
+    )

@@ -1,8 +1,17 @@
 <style>
+input {
+    text-align: center;
+    font-size: 23px !important;
+    padding: 0px !important;
+    width: 100% !important;
+}
 
+label {
+    font-size: 10px !important;
+}
 </style><!-- Loan Limit Modal -->
-<div class="modal fade" id="loanrequest-{{product.id}}" tabindex="-1" role="dialog" aria-labelledby="loanLimitModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade bd-example-modal-xs" id="loanrequest-{{product.id}}" tabindex="-1" role="dialog" aria-labelledby="loanLimitModalLabel" aria-hidden="true">
+    <div class="modal-dialog small_modal" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="loanLimitModalLabel">Loan Request</h5>
@@ -11,25 +20,34 @@
           </button>
         </div>
         <div class="modal-body text-center">
-          <form>
+          <form class="loanForm" data-product-id="{{product.id}}" method="post"> 
+            {% csrf_token %}
+            <input type="text" name="lender_id" value="{{product.lender.id}}" hidden>
+            <input type="text" name="product_id" value="{{product.id}}" hidden>
             <div class="form-group">
-              <label for="user-name" style="display: contents;font-size: 17px !important;">Loan Amount (100 - 40000)</label>
-              <input type="number" class="form-control" id="loanamount" placeholder="5000" value="john" required="" autofocus="" max="40000",min="100" />
+              <label for="user-name" style="display: contents;font-size: 14px !important;">Loan Amount (100 - 40000)</label>
+              <input name="loan_amount" type="number" class="form-control loan-amount" id="loanamount-{{product.id}}" placeholder="5000" required="" autofocus="" max="{{product.max_loan_amount}}",min="{{product.min_loan_amount}}" />
             </div>
             <div class="form-group">
-              <label for="user-name" style="display: contents;font-size: 17px !important;">Interest ({{product.interest_rate}})%</label>
-              <input type="number" class="form-control" id="interest" placeholder="5000" value="john" required="" autofocus="" max="100",min="0" disabled />
+              <label for="user-name" style="display: contents;font-size: 14px !important;">Interest ({{product.interest_rate}})%</label>
+              <input type="number" class="form-control" id="interestrate-{{product.id}}" value="{{product.interest_rate}}" required="" autofocus="" max="100",min="0" hidden />
+              <input name = "interest_rate" type="number" class="form-control" id="interest-{{product.id}}" placeholder="5000" required="" autofocus="" max="100",min="0" readonly />
             </div>
             <div class="form-group">
-              <label for="user-name" style="display: contents;font-size: 17px !important;">Facilitation Fees ()% of the interest</label>
-              <input type="number" class="form-control" id="fees" placeholder="5000" value="john" required="" autofocus="" max="100",min="0" disabled />
+              <label for="user-name" style="display: contents;font-size: 12px !important;">Facilitation Fees ({{product.penalties}})% of the interest</label>
+              <input hidden readonly type="number" class="form-control" id="feesrate-{{product.id}}" value="{{product.penalties}}" placeholder="5000" required="" autofocus="" max="100",min="0" readonly />
+              <input name = "facilitation_fees" type="number" class="form-control" id="fees-{{product.id}}" placeholder="5000" required="" autofocus="" max="100",min="0" readonly />
             </div>
             <div class="form-group">
-              <label for="user-name" style="display: contents;font-size: 17px !important;">Total</label>
-              <input type="number" class="form-control" id="total" placeholder="5000" value="john" required="" autofocus="" disabled />
+              <label for="user-name" style="display: contents;font-size: 14px !important;">Total Payable</label>
+              <input name = "total_loan_amount" type="number" class="form-control" id="total-{{product.id}}" placeholder="5000"  required="" autofocus="" readonly />
             </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-outline-success m-0">Submit</button>
+            <div class="form-group mt-1">
+              {% comment %} <button type="submit" class="btn btn-outline-success btn-xs m-0">Submit</button> {% endcomment %}
+              <button type="submit" class="btn" style="border-radius: 15px;border: 1px #27387c solid;" data-toggle="modal" data-target="#loanrequest-3">
+                <img src="/static/images/icons/requestloan.svg" alt="" style="height: 18px;padding: 0 2px 0 2px;">
+                Submit
+              </button>
             </div>
           </form>
         </div>
@@ -38,7 +56,34 @@
         </div>
       </div>
     </div>
-  </div>
-  <script>
+</div>
+{% comment %} <script>
+  // Get references to the loan amount and interest input fields
+  var loanAmountInput = document.getElementById("loanamount-{{product.id}}");
+  var interestInput = document.getElementById("interest-{{product.id}}");
+  var feesInput = document.getElementById("fees-{{product.id}}");
+  var totalLoanAmount = document.getElementById('total-{{product.id}}')
 
-  </script>
+  // Listen for changes in the loan amount input field
+  loanAmountInput.addEventListener("input", function () {
+    // Get the loan amount entered by the user
+    var loanAmount = parseFloat(loanAmountInput.value);
+
+    // Get the dynamic interest rate from the {{product.interest_rate}} value (replace this with your actual data source)
+    var interestRate = parseFloat("{{product.interest_rate}}");
+
+    // Calculate the interest amount based on the loan amount and interest rate
+    var interestAmount = (loanAmount * interestRate) / 100;
+    // facilitation fees
+    var feesrate = parseFloat("{{product.penalties}}");
+    var facilitationFees = (interestAmount * feesrate ) /100
+    // total loan amount payable
+    var totalamount = loanAmount + parseFloat(interestAmount) + parseFloat(facilitationFees)
+
+
+    // Update the interest input field with the calculated interest amount
+    interestInput.value = interestAmount.toFixed(2); // You can format it as needed
+    feesInput.value = facilitationFees.toFixed(2); // You can format it as needed
+    totalLoanAmount.value = totalamount.toFixed(2)
+  });
+</script> {% endcomment %}

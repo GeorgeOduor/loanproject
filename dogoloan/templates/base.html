@@ -40,6 +40,9 @@ body {
   font-family: Arial, sans-serif;
   background-color: #f8f9fa;
 }
+.modal-dialog.small_modal {
+  width: 270px;
+}
 .loader {
     border: 4px solid rgba(0, 0, 0, 0.1);
     border-top: 4px solid #3498db;
@@ -267,7 +270,7 @@ button:hover .button-text {
   color: #999;
   font-size: 12px;
   font-weight: normal;
-  position: absolute;
+  //position: absolute;
   pointer-events: none;
   left: 5px;
   top: 4px;
@@ -281,7 +284,13 @@ button:hover .button-text {
   font-size: 14px;
   color: #5264AE;
   }
-  
+  input#loanamount {
+    text-align: center;
+    font-style: revert-layer;
+    font-size: 23px;
+    padding: 2px;
+    font-family: math;
+  }
   .bar {
   position: relative;
   display: block;
@@ -358,7 +367,7 @@ button:hover .button-text {
     color: #999;
     font-size: 12px;
     font-weight: normal;
-    position: absolute;
+    //position: absolute;
     pointer-events: none;
     left: 5px;
     top: 4px;

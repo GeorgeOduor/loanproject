@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  Loan Requests
+{% endblock %}
+{% block nav %}
+  {% include 'includes/nav.html' %}
+{% endblock %}
+
+{% block menu %}
+  {% include 'includes/menu.html' %}
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
+    <h3 class="content-header-title mb-0 d-inline-block">Admin</h3>
+    <div class="row breadcrumbs-top d-inline-block">
+      <div class="breadcrumb-wrapper col-12">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item" title="Click to visit ">
+            <a href="#">Client Credit Details</a>
+          </li>
+          <!-- <li class="breadcrumb-item active" title="Click to visit ">23 Cases</li> -->
+        </ol>
+      </div>
+    </div>
+  </div>
+  <div class="content-header-right col-md-4 col-12 d-none d-md-inline-block">
+    {% comment %} <div class="btn-group float-md-right">
+      <a class="btn-gradient-secondary btn-xs white" href="wallet.html">Export</a>
+    </div> {% endcomment %}
+  </div>
+{% endblock %}
+
+{% block bodycontent %}
+<div class="row">
+    <div class="col-md-4">
+      <div class="card pull-up">
+        <div class="card-header mt-1 mb-0 p-0 ">   
+          <H4>KYC Details</H4>
+        </div>
+        <div class="card-body p-1 mt-0">
+          <div class="row">
+            <div class="col-md-12">
+              <p class="card-text">
+                <i class='bx bx-user'></i> <strong>Name:</strong> <span class="details" > {{first_name}} {{last_name}} </span>
+              </p>
+              <p class="card-text">
+                <i class='bx bx-female' ></i><strong>Gender:</strong> <span class="details"> {{gender}}</span>
+              </p>
+              <p class="card-text">
+                <i class='bx bxs-id-card' ></i><strong>ID Number:</strong> <span class="details" > {{national_id}} </span>
+              </p>
+              <p class="card-text">
+                <i class='bx bxs-phone'></i> <strong>Phone:</strong> <span class="details" > {{mobile_no}} <i class='bx bxs-plus-circle' style="cursor: pointer;" data-toggle="tooltip" data-placement="top" data-original-title="2 more phone numbers "></i></span>
+              </p>
+              <p class="card-text">
+                <i class='bx bxs-envelope'></i> <strong>Email:</strong> <span class="details"> {{email}}<i class='bx bxs-plus-circle' style="cursor: pointer;"  data-toggle="tooltip" data-placement="top" data-original-title="2 more email ids"></i></span>
+              </p>
+              <p class="card-text">
+                <i class='bx bx-calendar-event'></i><strong>Date of Birth:</strong> <span class="details"> {{dob}}</span>
+              </p>
+              <p class="card-text">
+                <i class='bx bxs-map'></i><strong>Address:</strong> <span class="details"> {{town}}</span>
+              </p>
+              <p class="card-text">
+                <i class='bx bxs-school'></i><strong>Education:</strong> <span class="details" > {{education}} </span>
+              </p>
+              <p class="card-text">
+                <i class='bx bxs-user-plus'></i><strong>Marital Status:</strong> <span class="details" > {{marital_status}} </span>
+              </p>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card pull-up">
+        <div class="card-header mt-1 mb-0 p-0">
+          <h5 class="card-title">Financial Details</h5>
+        </div>
+        <div class="card-body p-1 mt-0">
+          <div class="row mt-0">
+            <div class="col-md-12 p-1">
+              <p class="card-text"><strong>Income Sources:</strong> <span class="details">{{employment_status}}</span></p>
+            <p class="card-text"><strong>Monthly Income:</strong> <span class="details">{{income_range}}</span></p>
+            <p class="card-text"><strong>Monthly Expenses:</strong><span class="details">{{expenses}}</span></p>
+            <p class="card-text"><strong>Credit Score:</strong> <span class="details">{{credit_score}}</span></p>
+            <p class="card-text"><strong>Collateral:</strong> <span class="details mb-0">
+              {% if collateral %}
+              Available |  
+              <button  class="mb-0 btn-sm btn btn-success  collateralview" >View</button></span>{% else %}
+              <span style="color: red;">Not Available</span>
+              {% endif %}
+            </p>
+            <p class="card-text"><strong>Guarantor Information:</strong> <span class="details mb-0">
+              {% if guarantor %}
+              Available | 
+              <button  class="mb-0 btn-sm btn btn-success  collateralview" >View</button>
+            </span>
+            {% else %}
+            <span style="color: red;">Not Available</span>
+            {% endif %}
+            </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% if mpesa_statement %}
+      <div class="card pull-up">
+        <div class="card-header mt-1 mb-0 p-0">
+          <h5 class="card-title">Client Activity</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <p class="card-text"><strong>Total Transactions:</strong> <span class="details">50</span></p>
+              <p class="card-text"><strong>Total Deposits:</strong> <span class="details">Ksh 2,000</span></p>
+              <p class="card-text"><strong>Total Withdrawals:</strong> <span class="details">Ksh 1,500</span></p>
+              <p class="card-text"><strong>Average Transaction Amount:</strong> <span class="details">Ksh 50</span></p>
+              <p class="card-text"><strong>Largest Transaction Amount:</strong> <span class="details">Ksh 500</span></p>
+              <p class="card-text"><strong>Most Active Day of the Week:</strong> <span class="details">Friday</span></p>
+              <p class="card-text"><strong>Most Active Hour of the Day:</strong> <span class="details">2 PM</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      {% endif %}
+      
+    </div>
+    <div class="col-md-4">
+      <div class="card pull-up">
+        <div class="card-header mt-1 mb-0 p-0">
+          <h5 class="card-title">Loan Profile</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+                <p class="card-text"><strong>Loan Limit:</strong> <span class="details">Ksh 5,000</span></p>
+                <p class="card-text"><strong>Maximum Due Days:</strong> <span class="details">30 days</span></p>
+                <p class="card-text"><strong>Maximum Loan Amount:</strong> <span class="details">Ksh 5,000</span></p>
+                <p class="card-text"><strong>Most Recent Due Days:</strong> <span class="details">7 days</span></p>
+                <p class="card-text"><strong>Average Repayment Days:</strong> <span class="details">20 days</span></p>
+                <p class="card-text"><strong>Total Number of Loans:</strong> <span class="details">10</span></p>
+                <p class="card-text"><strong>Repayment Rate:</strong> <span class="details">90%</span></p>
+            </div>
+             
+          </div>
+        </div>
+      </div>
+      <div class="card pull-up">
+        <div class="card-header mt-1 mb-0 p-0">
+          <h5 class="card-title">Disbursement Decision</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <p class="card-text"><strong>Loan Amount Requested:</strong> <span class="details">Ksh {{apl_details.principle}}</span></p>
+              <p class="card-text"><strong>Interest Amount:</strong> <span class="details">{{apl_details.interest}}</span></p>
+              <p class="card-text"><strong>Charges/Fees </strong> <span class="details">Ksh {{apl_details.fees}}</span></p>
+              <p class="card-text"><strong>Repayment Amount:</strong> <span class="details">Ksh {{apl_details.total}}</span></p>
+              {% comment %} <p class="card-text"><strong>Repayment Term:</strong> <span class="details">1 month</span></p> {% endcomment %}
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="text-center">
+            <div class="row">
+              <div class="col-md-6 text-center">
+                <form action="" method="post">
+                  {% csrf_token %}
+                  <input type="text" name="action" value="Approve" hidden readonly/>
+                  <button type="submit" class="mb-1 btn-sm btn btn-success round">Approve</button>
+                </form>
+              </div>
+              <div class="col-md-6 text-center">
+                <form action="" method="post">
+                  {% csrf_token %}
+                  <input type="text" name="action" value="Reject" hidden readonly/>
+                  <button type="submit" class="mb-1 btn-sm btn btn-danger round">Reject</button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      
+      <script>
+        function approveLoan() {
+          // Perform necessary actions for loan approval
+          alert("Loan approved!");
+        }
+      
+        function rejectLoan() {
+          // Perform necessary actions for loan rejection
+          alert("Loan rejected!");
+        }
+      </script>
+      
+    </div>
+
+  </div>
+
+
+  <!-- more kpis -->
+{% endblock %}

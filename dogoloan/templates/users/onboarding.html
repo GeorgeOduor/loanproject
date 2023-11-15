@@ -245,44 +245,43 @@
       width: 600px;
     }
   </style>
-  <section id="account-login" class="flexbox-container">
-    <div class="col-12 d-flex align-items-center justify-content-center">
-      <div class="onboarding-card">
-        <div class="card-header bounce-in-top">
-          <img src="{% static 'images/welcome.png' %}" alt="" srcset="" class="welcome_image" style="height: 100px;border-radius: 27px;" />
-          I want to:
+<section id="account-login" class="flexbox-container">
+  <div class="col-12 d-flex align-items-center justify-content-center">
+    <div class="onboarding-card">
+      <div class="card-header bounce-in-top">
+        <img src="{% static 'images/welcome.png' %}" alt="" srcset="" class="welcome_image" style="height: 100px;border-radius: 27px;" />
+        I want to:
+      </div>
+      <div class="choice-panel">
+        <div class="lend">
+          <div class="onboarding-action bounce-in-left" style="animation-delay: .5s;">
+            <img src="{% static 'images/lend.png' %}" alt="" srcset="" class="onboarding_logo logo_image" />
+            <a href="/accounts/onboarding/lend/" class="learn-more btn-borrow mt-5 button" id="lend">
+              <span class="circle" aria-hidden="true"><span class="icon arrow"></span></span>
+              <span class="button-text">Lend</span>
+            </a>
+          </div>
         </div>
-        <div class="choice-panel">
-          <div class="lend">
-            <div class="onboarding-action bounce-in-left" style="animation-delay: .5s;">
-              <img src="{% static 'images/lend.png' %}" alt="" srcset="" class="onboarding_logo logo_image" />
-              <a href="/accounts/onboarding/lend/" class="learn-more btn-borrow mt-5 button" id="lend">
-                <span class="circle" aria-hidden="true"><span class="icon arrow"></span></span>
-                <span class="button-text">Lend</span>
-              </a>
-            </div>
+        <div class="borrow">
+          <div class="onboarding-action bounce-in-right" style="animation-delay: 1s;">
+            <img src="{% static 'images/borrow.png' %}" alt="" srcset="" class="onboarding_logo logo_image" />
+            <!-- <p class="card__content">Borrow</p> -->
+            <a href="{% url 'borrow:borrower_landing' %}" class="learn-more btn-borrow mt-5 button">
+              <span class="circle" aria-hidden="true"><span class="icon arrow"></span></span>
+              <span class="button-text">Borrow</span>
+            </a>
           </div>
-          <div class="borrow">
-            <div class="onboarding-action bounce-in-right" style="animation-delay: 1s;">
-              <img src="{% static 'images/borrow.png' %}" alt="" srcset="" class="onboarding_logo logo_image" />
-              <!-- <p class="card__content">Borrow</p> -->
-              <a href="{% url 'borrow:borrower_landing' %}" class="learn-more btn-borrow mt-5 button">
-                <span class="circle" aria-hidden="true"><span class="icon arrow"></span></span>
-                <span class="button-text">Borrow</span>
-              </a>
-            </div>
-          </div>
-          <div class="agent-ui">
-            <div class="onboarding-action-agents bounce-in-bottom" style="animation-delay: 1.5s;">
-              <a class="learn-more button" id="borrow">
-                <span class="circle" aria-hidden="true"><span class="icon arrow"></span></span>
-                <span class="button-text">Proceed as agent</span>
-              </a>
-            </div>
+        </div>
+        <div class="agent-ui">
+          <div class="onboarding-action-agents bounce-in-bottom" style="animation-delay: 1.5s;">
+            <a class="learn-more button" id="borrow">
+              <span class="circle" aria-hidden="true"><span class="icon arrow"></span></span>
+              <span class="button-text">Proceed as agent</span>
+            </a>
           </div>
         </div>
       </div>
     </div>
-  </section>
-  <script></script>
+  </div>
+</section>
 {% endblock %}

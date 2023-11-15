@@ -120,6 +120,13 @@ Client Dashboard
 {% block bodycontent %}
 <div class="row">
   <div class="container">
+    {% if messages %}
+        <ul class="messages" style="padding: 0;">
+            {% for message in messages %}
+            <li id="registrationMessage" {% if message.tags %} class="{{ message.tags }} alert-success animate__animated animate__zoomIn"{% endif %} style="list-style: none;padding: 5px;border-radius: 5px;">{{ message }} </li>
+            {% endfor %}
+        </ul>
+      {% endif %}
     <div class="row">
         <div class="col-md-4">
           <div class="card text-center">
@@ -145,7 +152,6 @@ Client Dashboard
                 <div class="col-sm-3 col-md-6 col-6 pr-2 p-1">
                   <button class = "" data-toggle="modal" data-target="#payloan">
                     <img src="{% static 'images/icons/payloan.svg' %}" alt="" height="59px">
-                    
                     Pay Loan
                    </button> 
                 </div>
@@ -213,4 +219,23 @@ Client Dashboard
 {% include 'modals/payloan.html' %}
 {% include 'modals/loanbalance.html' %}
 {% include 'modals/account_statement.html' %}
+<script>
+  $(document).ready(function() {
+    $("#loanbalance").click(function() {
+        $.ajax({
+            url: '{% url "borrow:loan_balance" %}',
+            type: 'GET',
+            success: function(response) {
+                // fetch balnance and show
+                $("#balance").text(response.balance);
+                $("#loanbalance").modal('show');
+
+            },
+            error: function() {
+                console.log("Error fetching data.");
+            }
+        });
+    });
+});
+</script>
 {% endblock %}

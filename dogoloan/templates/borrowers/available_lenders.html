@@ -19,17 +19,17 @@
       text-shadow: azure;
       letter-spacing: 2px;
       font-family: monospace;
-  }
-  input#loanamount {
-    font-size: 20px;
-    font-family: monospace;
-    text-align: center;
-    letter-spacing: 1px;
-    /* padding: 4px; */
-  }
-  .form-group {
-    margin: 4px 0px !important;
-  }
+    }
+    input#loanamount {
+      font-size: 20px;
+      font-family: monospace;
+      text-align: center;
+      letter-spacing: 1px;
+      /* padding: 4px; */
+    }
+    .form-group {
+      margin: 4px 0px !important;
+    }
     button {
       padding: 15px 25px;
       border: unset;
@@ -40,14 +40,14 @@
       position: relative;
       font-weight: 1000;
       font-size: 17px;
-      -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-      box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+      -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+      box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
       transition: all 250ms;
       overflow: hidden;
-     }
-     
+    }
+    
     button::before {
-      content: "";
+      content: '';
       position: absolute;
       top: 0;
       left: 0;
@@ -56,18 +56,18 @@
       border-radius: 15px;
       background-color: #27387c;
       z-index: -1;
-      -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-      box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-      transition: all 250ms
-     }
-     
+      -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+      box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+      transition: all 250ms;
+    }
+    
     button:hover {
       color: #e8e8e8;
-     }
-     
+    }
+    
     button:hover::before {
       width: 100%;
-     }
+    }
     .view-group {
       display: -ms-flexbox;
       display: flex;
@@ -124,10 +124,11 @@
     .item.list-group-item:after {
       clear: both;
     }
-    i.fa.fa-star, i.fa.fa-star-half {
-        /* background-color: aqua; */
-        color: #11db14;
-        font-size: 18px;
+    i.fa.fa-star,
+    i.fa.fa-star-half {
+      /* background-color: aqua; */
+      color: #11db14;
+      font-size: 18px;
     }
   </style>
   <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
@@ -161,55 +162,106 @@
 {% endblock %}
 
 {% block bodycontent %}
+
   <div class="container">
-{% for product in lendersl %}
-<p>Product Name: {{product.name}}</p>
-<p>Lender Name: {{product.lender.brand}}</p>
-<p>Interest Rate: {{product.interest_rate}}</p>
-{% endfor %}
     <div id="products" class="row view-group">
-      {% for product in lenders %}
-     
+      {% if balances %}
+      <!-- have an existing loan pay first-->
       <div class="item col-xs-4 col-lg-4 animate__animated animate__fadeInDownBig" style="border-radius: 10px;">
-        <div class="thumbnail card">
-          <div class="img-event">
-            <img class="group list-group-image img-fluid" src="http://placehold.it/400x250/000/fff" alt="" />
-          </div>
-          <div class="caption card-body">
-            <h4 class="group card-title inner list-group-item-heading" style="font-weight: 900;">{{product.name}}</h4>
-            <p class="lender-name mb-1">
-                <strong>Lender Name</strong>
-                <span class="lender-name-actual">{{product.lender.brand}}</span>
+        <div class="card">
+          <div class="card-body">
+            <h4 class="group card-title inner mb-1 list-group-item-heading">You have and existing unpaid loan.Please pay first.</h4>
+            <p class="lender-name mb-0">
+              If this is a mistake, please contact your Lender.
             </p>
-            <p class="lender-rating mb-1">
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star-half"></i>
-              <span class="charges pl-2"><strong>Interest Rate :</strong> {{product.interest_rate}}%</span>
+            <p class="row p-1 lender-rating mb-0" style="clear: both;">
+              Click the button below to pay
             </p>
-            
             <div class="row">
-              {% comment %} <div class="col-xs-6 col-md-6 col-6">
-                <button type="submit" class="btn btn-success btn-xs" >View Details</button>
-              </div> {% endcomment %}
               <div class="col-xs-6 col-md-6 col-6">
-                <button type="submit" class="btn" style="border-radius: 15px;border: 1px #27387c solid;" 
-                data-toggle="modal" data-target="#loanrequest-{{product.id}}">
-                  <img src="{% static 'images/icons/requestloan.svg' %}" alt="" style="height: 18px;padding: 0 2px 0 2px;">
-                  Apply Loan
-                </button>
+                <a class="btn btn-success btn-xs" href="{% url "borrow:borrower_landing" %}">
+                  Pay
+                </a>
+              </div>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      {% for product in lenders %}
+        <div class="item col-xs-4 col-lg-4 animate__animated animate__fadeInDownBig" style="border-radius: 10px;">
+          <div class="thumbnail card">
+            <div class="img-event">
+              <img class="group list-group-image img-fluid" src="http://placehold.it/400x250/000/fff" alt="" />
+            </div>
+            <div class="caption card-body">
+              <h4 class="group card-title inner mb-1 list-group-item-heading" style="font-weight: 900;">{{ product.name }}</h4>
+              <p class="lender-name mb-0">
+                <strong>Lender Name</strong>
+                <span class="lender-name-actual">{{ product.lender.brand }}</span>
+              </p>
+              <p class="row p-1 lender-rating mb-0" style="clear: both;">
+                <span class="charges pl-0 col-md-6" style="float: left;"><strong>Interest Rate :</strong> {{ product.interest_rate }}%</span>
+                <span class="col-md-6" style="float: right;">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                </span>
+                <span><p class="mb-1">Repayment Term: {{ product.repayment_term }} month(s)</p></span>
+              </p>
+
+              <div class="row">
+                {% comment %} <div class="col-xs-6 col-md-6 col-6">
+                  <button type="submit" class="btn btn-success btn-xs">View Details</button>
+                </div> {% endcomment %}
+                <div class="col-xs-6 col-md-6 col-6">
+                  <button type="submit" class="btn" style="border-radius: 15px;border: 1px #27387c solid;" data-toggle="modal" data-target="#loanrequest-{{ product.id }}">
+                    <img src="{% static 'images/icons/requestloan.svg' %}" alt="" style="height: 18px;padding: 0 2px 0 2px;" />
+                    Apply Loan
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+
+        {% include 'modals/loan_request.html' %}
+      {% endfor %}{% endif %}
       
-      {% include 'modals/loan_request.html' %}
-      {% endfor %}
     </div>
   </div>
 <script>
+  var loanForms = document.querySelectorAll('.loanForm');
+  loanForms.forEach(function(form) {
+    var productId = form.dataset.productId;
+    var loanAmountInput = document.getElementById("loanamount-" + productId);
+    var interestInput   = document.getElementById("interest-"+ productId );
+    var intRate         = document.getElementById("interestrate-" + productId);
+    var feesInput       = document.getElementById("fees-"+ productId );
+    var feesRate        = document.getElementById("feesrate-"+ productId );
+    var totalLoanAmount = document.getElementById("total-"+ productId );
+    // Listen for changes in the loan amount input field
+    loanAmountInput.addEventListener("input", function () {
+      // Get the loan amount entered by the user
+      var loanAmount = parseFloat(loanAmountInput.value);
+      // Get the interest rate
+      var interestRate = parseFloat(intRate.value);
+      // Calculate the interest amount based on the loan amount and interest rate
+      var interestAmount = loanAmount * (interestRate / 100);
+      // Get facilitation fees
+      var feesrate = parseFloat(feesRate.value);
+      console.log(feesrate)
+      // Calculate facilitation fees amount
+      var facilitationFees = interestAmount * (feesrate / 100)
 
+      // total loan amount payable
+      var totalamount = loanAmount + interestAmount + facilitationFees
+      // Update the interest input field with the calculated interest amount
+      interestInput.value = interestAmount.toFixed(2); // You can format it as needed
+      feesInput.value = facilitationFees.toFixed(2); // You can format it as needed
+      totalLoanAmount.value = totalamount.toFixed(2)
+    });
+  });
 </script>
 {% endblock %}

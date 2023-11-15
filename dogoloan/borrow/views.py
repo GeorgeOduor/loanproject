@@ -4,15 +4,41 @@ from django.http import JsonResponse
 # Create your views here.
 from users.models import Profile
 from .models import BorrowerProfile
-from lenders.models import LoanProduct,LenderProfile
+from lenders.models import LoanProduct,LenderProfile,LoanApplications,LoansCounter,Transaction
+from scripts.automations import get_loan_balance
+from django.contrib import messages
+
 
 class BorrowerLandingView(View):
     def get(self,request):
+        balances = get_loan_balance(request.user.id,Transaction)
         context = {
             'user_type': 'borrower',
+            'balances': balances,
+            'loan_balance': f"{balances.balance:,.2f}"
         }
         return render(request, 'borrowers/landing.html',context)
-
+    
+    def post(self,request):
+        form_data = request.POST
+        mobile_no = form_data.get('mobile_no')
+        # pay loan
+        current_loan_balance = get_loan_balance(request.user.id,Transaction)
+        try:
+            _,ret_message = Transaction.objects.create_repayment_transaction(
+                borrower             = request.user,
+                lender               = LenderProfile.objects.get(id = form_data.get('lender')),
+                product              = LoanProduct.objects.get(id = form_data.get('product')),
+                amount               = float(form_data.get('amount')),
+                current_loan_balance = current_loan_balance.balance,
+                mpesa_trx_id         = form_data.get('mpesa_trx_id')
+            )
+            messages.success(request,ret_message)
+            return redirect('borrow:borrower_landing')
+        except Exception as e:
+            message = f"Loan payment failed: {e}"
+            messages.error(request,message)
+            return redirect('borrow:borrower_landing')
 class BorrowerProfileView(View):
     profile  = Profile.objects
     borrower = BorrowerProfile.objects
@@ -88,22 +114,74 @@ class BorrowerProfileView(View):
         except:
             return JsonResponse({'error': 'Something went wrong,please try again'})
         
-
-
 class AvailableLoansView(View):
-    loanproducts = LoanProduct.objects.select_related('lender')#.filter(status = "Active")
+    
     # lenders = LenderProfile
     def get(self,request):
-        
+        loanproducts = LoanProduct.objects.select_related('lender').filter(status = "Active")
+        balances = get_loan_balance(request.user.id,Transaction).balance > 0
         try:
             context = {
                 'user_type': 'borrower',
-                'lenders':self.loanproducts
+                'lenders':loanproducts,
+                'products':len(loanproducts.values()),
+                'balances': balances
 
             }
-            print(self.loanproducts.values())
-            
             return render(request, 'borrowers/available_lenders.html',context=context)
         except Exception as e:
             raise e
             return JsonResponse({'error': f'Something went wrong,please try again:{e}'})
+        
+    def post(self,request):
+        loan_request_data = request.POST
+        lender_id         = loan_request_data.get('lender_id')
+        product_id        = loan_request_data.get('product_id')
+        principle         = loan_request_data.get('loan_amount')
+        interest_rate     = loan_request_data.get('interest_rate')
+        facilitation_fees = loan_request_data.get('facilitation_fees')
+        total_loan_amount = loan_request_data.get('total_loan_amount')
+        try:
+            # check if user has applied for the same loan and waiting approval
+            existing_application = LoanApplications.objects.filter(
+                borrower           = request.user,
+                loan_product_id    = product_id,
+                application_status = "Pending"
+                ).exists()
+            if existing_application:
+                return JsonResponse({'error': 'You have already applied for this loan and are waiting for approval'})
+            else:
+                lender = LenderProfile.objects.get(id = lender_id)
+                LoanApplications.objects.create(
+                    lender             = lender,
+                    loan_product       = LoanProduct.objects.get(id = product_id),
+                    borrower           = request.user,
+                    principle          = principle,
+                    interest           = interest_rate,
+                    fees               = facilitation_fees,
+                    total              = total_loan_amount,
+                    application_status = "Pending",
+                    has_previous_loan  = False
+                    )
+                # update requests counter
+                counter = LoansCounter.objects.filter(lender = lender)
+                if counter.exists():
+                    total_requests = counter[0].applied_loans + 1
+                    counter.update(applied_loans = total_requests)
+                else:
+                    LoansCounter.objects.create(
+                        lender = lender,
+                        applied_loans = 1
+                    )
+                return JsonResponse({'message': 'Data submitted successfully'})
+        except Exception as e:
+            return JsonResponse({'error': f'Something went wrong,please try again. {e}'})
+        return JsonResponse({'message': loan_request_data})
+
+def loan_balance(request):
+    # borrower identification
+    borrower_id = request.user.id
+    # get loan balance
+    loan_balance = Transaction.objects.filter(borrower=borrower_id).order_by('-transaction_date')[0].balance
+    
+    return JsonResponse({"loan_balance": loan_balance})

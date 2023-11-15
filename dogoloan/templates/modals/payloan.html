@@ -1,6 +1,6 @@
 <!-- Loan Limit Modal -->
 <div class="modal fade" id="payloan" tabindex="-1" role="dialog" aria-labelledby="loanLimitModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog  small_modal" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="loanLimitModalLabel">Pay Loan</h5>
@@ -9,17 +9,21 @@
           </button>
         </div>
         <div class="modal-body text-center">
-          <form>
+          <form method="post" action="">
+            {% csrf_token %}
+            <input type="text" name="lender" value="{{balances.lender_id}}" hidden>
+            <input type="text" name="product" value="{{balances.product_id}}" hidden>
+            <input type="text" name="borrower_id" value="{{balances.borrower_id}}" hidden>
             <div class="form-group">
               <label for="user-name">Amount</label>
-              <input type="number" class="form-control" id="loanamount" placeholder="5000" required="" autofocus="" max="40000",min="100" />
+              <input name="amount" type="number" class="form-control" id="loanamount" placeholder="5,000" required="" autofocus="" max="{{balances.balance}}" min="1" >
             </div>
             <div class="form-group">
               <label for="user-name">Mobile Number to pay from</label>
-              <input type="text" class="form-control" id="loanamount" placeholder="254711222222" required="" autofocus="" />
+              <input name="mobile_no" type="text" class="form-control" id="loanamount" placeholder="254711222222" required="" autofocus="" />
             </div>
             <div class="form-group">
-              <button type="submit" class="btn btn-outline-success m-0">Submit</button>
+              <button  type="submit" class="btn btn-outline-success m-0">Submit</button>
             </div>
           </form>
         </div>

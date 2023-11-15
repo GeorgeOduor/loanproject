@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-s%lsso1$seg5-7%ujei98-$mc*7pcm0@)e_#aawq165x!#%k&a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0','fc09-102-1-235-148.ngrok-free.app']
 
 
 # Application definition
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'core',
     'lenders',
     'borrow'
-# otp
+    # otp
     # 'django_otp',
     # 'django_otp.plugins.otp_totp',
     # 'django_otp.plugins.otp_hotp',
