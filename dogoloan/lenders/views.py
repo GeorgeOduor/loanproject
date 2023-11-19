@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.views import View
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from time import sleep
 from django.contrib import messages
 
@@ -11,6 +13,7 @@ from .models import LoanApplications as applicants
 from borrow.models import BorrowerProfile
 from users.models import Profile,User
 
+@method_decorator(login_required, name='dispatch')
 class LendersDashboard(View):
     template_name = 'lenders/dashboard.html'
     def get(self, request):
@@ -19,6 +22,7 @@ class LendersDashboard(View):
             }
         return render(request, self.template_name,context=context)
 
+@method_decorator(login_required, name='dispatch')
 class LenderProfileView(View):
     template_name = 'lenders/profile.html'
     profiles = Profile.objects
@@ -70,6 +74,7 @@ class LenderProfileView(View):
         lender_profile.save()
         return JsonResponse({'message': "Your profile has been updated successfully,Happy Lending!"})
 
+@method_decorator(login_required, name='dispatch')
 class LendersWallet(View):
     template_name = 'lenders/adminwallet.html'
     
@@ -87,6 +92,7 @@ class LoanApplications(View):
         }
         return render(request, self.template_name,context=context)
 
+@method_decorator(login_required, name='dispatch')
 class LenderSettings(View):
     template_name = 'lenders/settings.html'
 
@@ -174,6 +180,7 @@ class LenderSettings(View):
 
         # return render(request, self.template_name,context=context)
 
+@login_required
 def lender_application(request,category):
     if request.method == 'GET':
         if category == 'products':
@@ -190,6 +197,7 @@ def lender_application(request,category):
         if category == 'agents':
             return render(request,'includes/agents.html')
         
+@method_decorator(login_required, name='dispatch')
 class Lend(View):
     template_name = 'lenders/loanapplications.html'
     user = LenderProfile.objects
@@ -217,6 +225,7 @@ class Lend(View):
         form_data           = request.POST
     
 
+@method_decorator(login_required, name='dispatch')
 class CreditDetails(View):
     template_name = 'lenders/applicant_details.html'   
 
@@ -260,6 +269,7 @@ class CreditDetails(View):
         return redirect('lenders:lend')
     
     
+@login_required
 def loan_approval(request,application_id):
     application_id      = application_id
     action              = request.POST.get('action')

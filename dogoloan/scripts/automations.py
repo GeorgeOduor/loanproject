@@ -68,11 +68,11 @@ class TransactionManager(models.Manager):
         return loan_repayment, message
 
 def get_loan_balance(borrower_id,model):
-    try:
-        # get loan balance
-        loan_balance = model.objects.filter(borrower=borrower_id).order_by('-transaction_date')[0]
+    loan_balance = model.objects.filter(borrower=borrower_id)
+    if loan_balance.exists():
+        loan_balance = loan_balance.order_by('-transaction_date')[0]
         return loan_balance
-    except Exception as e:
-        print(f"{e}","------------------x")
-        return 0
+    else:
+        return None
+    
 

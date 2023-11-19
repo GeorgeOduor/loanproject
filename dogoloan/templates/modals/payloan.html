@@ -16,7 +16,9 @@
             <input type="text" name="borrower_id" value="{{balances.borrower_id}}" hidden>
             <div class="form-group">
               <label for="user-name">Amount</label>
-              <input name="amount" type="number" class="form-control" id="loanamount" placeholder="5,000" required="" autofocus="" max="{{balances.balance}}" min="1" >
+              <input name="amount" type="decimal" class="form-control" id="loanamount"
+               placeholder="Ksh {{balances.balance}}" required="" autofocus=""
+               max="{{balances.balance}}" min="0" >
             </div>
             <div class="form-group">
               <label for="user-name">Mobile Number to pay from</label>

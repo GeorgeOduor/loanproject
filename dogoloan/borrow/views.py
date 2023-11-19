@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http import JsonResponse
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 from users.models import Profile
 from .models import BorrowerProfile
@@ -9,14 +11,19 @@ from scripts.automations import get_loan_balance
 from django.contrib import messages
 
 
+@method_decorator(login_required, name='dispatch')
 class BorrowerLandingView(View):
     def get(self,request):
         balances = get_loan_balance(request.user.id,Transaction)
+        # print(balances,"----------------------")
+
         context = {
             'user_type': 'borrower',
-            'balances': balances,
-            'loan_balance': f"{balances.balance:,.2f}"
         }
+        if balances:
+            context['loan_balance'] = f"{balances.balance:,.2f}"
+            context['balances']     = balances
+
         return render(request, 'borrowers/landing.html',context)
     
     def post(self,request):
@@ -39,6 +46,8 @@ class BorrowerLandingView(View):
             message = f"Loan payment failed: {e}"
             messages.error(request,message)
             return redirect('borrow:borrower_landing')
+
+@method_decorator(login_required, name='dispatch')
 class BorrowerProfileView(View):
     profile  = Profile.objects
     borrower = BorrowerProfile.objects
@@ -114,12 +123,17 @@ class BorrowerProfileView(View):
         except:
             return JsonResponse({'error': 'Something went wrong,please try again'})
         
+@method_decorator(login_required, name='dispatch')
 class AvailableLoansView(View):
     
     # lenders = LenderProfile
     def get(self,request):
         loanproducts = LoanProduct.objects.select_related('lender').filter(status = "Active")
-        balances = get_loan_balance(request.user.id,Transaction).balance > 0
+        balances = get_loan_balance(request.user.id,Transaction)
+        if balances:
+            balances = balances.balance > 0
+        else:
+            balances = False
         try:
             context = {
                 'user_type': 'borrower',
@@ -149,7 +163,8 @@ class AvailableLoansView(View):
                 application_status = "Pending"
                 ).exists()
             if existing_application:
-                return JsonResponse({'error': 'You have already applied for this loan and are waiting for approval'})
+                messages.error(request, 'You have already applied for this loan and are waiting for approval')
+                return redirect('borrow:borrower_landing')
             else:
                 lender = LenderProfile.objects.get(id = lender_id)
                 LoanApplications.objects.create(
@@ -173,15 +188,23 @@ class AvailableLoansView(View):
                         lender = lender,
                         applied_loans = 1
                     )
-                return JsonResponse({'message': 'Data submitted successfully'})
+                messages.success(request, 'Loan application submitted successfully')
+                return redirect('borrow:borrower_landing')
         except Exception as e:
-            return JsonResponse({'error': f'Something went wrong,please try again. {e}'})
+            messages.error(request, f'Something went wrong,please try again. {e}')
+            return redirect('borrow:borrower_landing')
         return JsonResponse({'message': loan_request_data})
 
+@login_required
 def loan_balance(request):
     # borrower identification
     borrower_id = request.user.id
     # get loan balance
-    loan_balance = Transaction.objects.filter(borrower=borrower_id).order_by('-transaction_date')[0].balance
+    loan_balance = Transaction.objects.filter(borrower=borrower_id).order_by('-transaction_date')
+
+    if loan_balance.exists():
+        loan_balance = loan_balance[0].balance
+    else:
+        loan_balance = 0
     
     return JsonResponse({"loan_balance": loan_balance})

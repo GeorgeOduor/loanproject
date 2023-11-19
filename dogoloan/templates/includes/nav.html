@@ -1,4 +1,5 @@
 {% load static %}
+{% load user_extras %}
 <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-bg-color">
   <div class="navbar-wrapper">
     <div class="navbar-header d-md-none">
@@ -43,7 +44,9 @@
           <li class="dropdown dropdown-notification nav-item">
             <a class="nav-link nav-link-label" href="#" data-toggle="dropdown">
               <i class="ficon ft-bell"></i>
-              <span class="badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">5</span>
+              <span class="badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">
+                {% url "users:notifications" "lender" %}
+              </span>
             </a>
             <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
               <li class="dropdown-menu-header">

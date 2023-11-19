@@ -1,5 +1,5 @@
 from django.contrib import admin
-from users.models import User, Profile
+from users.models import User, Profile,UserNotification
 from django.utils.translation import gettext_lazy as _
 
 
@@ -41,6 +41,16 @@ class UserAdmin(admin.ModelAdmin):
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ("user", "first_name", "last_name", "gender",  "national_id", "social_reach")
     search_fields = ("user", "first_name", "last_name", "gender","national_id", "social_reach")
+    add_fieldsets = (
+        (
+            None,
+        )
+    )
+
+@admin.register(UserNotification)
+class UserNotificationAdmin(admin.ModelAdmin):
+    list_display = ('user', 'user_type', 'type', 'title', 'message', 'created_on')
+    search_fields = ('user', 'user_type', 'type', 'title', 'message', 'created_on')
     add_fieldsets = (
         (
             None,

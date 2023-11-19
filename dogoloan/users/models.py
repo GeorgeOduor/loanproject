@@ -71,3 +71,28 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
+class UserNotification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_type = models.CharField(max_length=50, null=True, blank=True,choices=[
+        ('borrower', 'Borrower'),
+        ('lender', 'Lender'),
+        ('admin', 'Admin')
+    ])
+    type = models.CharField(max_length=50, null=True, blank=True,choices=[
+        ('loan_disbursement', 'Loan Disbursement'),
+        ('loan_repayment', 'Loan Repayment'),
+        ('loan_request', 'Loan Request'),
+        ('complaint', 'Complaint'),
+        ('message', 'Message'),
+        ('other', 'Other')
+    ])
+    title = models.CharField(max_length=50, null=True, blank=True)
+    message = models.TextField(null=True, blank=True)
+    created_on = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        ordering = ['-created_on']
+        

@@ -2,8 +2,13 @@ from django.shortcuts import render,redirect
 from django.views import View
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login,logout
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from borrow.models import BorrowerProfile
 from lenders.models import LenderProfile
+from .models import UserNotification
+
 
 
 from .models import User,Profile
@@ -34,7 +39,7 @@ class LoginView(View):
         msisdn   = f"254{data['mobile'][-9:]}"
         # authenticate
         user = authenticate(request, msisdn=msisdn, password=password)
-        
+        print(msisdn, password,user,'----------------------')
         if user:
             login(request, user)
             return JsonResponse({'message': 'Login Successfull'})
@@ -68,8 +73,9 @@ class RegisterView(View):
         try:
             # perform registration
             user = User.objects.create_user(
-                msisdn   = data['msisdn'],
+                msisdn   = f"254{data['msisdn'][-9:]}",
                 password = data['password'],
+                is_active = True
                 )
             profileinfo               = Profile.objects.get(user=user)
             profileinfo.first_name    = data['fname']
@@ -78,10 +84,13 @@ class RegisterView(View):
             profileinfo.date_of_birth = data['dob']
             profileinfo.email_address = data['email_address']
             profileinfo.town          = data['town']
-            profileinfo.national_id    = data['nationalid']
+            profileinfo.national_id   = data['nationalid']
             profileinfo.social_reach  = data['social_reach']
             profileinfo.save()
-            return JsonResponse({'message': 'Data submitted successfully'})
+            message = f"Welcome {data['fname']} {data['lname']}, You have been registered successfully"
+            messages.success(request, message)
+            return redirect('users:onboarding')        
+            
         except Exception as e:
             print(e)
             return JsonResponse({'errors': str(e)})
@@ -116,7 +125,8 @@ class RegisterView(View):
             return True
         except User.DoesNotExist:
             return False
-    
+
+@method_decorator(login_required, name='dispatch')
 class Onboarding(View):
     def get(self,request):
         if not request.user.is_authenticated:
@@ -128,6 +138,7 @@ def logout_view(request):
     logout(request)
     return redirect("users:login")
 
+@method_decorator(login_required, name='dispatch')
 class AccountsVerification(View):
 
     def get(self,request,user_action):
@@ -137,17 +148,18 @@ class AccountsVerification(View):
         
         # check if user is active
         if user_action == "lend":
-            lender_profile = LenderProfile.objects.get(user = request.user)
-            if lender_profile.status == "Active":
-                return redirect('/lend/')
+            lender_profile = LenderProfile.objects.filter(user = request.user)
+            if lender_profile.exists():
+                if lender_profile.filter(status = "Active").exists():
+                    return redirect('/lend/')
         elif user_action == "borrow":
-            borrower_profile = BorrowerProfile.objects.get(user = request.user)
-            if  borrower_profile.status == "Active":
-                return redirect('/borrow/')
+            borrower_profile = BorrowerProfile.objects.filter(user = request.user)
+            if borrower_profile.exists():
+                if  borrower_profile.filter(status = "Active").exists():
+                    return redirect('/borrow/')
         else:
             return redirect('users:onboarding')
         
-        # print(user_action,"----------------")
         context = {
             'user_action': user_action,
             'first_name': Profile.objects.get(user=request.user).first_name
@@ -241,4 +253,15 @@ class AccountsVerification(View):
         files = request.FILES
         # logic to scrap text from image
         return True
-            
+
+class usernotifications(View):
+    def get(self,request,user_type):
+        notifications = UserNotification.objects.\
+            filter(user=request.user,user_type=user_type).order_by('-created_on')
+        context = {
+            'notifications': notifications,
+            'notifications_count': notifications.count()
+        }
+        return JsonResponse(f'{context}')
+        
+         
